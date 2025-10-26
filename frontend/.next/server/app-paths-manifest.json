@@ -1,8 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/lomba/page": "app/lomba/page.js",
-  "/beasiswa/page": "app/beasiswa/page.js",
-  "/bootcamp/page": "app/bootcamp/page.js",
-  "/member/page": "app/member/page.js",
-  "/talk/page": "app/talk/page.js"
-}
