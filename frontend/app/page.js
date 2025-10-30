@@ -21,10 +21,10 @@ export default function Home() {
         <div className={styles["text-wrapper-8"]}>Explore Now</div>
         <p className={styles.p}>The official platform for sharing insights, learning and growing in the world of technology</p>
         <div className={styles.group}>
-          <img className={styles["computer-only-white"]} src="https://c.animaapp.com/VRxB5Vfk/img/computer-only--white--1 @2x.png" />
-          <img className={styles["logo-UCCD-putih-copy"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-putih-copy-1 @2x.png" />
+          <img className={styles["computer-only-white"]} src="https://c.animaapp.com/VRxB5Vfk/img/computer-only--white--1@2x.png" />
+          <img className={styles["logo-UCCD-putih-copy"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-putih-copy-1@2x.png" />
         </div>
-        <img className={styles["mask-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/mask-group @2x.png" />
+        <img className={styles["mask-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/mask-group@2x.png" />
         <div className={styles["rectangle-3"]}></div>
       </div>
       <div className={styles["about-UCCD"]}>
@@ -59,8 +59,8 @@ export default function Home() {
         <img className={styles.TALKS} src="https://c.animaapp.com/VRxB5Vfk/img/talks.png" />
         <img className={styles.GLORY} src="https://c.animaapp.com/VRxB5Vfk/img/glory.png" />
         <p className={styles["text-wrapper-13"]}>Gain the information you need to level up your skills here</p>
-        <img className={styles["clip-path-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group @2x.png" />
-        <img className={styles["clip-path-group-2"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group-1 @2x.png" />
+        <img className={styles["clip-path-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group@2x.png" />
+        <img className={styles["clip-path-group-2"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group-1@2x.png" />
         <img className={styles.glory} src="https://c.animaapp.com/VRxB5Vfk/img/glory--1--1.svg" />
         <img className={styles.talks} src="https://c.animaapp.com/VRxB5Vfk/img/talks-1.svg" />
         <p className={styles["text-wrapper-14"]}>
@@ -73,7 +73,7 @@ export default function Home() {
         <div className={styles["rectangle-5"]}></div>
         <div className={styles["text-wrapper-15"]}>Contact</div>
         <div className={styles["text-wrapper-16"]}>About</div>
-        <img className={styles["logo-UCCD-hitam"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-hitam--1--1 @2x.png" />
+        <img className={styles["logo-UCCD-hitam"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-hitam--1--1@2x.png" />
       </footer>
     </div>
   );
