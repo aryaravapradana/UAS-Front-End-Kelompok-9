@@ -6,10 +6,6 @@ const {
   createTalk,
   updateTalk,
   deleteTalk,
-} = require('../controllers/talk.controller.js');
-const auth = require('../middleware/auth.middleware.js');
-
-  deleteTalk,
   getTalkPeserta,
 } = require('../controllers/talk.controller.js');
 const auth = require('../middleware/auth.middleware.js');

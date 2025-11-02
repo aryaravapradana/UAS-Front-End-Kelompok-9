@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+  const {
+  getBeasiswas,
+  getBeasiswaById,
+  createBeasiswa,
+  updateBeasiswa,
   deleteBeasiswa,
   getBeasiswaPeserta,
 } = require('../controllers/beasiswa.controller.js');

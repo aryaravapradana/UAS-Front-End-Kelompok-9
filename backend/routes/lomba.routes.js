@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+  const {
+  getLombas,
+  getLombaById,
+  createLomba,
+  updateLomba,
   deleteLomba,
   getLombaPeserta,
 } = require('../controllers/lomba.controller.js');
