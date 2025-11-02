@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  nim           String            @unique
+  password      String
+  nama_lengkap  String
+  prodi         String
+  angkatan      String
+  role          String            @default("member")
+  rememberToken String?           @map("remember_token")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+  lombas        PesertaLomba[]
+  beasiswas     PesertaBeasiswa[]
+  talks         PesertaTalk[]
+  bootcamps     PesertaBootcamp[]
+  Lomba         Lomba[]
+  Beasiswa      Beasiswa[]
+}
+
+model Lomba {
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  nama_lomba       String
+  penyelenggara    String
+  batasan_tahun    String?
+  batasan_prodi    String?
+  tanggal_deadline DateTime
+  biaya_daftar     Float?
+  pemenang_uccd    String?
+  pemenang         Member?          @relation(fields: [pemenang_uccd], references: [nim])
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
+  pesertas         PesertaLomba[]
+}
+
+model Beasiswa {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  nama_beasiswa    String            @unique
+  penyelenggara    String
+  batasan_tahun    String?
+  batasan_prodi    String?
+  tanggal_deadline DateTime
+  biaya_daftar     Float?
+  penerima_uccd    String?
+  penerima         Member?           @relation(fields: [penerima_uccd], references: [nim])
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  pesertas         PesertaBeasiswa[]
+}
+
+model Talk {
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  nama_seminar        String
+  penyelenggara       String
+  tanggal_pelaksanaan DateTime
+  biaya_daftar        Float?
+  feedback_member     String?
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+  pesertas            PesertaTalk[]
+}
+
+model Bootcamp {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  nama_bootcamp    String
+  penyelenggara    String
+  tanggal_deadline DateTime
+  biaya_daftar     Float?
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  pesertas         PesertaBootcamp[]
+}
+
+model PesertaLomba {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  nim            String
+  id_lomba       String   @db.ObjectId
+  member         Member   @relation(fields: [nim], references: [nim])
+  lomba          Lomba    @relation(fields: [id_lomba], references: [id])
+  tanggal_daftar DateTime
+  status_pembayaran String   @default("unpaid")
+  status_hasil      String   @default("pending")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([nim, id_lomba])
+}
+
+model PesertaBeasiswa {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nim               String
+  nama_beasiswa     String
+  member            Member   @relation(fields: [nim], references: [nim])
+  beasiswa          Beasiswa @relation(fields: [nama_beasiswa], references: [nama_beasiswa])
+  tanggal_daftar    DateTime
+  status_pembayaran String   @default("unpaid")
+  status_hasil      String   @default("pending")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([nim, nama_beasiswa])
+}
+
+model PesertaTalk {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nim               String
+  id_talk           String   @db.ObjectId
+  member            Member   @relation(fields: [nim], references: [nim])
+  talk              Talk     @relation(fields: [id_talk], references: [id])
+  tanggal_daftar    DateTime
+  status_pembayaran String   @default("unpaid")
+  status_hasil      String   @default("pending")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([nim, id_talk])
+}
+
+model PesertaBootcamp {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nim               String
+  id_bootcamp       String   @db.ObjectId
+  member            Member   @relation(fields: [nim], references: [nim])
+  bootcamp          Bootcamp @relation(fields: [id_bootcamp], references: [id])
+  tanggal_daftar    DateTime
+  status_pembayaran String   @default("unpaid")
+  status_hasil      String   @default("pending")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([nim, id_bootcamp])
+}
