@@ -1,9 +1,11 @@
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f0f2f5;
+  padding: 2rem 0;
 }
 
 .form {
@@ -23,6 +25,7 @@
 .error {
   color: red;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .inputGroup {
@@ -41,6 +44,11 @@
   border-radius: 4px;
 }
 
+.inputGroup input:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
 .button {
   width: 100%;
   padding: 0.75rem;
@@ -54,18 +62,4 @@
 
 .button:hover {
   background-color: #005bb5;
-}
-
-.signupLink {
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.signupLink a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.signupLink a:hover {
-  text-decoration: underline;
 }

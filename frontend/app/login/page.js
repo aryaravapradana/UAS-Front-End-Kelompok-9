@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -70,6 +71,9 @@ export default function LoginPage() {
           />
         </div>
         <button type="submit" className={styles.button}>Login</button>
+        <div className={styles.signupLink}>
+          Do not have an account? <Link href="/register">Sign up</Link>
+        </div>
       </form>
     </div>
   );
