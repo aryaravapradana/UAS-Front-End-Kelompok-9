@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -32,9 +31,8 @@ export default function LoginPage() {
 
       if (res.ok) {
         const data = await res.json();
-        // Assuming the backend returns a token
         localStorage.setItem('token', data.token);
-        router.push('/'); // Redirect to home page after successful login
+        router.push('/');
       } else {
         const errorData = await res.json();
         setError(errorData.message || 'Login failed');
@@ -47,32 +45,56 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.logo}>
+        <img src="/uccd-logo.png" alt="UCCD" className={styles.logoIconImg} />
+        <span>UCCD</span>
+      </div>
+
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Login</h1>
+        <div className={styles.formHeader}>
+          <div className={styles.formIcon}>
+            <img src="/uccd-logo.png" alt="Code" className={styles.formIconImage} />
+          </div>
+          <h1 className={styles.title}>Sign In</h1>
+          <p className={styles.subtitle}>Please enter your details to sign in</p>
+        </div>
+
         {error && <p className={styles.error}>{error}</p>}
+
         <div className={styles.inputGroup}>
-          <label htmlFor="nim">NIM</label>
-          <input
-            type="text"
-            id="nim"
-            value={nim}
-            onChange={(e) => setNim(e.target.value)}
-            required
-          />
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-envelope"></i>
+            <input
+              type="text"
+              id="nim"
+              value={nim}
+              onChange={(e) => setNim(e.target.value)}
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
         </div>
+
         <div className={styles.inputGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-key"></i>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+          </div>
         </div>
-        <button type="submit" className={styles.button}>Login</button>
+
+        <button type="submit" className={styles.button}>
+          Sign in
+        </button>
+
         <div className={styles.signupLink}>
-          Do not have an account? <Link href="/register">Sign up</Link>
+          Dont have an account? <Link href="/register">Sign up</Link>
         </div>
       </form>
     </div>

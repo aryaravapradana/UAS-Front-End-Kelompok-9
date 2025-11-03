@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -69,68 +68,86 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.logo}>
+        <img src="/uccd-logo.png" alt="UCCD" className={styles.logoIconImg} />
+        <span>UCCD</span>
+      </div>
+
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Register</h1>
+        <div className={styles.formHeader}>
+          <div className={styles.formIcon}>
+            <img src="/uccd-logo.png" alt="Code" className={styles.formIconImage} />
+          </div>
+          <h1 className={styles.title}>Create an account</h1>
+          <p className={styles.subtitle}>Please enter your details to regist</p>
+        </div>
+
         {error && <p className={styles.error}>{error}</p>}
+
         <div className={styles.inputGroup}>
-          <label htmlFor="namaLengkap">Nama Lengkap</label>
-          <input
-            type="text"
-            id="namaLengkap"
-            value={namaLengkap}
-            onChange={(e) => setNamaLengkap(e.target.value)}
-            required
-          />
+          <label htmlFor="namaLengkap">Name</label>
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-user"></i>
+            <input
+              type="text"
+              id="namaLengkap"
+              value={namaLengkap}
+              onChange={(e) => setNamaLengkap(e.target.value)}
+              placeholder="Enter your name"
+              required
+            />
+          </div>
         </div>
+
         <div className={styles.inputGroup}>
-          <label htmlFor="nim">NIM</label>
-          <input
-            type="text"
-            id="nim"
-            value={nim}
-            onChange={(e) => setNim(e.target.value)}
-            required
-          />
+          <label htmlFor="nim">Student Id</label>
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-id-card"></i>
+            <input
+              type="text"
+              id="nim"
+              value={nim}
+              onChange={(e) => setNim(e.target.value)}
+              placeholder="Enter your student id"
+              required
+            />
+          </div>
         </div>
-        <div className={styles.inputGroup}>
-          <label htmlFor="prodi">Program Studi</label>
-          <input
-            type="text"
-            id="prodi"
-            value={prodi}
-            disabled
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label htmlFor="angkatan">Angkatan</label>
-          <input
-            type="text"
-            id="angkatan"
-            value={angkatan}
-            disabled
-          />
-        </div>
+
         <div className={styles.inputGroup}>
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-key"></i>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+          </div>
         </div>
+
         <div className={styles.inputGroup}>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <div className={styles.inputWrapper}>
+            <i className="fas fa-key"></i>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
         </div>
-        <button type="submit" className={styles.button}>Register</button>
+
+        <button type="submit" className={styles.button}>
+          Get Started
+        </button>
+
         <div className={styles.signinLink}>
           Already have an account? <Link href="/login">Sign in</Link>
         </div>
