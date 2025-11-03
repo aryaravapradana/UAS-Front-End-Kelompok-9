@@ -316,59 +316,29 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .container::before,
+  .container::after {
+    /* Scale down decorative elements on tablets */
+    transform: scale(0.8);
+  }
+}
+
 @media (max-width: 480px) {
   .form {
     padding: 36px 28px 32px;
-    margin: 20px;
-    max-width: calc(100% - 40px);
+    margin: 0 20px;
+    width: auto;
+    max-width: 100%;
   }
   
   .title {
     font-size: 26px;
   }
-  
-  .subtitle {
-    font-size: 13px;
-  }
-  
-  .inputGroup {
-    margin-bottom: 12px;
-  }
-  
-  .inputGroup label {
-    font-size: 12px;
-    margin-bottom: 6px;
-  }
-  
-  .logo {
-    top: 24px;
-    left: 24px;
-  }
-  
-  .logoIconImg {
-    height: 36px;
-  }
-  
-  .logo span {
-    font-size: 20px;
-  }
-  
-  .formIcon {
-    width: 56px;
-    height: 56px;
-  }
-  
-  .container::before {
-    width: 360px;
-    height: 520px;
-    top: -120px;
-    left: -100px;
-  }
-  
+
+  .container::before,
   .container::after {
-    width: 340px;
-    height: 500px;
-    bottom: -110px;
-    right: -90px;
+    /* Hide decorative elements on small screens */
+    display: none;
   }
 }

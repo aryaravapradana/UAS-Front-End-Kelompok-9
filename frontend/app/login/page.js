@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './login.module.css';
 
@@ -9,11 +9,31 @@ export default function LoginPage() {
   const [nim, setNim] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const status = searchParams.get('status');
+    if (status === 'registered') {
+      setSuccessMessage('Registration successful! Please log in.');
+      setIsMessageVisible(true);
+
+      const fadeOutTimer = setTimeout(() => {
+        setIsMessageVisible(false);
+      }, 1300); // Start fading out after 1.3 seconds
+
+      return () => {
+        clearTimeout(fadeOutTimer);
+      };
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
 
     if (!nim || !password) {
       setError('NIM and password are required');
@@ -32,7 +52,7 @@ export default function LoginPage() {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('token', data.token);
-        router.push('/');
+        router.push('/?status=loggedin');
       } else {
         const errorData = await res.json();
         setError(errorData.message || 'Login failed');
@@ -60,16 +80,21 @@ export default function LoginPage() {
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
+        {successMessage && (
+          <p className={`${styles.success} ${isMessageVisible ? styles.visible : ''}`}>
+            {successMessage}
+          </p>
+        )}
 
         <div className={styles.inputGroup}>
           <div className={styles.inputWrapper}>
-            <i className="fas fa-envelope"></i>
+            <i className="fas fa-id-card"></i>
             <input
               type="text"
               id="nim"
               value={nim}
               onChange={(e) => setNim(e.target.value)}
-              placeholder="Enter your email address"
+              placeholder="Enter your Student ID (NIM)"
               required
             />
           </div>
