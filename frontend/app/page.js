@@ -1,5 +1,6 @@
 
 import styles from "./page.module.css";
+import LoginButton from "./components/LoginButton";
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
         <div className={styles.rectangle}></div>
         <div className={styles["rectangle-2"]}></div>
         <div className={styles["text-wrapper-6"]}>Get Started</div>
-        <div className={styles["text-wrapper-7"]}>Log In</div>
+        <LoginButton />
         <div className={styles["text-wrapper-8"]}>Explore Now</div>
         <p className={styles.p}>The official platform for sharing insights, learning and growing in the world of technology</p>
         <div className={styles.group}>
