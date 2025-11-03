@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import styles from './register.module.css';
 
 const getProdi = (nim) => {
@@ -130,6 +131,9 @@ export default function RegisterPage() {
           />
         </div>
         <button type="submit" className={styles.button}>Register</button>
+        <div className={styles.signinLink}>
+          Already have an account? <Link href="/login">Sign in</Link>
+        </div>
       </form>
     </div>
   );
