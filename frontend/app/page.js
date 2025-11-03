@@ -1,10 +1,90 @@
+'use client';
 
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from "./page.module.css";
 import LoginButton from "./components/LoginButton";
 
 export default function Home() {
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+
+  // Effect for displaying login success message
+  useEffect(() => {
+    const status = searchParams.get('status');
+    if (status === 'loggedin') {
+      setSuccessMessage('Login successful! Welcome.');
+      setIsMessageVisible(true);
+
+      const visibilityTimer = setTimeout(() => {
+        setIsMessageVisible(false);
+      }, 1500); // Message will start to fade out after 1.5 seconds
+
+      return () => {
+        clearTimeout(visibilityTimer);
+      };
+    }
+  }, [searchParams]);
+
+  // Effect for checking login status and fetching user profile
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      setIsLoading(true);
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        try {
+          const res = await fetch('http://localhost:3001/api/profile', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (res.ok) {
+            const userData = await res.json();
+            setUser(userData);
+          } else {
+            // Token might be expired or invalid
+            localStorage.removeItem('token');
+            setUser(null);
+          }
+        } catch (error) {
+          console.error('Failed to fetch user profile:', error);
+          localStorage.removeItem('token');
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+      setIsLoading(false);
+    };
+
+    checkLoginStatus();
+  }, []); // Run only once on mount
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    // Optionally redirect to force a re-render or clear any cached data
+    // router.push('/');
+  };
+
+  if (isLoading) {
+    return <div className={styles.loading}>Loading...</div>; // Basic loading indicator
+  }
+
   return (
     <div className={styles.home} data-model-id="20:2">
+      {successMessage && (
+        <div className={`${styles.successPopup} ${isMessageVisible ? styles.visible : ''}`}>
+          {successMessage}
+        </div>
+      )}
       <div className={styles.awal}>
         <img className={styles.image} src="https://c.animaapp.com/VRxB5Vfk/img/image-19.png" />
         <div className={styles.navbar}>
@@ -15,10 +95,21 @@ export default function Home() {
           <div className={styles["text-wrapper-4"]}>Talks</div>
           <div className={styles["text-wrapper-5"]}>Info</div>
         </div>
-        <div className={styles.rectangle}></div>
-        <div className={styles["rectangle-2"]}></div>
-        <div className={styles["text-wrapper-6"]}>Get Started</div>
-        <LoginButton />
+        
+        {user ? (
+          <div className={styles.loggedInControls}>
+            <span className={styles.welcomeMessage}>Halo, {user.nama_lengkap}</span>
+            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+          </div>
+        ) : (
+          <div className={styles.loggedOutControls}>
+            <div className={styles.rectangle}></div>
+            <div className={styles["rectangle-2"]}></div>
+            <div className={styles["text-wrapper-6"]}>Get Started</div>
+            <LoginButton />
+          </div>
+        )}
+
         <div className={styles["text-wrapper-8"]}>Explore Now</div>
         <p className={styles.p}>The official platform for sharing insights, learning and growing in the world of technology</p>
         <div className={styles.group}>

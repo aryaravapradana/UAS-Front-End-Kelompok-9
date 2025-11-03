@@ -6,6 +6,7 @@ import Link from 'next/link';
 import styles from './register.module.css';
 
 const getProdi = (nim) => {
+  if (nim.length < 3) return '';
   const prodiCode = nim.substring(0, 3);
   const prodiMap = {
     '535': 'Teknik Informatika',
@@ -55,7 +56,7 @@ export default function RegisterPage() {
       });
 
       if (res.ok) {
-        router.push('/login');
+        router.push('/login?status=registered');
       } else {
         const errorData = await res.json();
         setError(errorData.message || 'Registration failed');
@@ -79,7 +80,7 @@ export default function RegisterPage() {
             <img src="/uccd-logo.png" alt="Code" className={styles.formIconImage} />
           </div>
           <h1 className={styles.title}>Create an account</h1>
-          <p className={styles.subtitle}>Please enter your details to regist</p>
+          <p className={styles.subtitle}>Please enter your details to register</p>
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
@@ -100,7 +101,7 @@ export default function RegisterPage() {
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="nim">Student Id</label>
+          <label htmlFor="nim">Student ID</label>
           <div className={styles.inputWrapper}>
             <i className="fas fa-id-card"></i>
             <input
@@ -111,6 +112,20 @@ export default function RegisterPage() {
               placeholder="Enter your student id"
               required
             />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label>Prodi</label>
+          <div className={styles.inputWrapper}>
+            <input type="text" value={prodi} disabled />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label>Angkatan</label>
+          <div className={styles.inputWrapper}>
+            <input type="text" value={angkatan} disabled />
           </div>
         </div>
 
