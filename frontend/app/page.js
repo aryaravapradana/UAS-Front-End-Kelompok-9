@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import styles from "./page.module.css";
 import LoginButton from "./components/LoginButton";
 
@@ -10,6 +11,7 @@ export default function Home() {
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const searchParams = useSearchParams();
 
   // Effect for displaying login success message
@@ -98,7 +100,22 @@ export default function Home() {
         
         {user ? (
           <div className={styles.loggedInControls}>
+            {user.avatar && (
+              <img src={`http://localhost:3001${user.avatar}`} alt="Avatar" className={styles.userAvatar} />
+            )}
             <span className={styles.welcomeMessage}>Halo, {user.nama_lengkap}</span>
+            <div className={styles.settingsContainer}>
+              <button onClick={() => setIsSettingsOpen(!isSettingsOpen)} className={styles.settingsButton}>
+                <i className="fas fa-cog"></i> Settings
+              </button>
+              {isSettingsOpen && (
+                <div className={styles.settingsDropdown}>
+                  <Link href="/account-settings">
+                    <div className={styles.dropdownItem}>Pengaturan Akun</div>
+                  </Link>
+                </div>
+              )}
+            </div>
             <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
           </div>
         ) : (

@@ -8,6 +8,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 const authRoutes = require('./routes/auth.routes.js');
 const lombaRoutes = require('./routes/lomba.routes.js');
