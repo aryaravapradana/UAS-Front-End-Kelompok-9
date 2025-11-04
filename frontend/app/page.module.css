@@ -96,7 +96,7 @@
 .welcomeMessage {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 500;
-  color: #ffffff;
+  color: #333; /* Changed from white to dark gray */
   font-size: 1.2rem;
   white-space: nowrap;
 }
@@ -177,7 +177,6 @@
     font-size: 0.9rem;
   }
 }
-
 @media (max-width: 480px) {
   .loggedInControls,
   .loggedOutControls {
@@ -424,4 +423,60 @@
 .successPopup.visible {
   opacity: 1;
   visibility: visible;
+}
+
+/* Settings Dropdown Styles */
+.settingsContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.settingsButton {
+  background: none;
+  border: none;
+  color: #333; /* Changed from white to dark gray */
+  cursor: pointer;
+  font-size: 1.5rem; /* Adjust size of the gear icon */
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.settingsButton:hover {
+  opacity: 0.8;
+}
+
+.settingsDropdown {
+  position: absolute;
+  top: 100%; /* Position it right below the button */
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  min-width: 160px;
+  overflow: hidden; /* Ensures children conform to border-radius */
+}
+
+.dropdownItem {
+  padding: 12px 16px;
+  color: black;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background-color: #f1f1f1;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid white;
 }

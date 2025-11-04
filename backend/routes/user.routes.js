@@ -3,10 +3,13 @@ const router = express.Router();
 const {
   getProfile,
   updateProfile,
+  changePassword,
   getAllUsers,
   getUserByNim,
   updateUser,
   deleteUser,
+  upload, // Multer upload instance
+  updateAvatar, // Controller for avatar update
   getMemberLombasForAdmin,
   getMemberBeasiswasForAdmin,
   getMemberTalksForAdmin,
@@ -17,6 +20,8 @@ const admin = require('../middleware/admin.middleware.js');
 
 // Member-specific routes
 router.route('/profile').get(auth, getProfile).put(auth, updateProfile);
+router.put('/change-password', auth, changePassword);
+router.put('/profile/avatar', auth, upload.single('avatar'), updateAvatar);
 
 // Admin-only user management routes
 router.route('/users').get(auth, admin, getAllUsers);
