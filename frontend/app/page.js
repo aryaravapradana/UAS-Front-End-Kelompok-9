@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 import LoginButton from "./components/LoginButton";
 
@@ -11,162 +11,256 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // Effect for displaying login success message
   useEffect(() => {
-    const status = searchParams.get('status');
-    if (status === 'loggedin') {
-      setSuccessMessage('Login successful! Welcome.');
+    const message = searchParams.get('message');
+    if (message === 'login-success') {
+      setSuccessMessage('Login berhasil! Selamat datang di UCCD.');
       setIsMessageVisible(true);
-
-      const visibilityTimer = setTimeout(() => {
-        setIsMessageVisible(false);
-      }, 1500); // Message will start to fade out after 1.5 seconds
-
-      return () => {
-        clearTimeout(visibilityTimer);
-      };
+      setTimeout(() => setIsMessageVisible(false), 3000);
     }
-  }, [searchParams]);
 
-  // Effect for checking login status and fetching user profile
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      setIsLoading(true);
-      const token = localStorage.getItem('token');
-
-      if (token) {
-        try {
-          const res = await fetch('http://localhost:3001/api/profile', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-
-          if (res.ok) {
-            const userData = await res.json();
-            setUser(userData);
-          } else {
-            // Token might be expired or invalid
-            localStorage.removeItem('token');
-            setUser(null);
-          }
-        } catch (error) {
-          console.error('Failed to fetch user profile:', error);
-          localStorage.removeItem('token');
-          setUser(null);
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('http://192.168.1.14:3000/auth/user', {
+          credentials: 'include'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data);
         }
-      } else {
-        setUser(null);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    checkLoginStatus();
-  }, []); // Run only once on mount
+    fetchUser();
+  }, [searchParams]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-    // Optionally redirect to force a re-render or clear any cached data
-    // router.push('/');
+  const handleLogout = async () => {
+    try {
+      await fetch('http://192.168.1.14:3000/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      setUser(null);
+      router.push('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
-  if (isLoading) {
-    return <div className={styles.loading}>Loading...</div>; // Basic loading indicator
-  }
-
   return (
-    <div className={styles.home} data-model-id="20:2">
+    <main className={styles.main}>
       {successMessage && (
-        <div className={`${styles.successPopup} ${isMessageVisible ? styles.visible : ''}`}>
+        <div className={`${styles.successToast} ${isMessageVisible ? styles.fadeIn : styles.fadeOut}`}>
+          <i className="fas fa-check-circle me-2"></i>
           {successMessage}
         </div>
       )}
-      <div className={styles.awal}>
-        <img className={styles.image} src="https://c.animaapp.com/VRxB5Vfk/img/image-19.png" />
-        <div className={styles.navbar}>
-          <div className={styles["text-wrapper"]}>Home</div>
-          <div className={styles.div}>Bootcamp</div>
-          <div className={styles["text-wrapper-2"]}>Insight</div>
-          <div className={styles["text-wrapper-3"]}>Glory</div>
-          <div className={styles["text-wrapper-4"]}>Talks</div>
-          <div className={styles["text-wrapper-5"]}>Info</div>
-        </div>
-        
-        {user ? (
-          <div className={styles.loggedInControls}>
-            <span className={styles.welcomeMessage}>Halo, {user.nama_lengkap}</span>
-            <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
-          </div>
-        ) : (
-          <div className={styles.loggedOutControls}>
-            <div className={styles.rectangle}></div>
-            <div className={styles["rectangle-2"]}></div>
-            <div className={styles["text-wrapper-6"]}>Get Started</div>
-            <LoginButton />
-          </div>
-        )}
 
-        <div className={styles["text-wrapper-8"]}>Explore Now</div>
-        <p className={styles.p}>The official platform for sharing insights, learning and growing in the world of technology</p>
-        <div className={styles.group}>
-          <img className={styles["computer-only-white"]} src="https://c.animaapp.com/VRxB5Vfk/img/computer-only--white--1@2x.png" />
-          <img className={styles["logo-UCCD-putih-copy"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-putih-copy-1@2x.png" />
+      <nav className={styles.navbar}>
+        <div className="container-fluid px-4 px-lg-5">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center gap-3" style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
+              <div className={styles.logoContainer}>
+                <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.logo3D} />
+              </div>
+              <span className={styles.logoText}>UCCD</span>
+            </div>
+
+            <div className="d-none d-lg-flex gap-4 align-items-center">
+              <a href="/home" className={styles.navLink}>Home</a>
+              <a href="/bootcamp" className={styles.navLink}>Bootcamp</a>
+              <a href="/insight" className={styles.navLink}>Insight</a>
+              <a href="/glory" className={styles.navLink}>Glory</a>
+              <a href="/talks" className={styles.navLink}>Talks</a>
+              <a href="/info" className={styles.navLink}>Info</a>
+            </div>
+
+            <div className="d-flex align-items-center gap-3">
+              {user ? (
+                <>
+                  <span className="text-white d-none d-md-inline" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '0.95rem', fontWeight: '400' }}>
+                    Halo, {user.nama_lengkap}
+                  </span>
+                  <button onClick={handleLogout} className={styles.btnPrimary}>Logout</button>
+                </>
+              ) : (
+                <>
+                  <button className={`${styles.btnOutline} d-none d-md-block`}>Get Started</button>
+                  <LoginButton />
+                </>
+              )}
+            </div>
+          </div>
         </div>
-        <img className={styles["mask-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/mask-group@2x.png" />
-        <div className={styles["rectangle-3"]}></div>
-      </div>
-      <div className={styles["about-UCCD"]}>
-        <img
-          className={styles["untar-computer-club"]}
-          src="https://c.animaapp.com/VRxB5Vfk/img/untar-computer--club-development.png"
-        />
-        <p className={styles["text-wrapper-9"]}>
-          UCCD is an organization under the Student Executive Board (BEM) of FTI UNTAR, established to develop academic
-          extracurricular activities, particularly in the field of information technology. Currently, UCCD consists of
-          five main programs Insight, Talks, Bootcamp, Glory, and Info.
-        </p>
-        <img className={styles.img} src="https://c.animaapp.com/VRxB5Vfk/img/image--37--1.png" />
-      </div>
-      <div className={styles.subject}>
-        <div className={styles.rect}><div className={styles["rectangle-4"]}></div></div>
-        <div className={styles["rectangle-wrapper"]}><div className={styles["rectangle-4"]}></div></div>
-        <div className={styles["div-wrapper"]}><div className={styles["rectangle-4"]}></div></div>
-        <div className={styles["rect-2"]}><div className={styles["rectangle-4"]}></div></div>
-        <div className={styles["rect-3"]}><div className={styles["rectangle-4"]}></div></div>
-        <img className={styles["whats-in-it-for-you"]} src="https://c.animaapp.com/VRxB5Vfk/img/what-s-in-it-for-you-.png" />
-        <p className={styles["text-wrapper-10"]}>Gain the information you need to level up your skills here</p>
-        <p className={styles["text-wrapper-11"]}>
-          Articles and discussions on current issues in technology and digital developments.
-        </p>
-        <p className={styles["text-wrapper-12"]}>
-          Talkshows with tech professionals sharing industry insights and career experiences.
-        </p>
-        <p className={styles["gain-the-information"]}>Gain the information you need&nbsp;&nbsp;to level up your skills here</p>
-        <img className={styles.BOOTCAMP} src="https://c.animaapp.com/VRxB5Vfk/img/bootcamp.png" />
-        <img className={styles.INSIGHT} src="https://c.animaapp.com/VRxB5Vfk/img/insight.png" />
-        <img className={styles.TALKS} src="https://c.animaapp.com/VRxB5Vfk/img/talks.png" />
-        <img className={styles.GLORY} src="https://c.animaapp.com/VRxB5Vfk/img/glory.png" />
-        <p className={styles["text-wrapper-13"]}>Gain the information you need to level up your skills here</p>
-        <img className={styles["clip-path-group"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group@2x.png" />
-        <img className={styles["clip-path-group-2"]} src="https://c.animaapp.com/VRxB5Vfk/img/clip-path-group-1@2x.png" />
-        <img className={styles.glory} src="https://c.animaapp.com/VRxB5Vfk/img/glory--1--1.svg" />
-        <img className={styles.talks} src="https://c.animaapp.com/VRxB5Vfk/img/talks-1.svg" />
-        <p className={styles["text-wrapper-14"]}>
-          Updates on tech competitions and scholarships to support student growth and opportunities.
-        </p>
-        <img className={styles.INFO} src="https://c.animaapp.com/VRxB5Vfk/img/info.png" />
-        <img className={styles.info} src="https://c.animaapp.com/VRxB5Vfk/img/info-1.svg" />
-      </div>
+      </nav>
+
+      <section className={styles.heroSection}>
+        <div className="container" style={{ position: 'relative', zIndex: 3 }}>
+          <div className="row justify-content-center">
+            <div className="col-12 col-xl-10">
+              <div className="text-center">
+                <h1 className={styles.heroTitle}>
+                  Empowering FTI Students<br />
+                  Through Technology & Innovation
+                </h1>
+                <p className={styles.heroSubtext}>
+                  The official platform for sharing insights, learning and growing in the world of technology
+                </p>
+                <button className={styles.btnExplore}>
+                  <span>Explore Now</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.uccdSection}>
+        <div className="container">
+          <div className="row align-items-center">
+            <div className={`col-lg-6 col-md-12 ${styles.textBlock}`}>
+              <h2 className={styles.sectionTitle}>
+                Untar Computer<br />Club Development
+              </h2>
+              <p className={styles.sectionText}>
+                UCCD is an organization under the Student Executive Board (BEM) of FTI UNTAR, established to develop
+                academic extracurricular activities, particularly in the field of information technology. Currently,
+                UCCD consists of five main programs: Insight, Talks, Bootcamp, Glory, and Info.
+              </p>
+            </div>
+
+            <div className={`col-lg-6 col-md-12 text-center ${styles.logoBlock}`}>
+              <div className={styles.logoTilt}>
+                <img src="/pc-homepage.png" alt="UCCD Logo" className={styles.uccdLogo} width={520} height={520} style={{ objectFit: "contain" }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.featuresSection}>
+        <div className="container text-center">
+          <div className="mb-5">
+            <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+              <span className={`${styles.dot} ${styles.dotLeft}`}></span>
+              <h2 className={styles.featuresTitle}>Whats in it for you?</h2>
+              <span className={`${styles.dot} ${styles.dotRight}`}></span>
+            </div>
+            <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
+          </div>
+
+          <div className="row gy-4 justify-content-center" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div className="col-lg-4 col-md-6">
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/bootcamp')}>
+                <img src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
+                <h3>BOOTCAMP</h3>
+                <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-6">
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/insight')}>
+                <img src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
+                <h3>INSIGHT</h3>
+                <p>Articles and discussions on current issues in technology and digital developments.</p>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-6">
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/glory')}>
+                <img src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                <h3>GLORY</h3>
+                <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-6">
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/info')}>
+                <img src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+                <h3>INFO</h3>
+                <p>Updates on tech competitions and scholarships to support student growth.</p>
+              </div>
+            </div>
+
+            <div className="col-lg-4 col-md-6">
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/talks')}>
+                <img src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+                <h3>TALKS</h3>
+                <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer className={styles.footer}>
-        <div className={styles["rectangle-5"]}></div>
-        <div className={styles["text-wrapper-15"]}>Contact</div>
-        <div className={styles["text-wrapper-16"]}>About</div>
-        <img className={styles["logo-UCCD-hitam"]} src="https://c.animaapp.com/VRxB5Vfk/img/logo-uccd-hitam--1--1@2x.png" />
+        <div className="container">
+          <div className="row g-5">
+            <div className="col-lg-4 col-md-6">
+              <div className="d-flex align-items-start gap-3 mb-3">
+                <div className={styles.footerLogo}>
+                  <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.footerLogoImg} />
+                </div>
+                <div>
+                  <span className={styles.footerLogoText}>UCCD</span>
+                  <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
+                    Untar Computer<br />Club Development
+                  </p>
+                </div>
+              </div>
+              <p className={styles.footerText}>
+                UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
+              </p>
+            </div>
+
+            <div className="col-lg-4 col-md-3">
+              <h4 className={styles.footerTitle}>Contact</h4>
+              <ul className="list-unstyled">
+              <li className="mb-3">
+                <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
+                  <i className="fas fa-envelope me-2"></i>
+                  uccd@untar.ac.id
+                </a>
+              </li>
+              <li className="mb-3">
+                <a
+                  href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
+                  className={`${styles.footerLink} ${styles.instagramLink}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className={`fab fa-instagram ${styles.instagramIcon} me-2`}></i>
+                  @uccdfti.untar
+                </a>
+              </li>
+            </ul>
+            </div>
+            
+            <div className="col-lg-4 col-md-3">
+              <h4 className={styles.footerTitle}>About</h4>
+              <ul className="list-unstyled">
+                <li className="mb-2"><a href="/home" className={styles.footerLink}>Home</a></li>
+                <li className="mb-2"><a href="/bootcamp" className={styles.footerLink}>Bootcamp</a></li>
+                <li className="mb-2"><a href="/insight" className={styles.footerLink}>Insight</a></li>
+                <li className="mb-2"><a href="/glory" className={styles.footerLink}>Glory</a></li>
+                <li className="mb-2"><a href="/talks" className={styles.footerLink}>Talks</a></li>
+                <li className="mb-2"><a href="/info" className={styles.footerLink}>Info</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+            <p className={styles.footerCopyright}>
+              © 2025 UCCD - Untar Computer Club Development. All rights reserved.
+            </p>
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }

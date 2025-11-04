@@ -70,14 +70,14 @@ export default function RegisterPage() {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src="/uccd-logo.png" alt="UCCD" className={styles.logoIconImg} />
+        <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.logoIconImg} />
         <span>UCCD</span>
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formHeader}>
           <div className={styles.formIcon}>
-            <img src="/uccd-logo.png" alt="Code" className={styles.formIconImage} />
+            <img src="/uccd-logo@2x.png" alt="Code" className={styles.formIconImage} />
           </div>
           <h1 className={styles.title}>Create an account</h1>
           <p className={styles.subtitle}>Please enter your details to register</p>
