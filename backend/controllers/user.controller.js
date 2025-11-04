@@ -1,36 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
-const multer = require('multer');
-const path = require('path');
 const prisma = new PrismaClient();
-
-// Multer configuration for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Files will be stored in the 'uploads' directory
-  },
-  filename: (req, file, cb) => {
-    // Use original name with a timestamp to prevent overwrites
-    cb(null, `${req.member.nim}-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 }, // 5MB file size limit
-  fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif/;
-    const mimetype = filetypes.test(file.mimetype);
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    cb(new Error('Only images (jpeg, jpg, png, gif) are allowed'));
-  },
-});
-
-exports.upload = upload; // Export the upload instance
 
 // @desc    Get logged in member's profile
 // @route   GET /api/profile
@@ -65,71 +35,6 @@ exports.updateProfile = async (req, res) => {
     });
 
     res.status(200).json(updatedMember);
-  } catch (error) {
-    res.status(500).json({ message: 'Something went wrong', error: error.message });
-  }
-};
-
-// @desc    Change logged in member's password
-// @route   PUT /api/change-password
-// @access  Private
-exports.changePassword = async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
-
-  if (!currentPassword || !newPassword) {
-    return res.status(400).json({ message: 'Please provide current and new passwords' });
-  }
-
-  try {
-    const member = await prisma.member.findUnique({ where: { nim: req.member.nim } });
-
-    if (!member) {
-      return res.status(404).json({ message: 'Member not found' });
-    }
-
-    const isMatch = await bcrypt.compare(currentPassword, member.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Incorrect current password' });
-    }
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, 12);
-
-    await prisma.member.update({
-      where: { nim: req.member.nim },
-      data: { password: hashedNewPassword },
-    });
-
-    res.status(200).json({ message: 'Password changed successfully' });
-
-  } catch (error) {
-    res.status(500).json({ message: 'Something went wrong', error: error.message });
-  }
-};
-
-// @desc    Update logged in member's profile picture
-// @route   PUT /api/profile/avatar
-// @access  Private
-exports.updateAvatar = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    const member = await prisma.member.findUnique({ where: { nim: req.member.nim } });
-    if (!member) {
-      return res.status(404).json({ message: 'Member not found' });
-    }
-
-    // Construct the URL for the frontend
-    const avatarUrl = `/uploads/${req.file.filename}`;
-
-    const updatedMember = await prisma.member.update({
-      where: { nim: req.member.nim },
-      data: { avatar: avatarUrl },
-    });
-
-    res.status(200).json({ message: 'Profile picture updated successfully', avatar: avatarUrl });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
