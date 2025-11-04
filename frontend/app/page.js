@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 import LoginButton from "./components/LoginButton";
+import Link from 'next/link';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
@@ -22,17 +23,27 @@ export default function Home() {
     }
 
     const fetchUser = async () => {
-      try {
-        const response = await fetch('http://192.168.1.14:3000/auth/user', {
-          credentials: 'include'
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('http://localhost:3001/api/profile', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data);
+          } else {
+            // Token might be invalid or expired
+            localStorage.removeItem('token');
+          }
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
+      } else {
         setIsLoading(false);
       }
     };
@@ -40,17 +51,10 @@ export default function Home() {
     fetchUser();
   }, [searchParams]);
 
-  const handleLogout = async () => {
-    try {
-      await fetch('http://192.168.1.14:3000/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      setUser(null);
-      router.push('/');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    router.push('/');
   };
 
   return (
@@ -73,12 +77,12 @@ export default function Home() {
             </div>
 
             <div className="d-none d-lg-flex gap-4 align-items-center">
-              <a href="/home" className={styles.navLink}>Home</a>
-              <a href="/bootcamp" className={styles.navLink}>Bootcamp</a>
-              <a href="/insight" className={styles.navLink}>Insight</a>
-              <a href="/glory" className={styles.navLink}>Glory</a>
-              <a href="/talks" className={styles.navLink}>Talks</a>
-              <a href="/info" className={styles.navLink}>Info</a>
+              <Link href="/" className={styles.navLink}>Home</Link>
+              <Link href="/bootcamp" className={styles.navLink}>Bootcamp</Link>
+              <Link href="/insight" className={styles.navLink}>Insight</Link>
+              <Link href="/glory" className={styles.navLink}>Glory</Link>
+              <Link href="/talk" className={styles.navLink}>Talks</Link>
+              <Link href="/info" className={styles.navLink}>Info</Link>
             </div>
 
             <div className="d-flex align-items-center gap-3">
@@ -87,7 +91,10 @@ export default function Home() {
                   <span className="text-white d-none d-md-inline" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '0.95rem', fontWeight: '400' }}>
                     Halo, {user.nama_lengkap}
                   </span>
-                  <button onClick={handleLogout} className={styles.btnPrimary}>Logout</button>
+                  <button onClick={handleLogout} className={`${styles.btnOutline} d-flex align-items-center`}>
+                    <i className="fas fa-sign-out-alt"></i>
+                    <span className="ms-2">Logout</span>
+                  </button>
                 </>
               ) : (
                 <>
@@ -158,7 +165,7 @@ export default function Home() {
           <div className="row gy-4 justify-content-center" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/bootcamp')}>
-                <img src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
+                <img src="/bootcamp.png" alt="Bootcamp" className={styles.featureImg} />
                 <h3>BOOTCAMP</h3>
                 <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
               </div>
@@ -166,7 +173,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/insight')}>
-                <img src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
+                <img src="/insight.png" alt="Insight" className={styles.featureImg} />
                 <h3>INSIGHT</h3>
                 <p>Articles and discussions on current issues in technology and digital developments.</p>
               </div>
@@ -174,7 +181,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/glory')}>
-                <img src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                <img src="/glory.png" alt="Glory" className={styles.featureImg} />
                 <h3>GLORY</h3>
                 <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
               </div>
@@ -182,15 +189,15 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/info')}>
-                <img src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+                <img src="/info.png" alt="Info" className={styles.featureImg} />
                 <h3>INFO</h3>
                 <p>Updates on tech competitions and scholarships to support student growth.</p>
               </div>
             </div>
 
             <div className="col-lg-4 col-md-6">
-              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/talks')}>
-                <img src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+              <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/talk')}>
+                <img src="/talks.png" alt="Talks" className={styles.featureImg} />
                 <h3>TALKS</h3>
                 <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
               </div>
