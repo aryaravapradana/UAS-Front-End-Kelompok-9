@@ -169,7 +169,7 @@ exports.uploadProfilePicture = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    const profilePictureUrl = req.file.location; // URL from Cloudflare R2
+    const profilePictureUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`; // URL from Cloudflare R2 Worker
 
     const updatedMember = await prisma.member.update({
       where: { nim: req.member.nim },
