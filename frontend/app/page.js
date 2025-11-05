@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 import LoginButton from "./components/LoginButton";
+import ProfileButton from "./components/ProfileButton";
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -21,36 +21,15 @@ export default function Home() {
       setTimeout(() => setIsMessageVisible(false), 3000);
     }
 
-    const fetchUser = async () => {
-      try {
-        const response = await fetch('http://192.168.1.14:3000/auth/user', {
-          credentials: 'include'
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUser();
+    // Check for token to determine login status
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
   }, [searchParams]);
 
-  const handleLogout = async () => {
-    try {
-      await fetch('http://192.168.1.14:3000/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      setUser(null);
-      router.push('/');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    router.push('/');
   };
 
   return (
@@ -82,11 +61,9 @@ export default function Home() {
             </div>
 
             <div className="d-flex align-items-center gap-3">
-              {user ? (
+              {isLoggedIn ? (
                 <>
-                  <span className="text-white d-none d-md-inline" style={{ fontFamily: 'Poppins, sans-serif', fontSize: '0.95rem', fontWeight: '400' }}>
-                    Halo, {user.nama_lengkap}
-                  </span>
+                  <ProfileButton />
                   <button onClick={handleLogout} className={styles.btnPrimary}>Logout</button>
                 </>
               ) : (
