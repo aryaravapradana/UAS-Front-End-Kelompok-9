@@ -159,3 +159,28 @@ exports.getMemberBootcampsForAdmin = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Upload member profile picture
+// @route   POST /api/profile/picture
+// @access  Private
+exports.uploadProfilePicture = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const profilePictureUrl = req.file.location; // URL from Cloudflare R2
+
+    const updatedMember = await prisma.member.update({
+      where: { nim: req.member.nim },
+      data: { profilePictureUrl: profilePictureUrl },
+    });
+
+    res.status(200).json({
+      message: 'Profile picture uploaded successfully',
+      profilePictureUrl: updatedMember.profilePictureUrl,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};

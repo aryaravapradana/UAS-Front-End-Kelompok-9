@@ -11,22 +11,23 @@ datasource db {
 }
 
 model Member {
-  id            String            @id @default(auto()) @map("_id") @db.ObjectId
-  nim           String            @unique
-  password      String
-  nama_lengkap  String
-  prodi         String
-  angkatan      String
-  role          String            @default("member")
-  rememberToken String?           @map("remember_token")
-  createdAt     DateTime          @default(now()) @map("created_at")
-  updatedAt     DateTime          @updatedAt @map("updated_at")
-  lombas        PesertaLomba[]
-  beasiswas     PesertaBeasiswa[]
-  talks         PesertaTalk[]
-  bootcamps     PesertaBootcamp[]
-  Lomba         Lomba[]
-  Beasiswa      Beasiswa[]
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  nim               String            @unique
+  password          String
+  nama_lengkap      String
+  prodi             String
+  angkatan          String
+  role              String            @default("member")
+  profilePictureUrl String?           @map("profile_picture_url")
+  rememberToken     String?           @map("remember_token")
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  lombas            PesertaLomba[]
+  beasiswas         PesertaBeasiswa[]
+  talks             PesertaTalk[]
+  bootcamps         PesertaBootcamp[]
+  Lomba             Lomba[]
+  Beasiswa          Beasiswa[]
 }
 
 model Lomba {
@@ -37,6 +38,8 @@ model Lomba {
   batasan_prodi    String?
   tanggal_deadline DateTime
   biaya_daftar     Float?
+  posterUrl        String?          @map("poster_url")
+  documentationUrl String?          @map("documentation_url")
   pemenang_uccd    String?
   pemenang         Member?          @relation(fields: [pemenang_uccd], references: [nim])
   createdAt        DateTime         @default(now()) @map("created_at")
@@ -52,6 +55,8 @@ model Beasiswa {
   batasan_prodi    String?
   tanggal_deadline DateTime
   biaya_daftar     Float?
+  posterUrl        String?           @map("poster_url")
+  documentationUrl String?           @map("documentation_url")
   penerima_uccd    String?
   penerima         Member?           @relation(fields: [penerima_uccd], references: [nim])
   createdAt        DateTime          @default(now()) @map("created_at")
@@ -65,6 +70,8 @@ model Talk {
   penyelenggara       String
   tanggal_pelaksanaan DateTime
   biaya_daftar        Float?
+  posterUrl           String?       @map("poster_url")
+  documentationUrl    String?       @map("documentation_url")
   feedback_member     String?
   createdAt           DateTime      @default(now()) @map("created_at")
   updatedAt           DateTime      @updatedAt @map("updated_at")
@@ -77,6 +84,8 @@ model Bootcamp {
   penyelenggara    String
   tanggal_deadline DateTime
   biaya_daftar     Float?
+  posterUrl        String?           @map("poster_url")
+  documentationUrl String?           @map("documentation_url")
   createdAt        DateTime          @default(now()) @map("created_at")
   updatedAt        DateTime          @updatedAt @map("updated_at")
   pesertas         PesertaBootcamp[]
