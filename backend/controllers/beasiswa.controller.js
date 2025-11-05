@@ -91,3 +91,28 @@ exports.getBeasiswaPeserta = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Upload beasiswa poster
+// @route   POST /api/beasiswas/:id/poster
+// @access  Private/Admin
+exports.uploadBeasiswaPoster = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const posterUrl = req.file.location; // URL from Cloudflare R2
+
+    const updatedBeasiswa = await prisma.beasiswa.update({
+      where: { id: req.params.id },
+      data: { posterUrl: posterUrl },
+    });
+
+    res.status(200).json({
+      message: 'Beasiswa poster uploaded successfully',
+      posterUrl: updatedBeasiswa.posterUrl,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};

@@ -84,3 +84,28 @@ exports.getBootcampPeserta = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Upload bootcamp poster
+// @route   POST /api/bootcamps/:id/poster
+// @access  Private/Admin
+exports.uploadBootcampPoster = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const posterUrl = req.file.location; // URL from Cloudflare R2
+
+    const updatedBootcamp = await prisma.bootcamp.update({
+      where: { id: req.params.id },
+      data: { posterUrl: posterUrl },
+    });
+
+    res.status(200).json({
+      message: 'Bootcamp poster uploaded successfully',
+      posterUrl: updatedBootcamp.posterUrl,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};

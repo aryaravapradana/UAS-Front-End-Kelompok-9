@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../utils/upload.js');
 const {
   getProfile,
   updateProfile,
@@ -11,12 +12,14 @@ const {
   getMemberBeasiswasForAdmin,
   getMemberTalksForAdmin,
   getMemberBootcampsForAdmin,
+  uploadProfilePicture,
 } = require('../controllers/user.controller.js');
 const auth = require('../middleware/auth.middleware.js');
 const admin = require('../middleware/admin.middleware.js');
 
 // Member-specific routes
 router.route('/profile').get(auth, getProfile).put(auth, updateProfile);
+router.route('/profile/picture').post(auth, upload.single('profilePicture'), uploadProfilePicture);
 
 // Admin-only user management routes
 router.route('/users').get(auth, admin, getAllUsers);

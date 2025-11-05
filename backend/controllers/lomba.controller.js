@@ -101,3 +101,28 @@ exports.getLombaPeserta = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Upload lomba poster
+// @route   POST /api/lombas/:id/poster
+// @access  Private/Admin
+exports.uploadLombaPoster = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const posterUrl = req.file.location; // URL from Cloudflare R2
+
+    const updatedLomba = await prisma.lomba.update({
+      where: { id: req.params.id },
+      data: { posterUrl: posterUrl },
+    });
+
+    res.status(200).json({
+      message: 'Lomba poster uploaded successfully',
+      posterUrl: updatedLomba.posterUrl,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};

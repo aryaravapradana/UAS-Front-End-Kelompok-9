@@ -85,3 +85,28 @@ exports.getTalkPeserta = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Upload talk poster
+// @route   POST /api/talks/:id/poster
+// @access  Private/Admin
+exports.uploadTalkPoster = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const posterUrl = req.file.location; // URL from Cloudflare R2
+
+    const updatedTalk = await prisma.talk.update({
+      where: { id: req.params.id },
+      data: { posterUrl: posterUrl },
+    });
+
+    res.status(200).json({
+      message: 'Talk poster uploaded successfully',
+      posterUrl: updatedTalk.posterUrl,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
