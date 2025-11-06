@@ -80,3 +80,17 @@
 .navLink:hover::after {
   width: 100%;
 }
+
+.navLink.active {
+  color: #ffffff;
+  cursor: default;
+  pointer-events: none;
+}
+
+.navLink.active::after {
+  width: 100%;
+}
+
+.navLink.active:hover {
+  color: #ffffff;
+}

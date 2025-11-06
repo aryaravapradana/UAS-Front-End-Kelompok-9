@@ -1,7 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import { useTransition } from '../context/TransitionContext';
 
 async function getBeasiswa() {
-  // Corrected API endpoint and port
   const res = await fetch('http://127.0.0.1:3001/api/beasiswas', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to fetch data from backend');
@@ -9,8 +12,32 @@ async function getBeasiswa() {
   return res.json();
 }
 
-export default async function BeasiswaPage() {
-  const data = await getBeasiswa();
+export default function BeasiswaPage() {
+  const [data, setData] = useState(null);
+  const { endTransition } = useTransition();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const beasiswaData = await getBeasiswa();
+        setData(beasiswaData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        endTransition();
+      }
+    };
+    fetchData();
+  }, [endTransition]);
+
+  if (!data) {
+    return (
+      <div>
+        <Header />
+        {/* Render nothing or a minimal loader, the curtain is covering the screen */}
+      </div>
+    );
+  }
 
   return (
     <div>

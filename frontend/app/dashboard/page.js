@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
+import { useTransition } from '../context/TransitionContext';
 
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
@@ -15,62 +16,64 @@ const DashboardPage = () => {
   const [error, setError] = useState('');
   const router = useRouter();
   const fileInputRef = useRef(null);
+  const { endTransition } = useTransition();
 
-  const fetchData = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
-
-    const headers = { 'Authorization': `Bearer ${token}` };
-
-    try {
-      setLoading(true);
-      const [profileRes, lombasRes, beasiswasRes, talksRes, bootcampsRes] = await Promise.all([
-        fetch('http://localhost:3001/api/profile', { headers }),
-        fetch('http://localhost:3001/api/profile/lombas', { headers }),
-        fetch('http://localhost:3001/api/profile/beasiswas', { headers }),
-        fetch('http://localhost:3001/api/profile/talks', { headers }),
-        fetch('http://localhost:3001/api/profile/bootcamps', { headers })
-      ]);
-
-      if (profileRes.status === 401) {
-        localStorage.removeItem('token');
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
         router.push('/login');
         return;
       }
 
-      if (!profileRes.ok) throw new Error('Gagal mengambil data profil');
-      
-      const profileData = await profileRes.json();
-      setUser(profileData);
+      const headers = { 'Authorization': `Bearer ${token}` };
 
-      const eventPromises = [lombasRes, beasiswasRes, talksRes, bootcampsRes];
-      const eventData = await Promise.all(eventPromises.map(res => res.ok ? res.json() : []));
+      try {
+        setLoading(true);
+        const [profileRes, lombasRes, beasiswasRes, talksRes, bootcampsRes] = await Promise.all([
+          fetch('http://localhost:3001/api/profile', { headers }),
+          fetch('http://localhost:3001/api/profile/lombas', { headers }),
+          fetch('http://localhost:3001/api/profile/beasiswas', { headers }),
+          fetch('http://localhost:3001/api/profile/talks', { headers }),
+          fetch('http://localhost:3001/api/profile/bootcamps', { headers })
+        ]);
 
-      const [lombas, beasiswas, talks, bootcamps] = eventData;
+        if (profileRes.status === 401) {
+          localStorage.removeItem('token');
+          router.push('/login');
+          return;
+        }
 
-      const combinedEvents = [
-        ...(lombas || []).map(item => ({ ...(item.lomba || {}), type: 'Lomba', date: (item.lomba || {}).tanggal_deadline })),
-        ...(beasiswas || []).map(item => ({ ...(item.beasiswa || {}), type: 'Beasiswa', date: (item.beasiswa || {}).tanggal_deadline })),
-        ...(talks || []).map(item => ({ ...(item.talk || {}), type: 'Talk', date: (item.talk || {}).tanggal_pelaksanaan })),
-        ...(bootcamps || []).map(item => ({ ...(item.bootcamp || {}), type: 'Bootcamp', date: (item.bootcamp || {}).tanggal_deadline }))
-      ].filter(event => event.id);
+        if (!profileRes.ok) throw new Error('Gagal mengambil data profil');
+        
+        const profileData = await profileRes.json();
+        setUser(profileData);
 
-      combinedEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
-      setEvents(combinedEvents);
+        const eventPromises = [lombasRes, beasiswasRes, talksRes, bootcampsRes];
+        const eventData = await Promise.all(eventPromises.map(res => res.ok ? res.json() : []));
 
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        const [lombas, beasiswas, talks, bootcamps] = eventData;
 
-  useEffect(() => {
+        const combinedEvents = [
+          ...(lombas || []).map(item => ({ ...(item.lomba || {}), type: 'Lomba', date: (item.lomba || {}).tanggal_deadline })),
+          ...(beasiswas || []).map(item => ({ ...(item.beasiswa || {}), type: 'Beasiswa', date: (item.beasiswa || {}).tanggal_deadline })),
+          ...(talks || []).map(item => ({ ...(item.talk || {}), type: 'Talk', date: (item.talk || {}).tanggal_pelaksanaan })),
+          ...(bootcamps || []).map(item => ({ ...(item.bootcamp || {}), type: 'Bootcamp', date: (item.bootcamp || {}).tanggal_deadline }))
+        ].filter(event => event.id);
+
+        combinedEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setEvents(combinedEvents);
+
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+        endTransition(); // End transition after all data is fetched
+      }
+    };
+
     fetchData();
-  }, [router]);
+  }, [router, endTransition]);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -90,7 +93,12 @@ const DashboardPage = () => {
       if (!res.ok) throw new Error('Gagal mengunggah gambar');
 
       // Refresh data to show the new picture
-      fetchData();
+      // Re-fetch data without reloading the page
+      const profileRes = await fetch('http://localhost:3001/api/profile', { headers: { 'Authorization': `Bearer ${token}` } });
+      if (profileRes.ok) {
+        const profileData = await profileRes.json();
+        setUser(profileData);
+      }
 
     } catch (err) {
       setError(err.message);
@@ -104,9 +112,9 @@ const DashboardPage = () => {
 
   if (loading) {
     return (
-        <div className={styles.loadingState}>
-            <div className={styles.spinner}></div>
-            <p>Loading Dashboard...</p>
+        <div className={styles.main}>
+            <Header />
+            {/* The curtain will cover this part, so no need for a visible loader */}
         </div>
     );
   }

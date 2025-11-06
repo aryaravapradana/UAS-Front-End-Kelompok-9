@@ -1,5 +1,7 @@
 import { Poppins, Montserrat } from 'next/font/google'
 import './globals.css'
+import { TransitionProvider } from './context/TransitionContext'
+import PageTransition from './components/PageTransition'
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -48,7 +50,10 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={poppins.className} suppressHydrationWarning={true}>
-        {children}
+        <TransitionProvider>
+          <PageTransition />
+          {children}
+        </TransitionProvider>
         
         <script 
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 

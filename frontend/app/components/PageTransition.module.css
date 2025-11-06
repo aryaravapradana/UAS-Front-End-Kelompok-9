@@ -1,0 +1,28 @@
+
+.curtain {
+  position: fixed;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background-color: #1a1a1a;
+  z-index: 9999;
+  transition: transform 0.5s ease-in-out;
+}
+
+.left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.right {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.left.closed {
+  transform: translateX(0);
+}
+
+.right.closed {
+  transform: translateX(0);
+}
