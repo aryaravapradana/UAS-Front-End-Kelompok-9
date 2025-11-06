@@ -32,7 +32,7 @@ export default async function LombaPage() {
             </thead>
             <tbody>
               {data.map((lomba) => (
-                <tr key={lomba.id}> {/* Use unique id for key */}
+                <tr key={lomba.id}>
                   <td>{lomba.nama_lomba}</td>
                   <td>{lomba.penyelenggara}</td>
                   <td>{lomba.batasan_tahun}</td>
