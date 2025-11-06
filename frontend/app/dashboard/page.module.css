@@ -202,3 +202,66 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.profilePictureContainer {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.profilePictureContainer:hover .profilePicture {
+  filter: brightness(0.7);
+}
+
+.editIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profilePictureContainer:hover .editIcon {
+  opacity: 1;
+}
+
+.accountActions {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.logoutButton {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logoutButton:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
