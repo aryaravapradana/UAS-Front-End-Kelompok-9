@@ -1,5 +1,7 @@
 
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Header.module.css';
@@ -7,6 +9,13 @@ import LoginButton from './LoginButton';
 import ProfileButton from './ProfileButton';
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
     <header className={styles.navbar}>
       <div className="container d-flex justify-content-between align-items-center">
@@ -31,8 +40,8 @@ const Header = () => {
           <Link href="/dashboard" className={styles.navLink}>Dashboard</Link>
         </nav>
         <div className="d-flex align-items-center gap-3">
-          <LoginButton />
-          <ProfileButton />
+          {!isLoggedIn && <LoginButton />}
+          {isLoggedIn && <ProfileButton />}
         </div>
       </div>
     </header>

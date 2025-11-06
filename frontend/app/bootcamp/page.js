@@ -29,7 +29,7 @@ export default async function BootcampPage() {
             </thead>
             <tbody>
               {data.map((bootcamp) => (
-                <tr key={bootcamp.id}> {/* Use unique id for key */}
+                <tr key={bootcamp.id}>
                   <td>{bootcamp.nama_bootcamp}</td>
                   <td>{bootcamp.penyelenggara}</td>
                   <td>{new Date(bootcamp.tanggal_deadline).toLocaleDateString()}</td>

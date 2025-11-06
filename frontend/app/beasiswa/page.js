@@ -32,7 +32,7 @@ export default async function BeasiswaPage() {
             </thead>
             <tbody>
               {data.map((beasiswa) => (
-                <tr key={beasiswa.id}> {/* Use unique id for key */}
+                <tr key={beasiswa.id}>
                   <td>{beasiswa.nama_beasiswa}</td>
                   <td>{beasiswa.penyelenggara}</td>
                   <td>{beasiswa.batasan_tahun}</td>
