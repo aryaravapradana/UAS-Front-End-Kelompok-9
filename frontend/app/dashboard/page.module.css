@@ -1,98 +1,204 @@
+/* Inherit main styles from the homepage */
+.main {
+  min-height: 100vh;
+  background: #000;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 2rem 4rem; /* Padding top for fixed header */
 }
 
-.title {
+/* Hero Welcome Section */
+.heroSection {
   text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-}
-
-.profileCard {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 40px;
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.profilePictureContainer {
-  flex-shrink: 0;
+  padding: 2rem 0 4rem;
 }
 
 .profilePicture {
-  width: 120px;
-  height: 120px;
   border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.9); /* ACCENT CHANGED TO WHITE */
+  margin-bottom: 1.5rem;
   object-fit: cover;
-  border: 3px solid #007bff;
 }
 
-.profileInfo p {
-  margin: 5px 0;
-  color: #555;
-  font-size: 1.1em;
+.heroTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(180deg, #ffffff 0%, #e6e6e6 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.profileInfo strong {
-  color: #333;
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
 }
 
-.uploadSection {
-  border-top: 1px solid #eee;
-  padding-top: 30px;
-  text-align: center;
+/* Grid for Content Cards */
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
 }
 
-.uploadSection h2 {
-  color: #333;
-  margin-bottom: 20px;
+/* Card Style (mimicking .featureCard) */
+.contentCard {
+  background: #111;
+  border-radius: 20px;
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-.uploadSection input[type="file"] {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f0f0f0;
+.contentCard:hover {
+  border-color: rgba(255, 255, 255, 0.5); /* ACCENT CHANGED TO WHITE */
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
 }
 
-.uploadSection button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+.cardTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8); /* ACCENT CHANGED TO WHITE */
+  padding-bottom: 0.75rem;
+  display: inline-block;
+}
+
+/* Profile Card Specifics */
+.profileDetails {
+  font-size: 1.1rem;
+}
+
+.detailItem {
+  margin-bottom: 1.2rem;
+  color: #ccc;
+}
+
+.detailItem strong {
+  color: #fff;
+  margin-right: 0.75rem;
+}
+
+.editButton {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  padding: 0.7rem 2rem;
+  border-radius: 25px;
   cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
 }
 
-.uploadSection button:hover {
-  background-color: #0056b3;
+.editButton:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
 }
 
-.uploadSection button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+/* Events Card Specifics */
+.eventsCard {
+  max-height: 500px; /* Set a max height for scrollability */
+  display: flex;
+  flex-direction: column;
 }
 
-.uploadMessage {
-  margin-top: 15px;
-  font-size: 0.9em;
-  color: #28a745;
+.eventList {
+  overflow-y: auto; /* Make list scrollable if it overflows */
+  padding-right: 1rem; /* Add some space for the scrollbar */
 }
 
-.uploadMessage.error {
-  color: #dc3545;
+.noEvents {
+  color: #888;
+}
+
+.eventItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #222;
+}
+
+.eventItem:last-child {
+  border-bottom: none;
+}
+
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.eventTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #eee;
+}
+
+.eventDate {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.eventType {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.bootcamp { background-color: #007bff; }
+.lomba { background-color: #28a745; }
+.talk { background-color: #ffc107; color: #333; }
+.beasiswa { background-color: #dc3545; }
+
+/* Loading and Error States */
+.loadingState, .errorState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #ccc;
+  background-color: #000;
+}
+
+.errorState {
+  color: #d9534f;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #fff; /* ACCENT CHANGED TO WHITE */
+  margin-bottom: 1rem;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

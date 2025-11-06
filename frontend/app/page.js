@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
-import LoginButton from "./components/LoginButton";
-import ProfileButton from "./components/ProfileButton";
+import Header from "./components/Header";
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
@@ -41,41 +40,7 @@ export default function Home() {
         </div>
       )}
 
-      <nav className={styles.navbar}>
-        <div className="container-fluid px-4 px-lg-5">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center gap-3" style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
-              <div className={styles.logoContainer}>
-                <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.logo3D} />
-              </div>
-              <span className={styles.logoText}>UCCD</span>
-            </div>
-
-            <div className="d-none d-lg-flex gap-4 align-items-center">
-              <a href="/home" className={styles.navLink}>Home</a>
-              <a href="/bootcamp" className={styles.navLink}>Bootcamp</a>
-              <a href="/insight" className={styles.navLink}>Insight</a>
-              <a href="/glory" className={styles.navLink}>Glory</a>
-              <a href="/talks" className={styles.navLink}>Talks</a>
-              <a href="/info" className={styles.navLink}>Info</a>
-            </div>
-
-            <div className="d-flex align-items-center gap-3">
-              {isLoggedIn ? (
-                <>
-                  <ProfileButton />
-                  <button onClick={handleLogout} className={styles.btnPrimary}>Logout</button>
-                </>
-              ) : (
-                <>
-                  <button className={`${styles.btnOutline} d-none d-md-block`}>Get Started</button>
-                  <LoginButton />
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       <section className={styles.heroSection}>
         <div className="container" style={{ position: 'relative', zIndex: 3 }}>
