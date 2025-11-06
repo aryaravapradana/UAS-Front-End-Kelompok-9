@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 import Header from "./components/Header";
+import { useTransition } from './context/TransitionContext';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
@@ -11,8 +12,11 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { endTransition } = useTransition();
 
   useEffect(() => {
+    endTransition(); // End transition on mount for static pages
+
     const message = searchParams.get('message');
     if (message === 'login-success') {
       setSuccessMessage('Login berhasil! Selamat datang di UCCD.');
@@ -23,7 +27,7 @@ export default function Home() {
     // Check for token to determine login status
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-  }, [searchParams]);
+  }, [searchParams, endTransition]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

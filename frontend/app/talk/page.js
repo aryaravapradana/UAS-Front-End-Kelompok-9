@@ -1,7 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import { useTransition } from '../context/TransitionContext';
 
 async function getTalk() {
-  // Corrected API endpoint and port
   const res = await fetch('http://127.0.0.1:3001/api/talks', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to fetch data from backend');
@@ -9,8 +12,31 @@ async function getTalk() {
   return res.json();
 }
 
-export default async function TalkPage() {
-  const data = await getTalk();
+export default function TalkPage() {
+  const [data, setData] = useState(null);
+  const { endTransition } = useTransition();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const talkData = await getTalk();
+        setData(talkData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        endTransition();
+      }
+    };
+    fetchData();
+  }, [endTransition]);
+
+  if (!data) {
+    return (
+      <div>
+        <Header />
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import TransitionLink from './TransitionLink';
 import Image from 'next/image';
 import styles from './Header.module.css';
 import LoginButton from './LoginButton';
@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <header className={styles.navbar}>
       <div className="container d-flex justify-content-between align-items-center">
-        <Link href="/" className="d-flex align-items-center text-decoration-none">
+        <TransitionLink href="/" className="d-flex align-items-center text-decoration-none">
           <div className={styles.logoContainer}>
             <Image
               src="/uccd-logo@2x.png"
@@ -30,14 +30,14 @@ const Header = () => {
             />
           </div>
           <span className={styles.logoText}>UCCD</span>
-        </Link>
+        </TransitionLink>
         <nav className="d-none d-lg-flex align-items-center gap-4">
-          <Link href="/" className={styles.navLink}>Home</Link>
-          <Link href="/beasiswa" className={styles.navLink}>Beasiswa</Link>
-          <Link href="/lomba" className={styles.navLink}>Lomba</Link>
-          <Link href="/bootcamp" className={styles.navLink}>Bootcamp</Link>
-          <Link href="/talk" className={styles.navLink}>Talks</Link>
-          <Link href="/dashboard" className={styles.navLink}>Dashboard</Link>
+          <TransitionLink href="/" className={styles.navLink}>Home</TransitionLink>
+          <TransitionLink href="/beasiswa" className={styles.navLink}>Beasiswa</TransitionLink>
+          <TransitionLink href="/lomba" className={styles.navLink}>Lomba</TransitionLink>
+          <TransitionLink href="/bootcamp" className={styles.navLink}>Bootcamp</TransitionLink>
+          <TransitionLink href="/talk" className={styles.navLink}>Talks</TransitionLink>
+          <TransitionLink href="/dashboard" className={styles.navLink}>Dashboard</TransitionLink>
         </nav>
         <div className="d-flex align-items-center gap-3">
           {!isLoggedIn && <LoginButton />}
