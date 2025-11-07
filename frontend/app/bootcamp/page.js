@@ -71,7 +71,7 @@ function HeroSection() {
       <div className={styles.heroContent}>
         <div className={styles.heroText}>
           <h1>A Learning Experience That<br />Transforms Potential into Skill</h1>
-          <p>An intensive learning program designed by UCCD to help IT students gain real-world experience in UI Design,<br />Web Development, and Data Science guided by mentors and industry experts.</p>
+          <p>An intensive learning program designed by UCCD to help FTI students gain real-world experience in UI Design,<br />Web Development, and Data Science guided by mentors and industry experts.</p>
           <div className={styles.heroButtons}>
             <button className={styles.btnApply}>Apply Now</button>
             <button className={styles.btnExplore}>Explore Now</button>
@@ -90,7 +90,9 @@ function WhatIsSection() {
         <div className={styles.whatIsContent}>
           <div className={styles.whatIsText}>
             <h2>What is<br />UCCD Bootcamp?</h2>
-            <p>UCCD Bootcamp is a structured training program focusing on hands-on projects and mentorship. Participants are guided through real cases in the tech industry to help them develop both technical and problem-solving skills.</p>
+            <p>
+              UCCD Bootcamp is a structured <strong>training program</strong> focusing on hands-on projects and mentorship. Participants are guided through real cases in the tech industry to help them develop both technical and problem-solving skills.
+            </p>
           </div>
           <div className={styles.whatIsImage}>
             <Image 
@@ -204,62 +206,68 @@ function WhyJoinSection() {
     {
       number: '01',
       icon: '/bootcamp/learning_by_doing_icon.png',
-      title: 'Learn By Doing',
-      description: 'Gain hands-on experience with live projects guided by mentors'
+      title: 'Learn by Doing',
+      description: 'Gain real experience through hands-on projects guided by mentors.'
     },
     {
       number: '02',
       icon: '/bootcamp/mentor_support_icon.png',
       title: 'Mentor Support',
-      description: 'Get continuous guidance from industry professionals'
+      description: 'Receive personal guidance to help you learn, build, and achieve your goals.'
     },
     {
       number: '03',
-      icon: '/bootcamp/strong_porto_icon.png',
-      title: 'Build a Strong Portfolio',
-      description: 'Work on real-world projects to showcase in your portfolio'
+      icon: '/bootcamp/career_ready_icon.png',
+      title: 'Career Ready',
+      description: 'Develop essential digital skills aligned with today\'s industry demands.'
     },
     {
       number: '04',
-      icon: '/bootcamp/career_ready_icon.png',
-      title: 'Become Career Ready',
-      description: 'Acquire skills and experience that tech companies are looking for'
+      icon: '/bootcamp/strong_porto_icon.png',
+      title: 'Strong Portfolio',
+      description: 'Build impactful projects that demonstrate your skills and creativity.'
     }
   ];
 
   return (
     <section className={styles.whyJoinSection}>
-      <div className={styles.container}>
-        <div className={styles.whyJoinContent}>
-          <div className={styles.whyJoinImage}>
-            <Image 
-              src="/bootcamp/bootcamp.png" 
-              alt="Students" 
-              width={450}
-              height={550}
-              className={styles.whyImg}
-              style={{ objectFit: 'cover' }}
-            />
+      <div className="container-fluid">
+        <div className="row align-items-center">
+          <div className="col-lg-5">
+            <div className={styles.leftContent}>
+              <h2 className={styles.mainTitle}>
+                Why You Should<br />
+                <span className={styles.gradientText}>Join the Bootcamp</span>
+              </h2>
+              <div className={styles.whyJoinImage}>
+                <Image 
+                  src="/bootcamp/bootcamp.png" 
+                  alt="Students Celebrating" 
+                  width={400}
+                  height={300}
+                  className={`${styles.whyImg} img-fluid`}
+                />
+              </div>
+            </div>
           </div>
-          <div className={styles.whyJoinCards}>
-            <h2>Why You Should<br />Join the Bootcamp</h2>
-            
-            <div className={styles.reasonCardsGrid}>
+          
+          <div className="col-lg-7">
+            <div className="row g-3">
               {reasons.map((reason, index) => (
-                <div key={index} className={styles.reasonCard}>
-                  <div className={styles.reasonNumber}>{reason.number}</div>
-                  <div className={styles.reasonContent}>
-                    <div className={styles.reasonIconWrapper}>
-                      <Image 
-                        src={reason.icon} 
-                        alt={reason.title}
-                        width={40}
-                        height={40}
-                      />
-                    </div>
-                    <div className={styles.reasonText}>
+                <div key={index} className="col-md-6">
+                  <div className={styles.reasonCard}>
+                    <div className={styles.reasonNumber}>{reason.number}</div>
+                    <div className={styles.reasonContent}>
+                      <div className={styles.reasonIconWrapper}>
+                        <Image 
+                          src={reason.icon} 
+                          alt={reason.title}
+                          width={80}
+                          height={80}
+                        />
+                      </div>
+                      <p className={styles.reasonDescription}>{reason.description}</p>
                       <h3>{reason.title}</h3>
-                      <p>{reason.description}</p>
                     </div>
                   </div>
                 </div>
