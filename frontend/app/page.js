@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 import Header from "./components/Header";
 import { useTransition } from './context/TransitionContext';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
@@ -83,7 +85,7 @@ export default function Home() {
 
             <div className={`col-lg-6 col-md-12 text-center ${styles.logoBlock}`}>
               <div className={styles.logoTilt}>
-                <img src="/pc-homepage.png" alt="UCCD Logo" className={styles.uccdLogo} width={520} height={520} style={{ objectFit: "contain" }} />
+                <Image src="/pc-homepage.png" alt="UCCD Logo" width={520} height={520} className={styles.uccdLogo} style={{ objectFit: "contain" }} />
               </div>
             </div>
           </div>
@@ -104,7 +106,7 @@ export default function Home() {
           <div className="row gy-4 justify-content-center" style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/bootcamp')}>
-                <img src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
+                <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
                 <h3>BOOTCAMP</h3>
                 <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
               </div>
@@ -112,7 +114,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/insight')}>
-                <img src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
+                <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
                 <h3>INSIGHT</h3>
                 <p>Articles and discussions on current issues in technology and digital developments.</p>
               </div>
@@ -120,7 +122,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/glory')}>
-                <img src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
                 <h3>GLORY</h3>
                 <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
               </div>
@@ -128,7 +130,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/info')}>
-                <img src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+                <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
                 <h3>INFO</h3>
                 <p>Updates on tech competitions and scholarships to support student growth.</p>
               </div>
@@ -136,7 +138,7 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-6">
               <div className={`${styles.featureCard} shadow-sm`} onClick={() => router.push('/talks')}>
-                <img src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+                <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
                 <h3>TALKS</h3>
                 <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
               </div>
@@ -151,7 +153,7 @@ export default function Home() {
             <div className="col-lg-4 col-md-6">
               <div className="d-flex align-items-start gap-3 mb-3">
                 <div className={styles.footerLogo}>
-                  <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.footerLogoImg} />
+                  <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} />
                 </div>
                 <div>
                   <span className={styles.footerLogoText}>UCCD</span>
@@ -191,12 +193,12 @@ export default function Home() {
             <div className="col-lg-4 col-md-3">
               <h4 className={styles.footerTitle}>About</h4>
               <ul className="list-unstyled">
-                <li className="mb-2"><a href="/home" className={styles.footerLink}>Home</a></li>
-                <li className="mb-2"><a href="/bootcamp" className={styles.footerLink}>Bootcamp</a></li>
-                <li className="mb-2"><a href="/insight" className={styles.footerLink}>Insight</a></li>
-                <li className="mb-2"><a href="/glory" className={styles.footerLink}>Glory</a></li>
-                <li className="mb-2"><a href="/talks" className={styles.footerLink}>Talks</a></li>
-                <li className="mb-2"><a href="/info" className={styles.footerLink}>Info</a></li>
+                <li className="mb-2"><Link href="/" className={styles.footerLink}>Home</Link></li>
+                <li className="mb-2"><Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link></li>
+                <li className="mb-2"><Link href="/insight" className={styles.footerLink}>Insight</Link></li>
+                <li className="mb-2"><Link href="/glory" className={styles.footerLink}>Glory</Link></li>
+                <li className="mb-2"><Link href="/talks" className={styles.footerLink}>Talks</Link></li>
+                <li className="mb-2"><Link href="/info" className={styles.footerLink}>Info</Link></li>
               </ul>
             </div>
           </div>

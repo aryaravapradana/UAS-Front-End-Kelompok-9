@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import Image from 'next/image';
 import styles from './login.module.css';
 
 export default function LoginPage() {
@@ -66,14 +66,14 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src="/uccd-logo@2x.png" alt="UCCD" className={styles.logoIconImg} />
+        <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
         <span>UCCD</span>
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formHeader}>
           <div className={styles.formIcon}>
-            <img src="/uccd-logo@2x.png" alt="Code" className={styles.formIconImage} />
+            <Image src="/uccd-logo@2x.png" alt="Code" width={40} height={40} className={styles.formIconImage} />
           </div>
           <h1 className={styles.title}>Sign In</h1>
           <p className={styles.subtitle}>Please enter your details to sign in</p>

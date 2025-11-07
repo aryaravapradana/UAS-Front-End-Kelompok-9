@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function ProfileButton() {
@@ -73,12 +73,12 @@ export default function ProfileButton() {
         e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
       }}
     >
-      <img
+      <Image
         src={user.profilePictureUrl || '/default-profile.png'} // Use a default image if none
         alt="Profile"
+        width={30}
+        height={30}
         style={{
-          width: '30px',
-          height: '30px',
           borderRadius: '50%',
           objectFit: 'cover',
           marginRight: '8px',
