@@ -1,0 +1,946 @@
+/* ==================== BOOTCAMP PAGE ==================== */
+.bootcampPage {
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* ==================== NAVBAR ==================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  padding: 0.9rem 0;
+}
+
+.navContainer {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 1001;
+}
+
+.navLogo span {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.navLinks a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navLinks a:hover {
+  color: #C084FC;
+}
+
+.navButtons {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.btnLogin {
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  padding: 0.5rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btnLogin:hover {
+  border-color: #A855F7;
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.btnStarted {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 0.5rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btnStarted:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+  z-index: 1001;
+  width: 28px;
+  height: 24px;
+  justify-content: center;
+}
+
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* Mobile (320px - 767px) */
+@media (max-width: 767px) {
+  .navContainer {
+    padding: 0 1.5rem;
+  }
+  
+  .navLogo span {
+    font-size: 1.2rem;
+  }
+  
+  .navLinks {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 300px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(139, 92, 246, 0.2);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    transition: right 0.3s ease;
+    padding: 2rem;
+  }
+  
+  .navLinks.active {
+    right: 0;
+  }
+  
+  .navLinks a {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .hamburger {
+    display: flex;
+  }
+  
+  .navButtons {
+    display: none;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navContainer {
+    padding: 0 2rem;
+  }
+  
+  .navLogo span {
+    font-size: 1.1rem;
+  }
+  
+  .navLinks {
+    gap: 1.2rem;
+  }
+  
+  .navLinks a {
+    font-size: 0.8rem;
+  }
+  
+  .btnLogin,
+  .btnStarted {
+    padding: 0.4rem 1.1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1920px) {
+  .navContainer {
+    max-width: 1600px;
+  }
+  
+  .navLogo span {
+    font-size: 1.2rem;
+  }
+  
+  .navLinks a {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==================== HERO SECTION ==================== */
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/hero_section.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.heroBackground {
+  display: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  width: 100%;
+}
+
+.heroText {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.heroText h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.3rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.heroText p {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 1.8rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 0.9rem;
+  justify-content: center;
+}
+
+.btnApply {
+  background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 2.3rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btnApply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+}
+
+.btnExplore {
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  padding: 0.85rem 2.3rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btnExplore:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+/* ==================== WHAT IS SECTION ==================== */
+.whatIsSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/About.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.whatIsBackground {
+  display: none;
+}
+
+.whatIsContent {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  justify-content: space-between;
+}
+
+.whatIsText {
+  flex: 0 0 42%;
+}
+
+.whatIsText h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 1.1rem;
+  color: #E9D5FF;
+  letter-spacing: -0.01em;
+}
+
+.whatIsText p {
+  font-size: 0.88rem;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.whatIsImage {
+  flex: 0 0 52%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bootcampImg {
+  border-radius: 18px;
+  width: 100%;
+  height: auto;
+  max-width: 550px;
+  box-shadow: 0 20px 50px rgba(168, 85, 247, 0.3);
+}
+
+/* ==================== CHOOSE TRACK SECTION ==================== */
+.chooseTrackSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/choose.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.chooseBackground {
+  display: none;
+}
+
+.sectionTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.55rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.sectionSubtitle {
+  font-size: 0.92rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 2.3rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.trackFilter {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2.8rem;
+}
+
+.trackFilter button {
+  background: rgba(0, 0, 0, 0.55);
+  color: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  padding: 0.58rem 1.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.trackFilter button.active {
+  background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
+  color: #ffffff;
+  border: none;
+}
+
+.trackFilter button:not(.active):hover {
+  background: rgba(139, 92, 246, 0.16);
+}
+
+.trackCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+.trackCard {
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.28) 0%, rgba(74, 29, 150, 0.22) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.trackCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(168, 85, 247, 0.52);
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.32);
+}
+
+.trackImage {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+.trackImg {
+  width: 100%;
+  height: 100%;
+}
+
+.trackInfo {
+  padding: 1.4rem;
+}
+
+.trackTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.95rem;
+  gap: 0.8rem;
+}
+
+.trackInfo h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.trackBadge {
+  background: linear-gradient(135deg, #A855F7 0%, #C084FC 100%);
+  color: #ffffff;
+  padding: 0.32rem 0.95rem;
+  border-radius: 18px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.trackDetails {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.trackDetails li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.65rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.82rem;
+}
+
+.trackDetails li:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================== WHY JOIN SECTION ==================== */
+.whyJoinSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/why_you_should_join.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.whyBackground {
+  display: none;
+}
+
+.whyJoinContent {
+  display: flex;
+  gap: 2.8rem;
+  align-items: flex-start;
+  position: relative;
+  z-index: 10;
+}
+
+.whyJoinImage {
+  flex: 0 0 36%;
+}
+
+.whyImg {
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+}
+
+.whyJoinCards {
+  flex: 1;
+}
+
+.whyJoinCards h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 1.8rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
+}
+
+.reasonCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.95rem;
+}
+
+.reasonCard {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.38) 0%, rgba(88, 28, 135, 0.32) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.38);
+  border-radius: 14px;
+  padding: 1.4rem;
+  position: relative;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+}
+
+.reasonCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.52);
+  box-shadow: 0 10px 28px rgba(139, 92, 246, 0.28);
+}
+
+.reasonNumber {
+  position: absolute;
+  top: 1.15rem;
+  right: 1.15rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: rgba(139, 92, 246, 0.42);
+  line-height: 1;
+}
+
+.reasonContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.reasonIconWrapper {
+  width: 40px;
+  height: 40px;
+}
+
+.reasonIconWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.reasonText h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin-bottom: 0.38rem;
+  color: #ffffff;
+}
+
+.reasonText p {
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.52;
+}
+
+/* ==================== KNOW MORE SECTION ==================== */
+.knowMoreSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/get_to_know_more.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.knowMoreBackground {
+  display: none;
+}
+
+.infoCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-top: 2.8rem;
+  position: relative;
+  z-index: 10;
+}
+
+.infoCard {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.32) 0%, rgba(88, 28, 135, 0.26) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  border-radius: 15px;
+  padding: 1.85rem 1.4rem;
+  text-align: center;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.infoCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(168, 85, 247, 0.52);
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.32);
+}
+
+.infoIconWrapper {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+  border-radius: 11px;
+}
+
+.infoCard h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin-bottom: 0.68rem;
+  color: #ffffff;
+}
+
+.infoCard p {
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.62;
+  margin-bottom: 0.95rem;
+}
+
+.infoLink {
+  display: inline-block;
+  color: #C084FC;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.83rem;
+  transition: color 0.3s;
+}
+
+.infoLink:hover {
+  color: #E0B3FF;
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  position: relative;
+  width: 100%;
+  padding: 2.8rem 0 1.4rem;
+  margin: 0;
+  background-color: #000000;
+  background-image: url('/bootcamp/footer.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.footerBackground {
+  display: none;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 3.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footerLeft {
+  flex: 0 0 38%;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+
+.footerLogo span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.footerLeft p {
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.72;
+  font-size: 0.83rem;
+}
+
+.footerRight {
+  display: flex;
+  gap: 3.5rem;
+}
+
+.footerSection h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin-bottom: 0.95rem;
+  color: #ffffff;
+}
+
+.footerSection p,
+.footerSection a {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  margin-bottom: 0.58rem;
+  font-size: 0.83rem;
+  transition: color 0.3s;
+}
+
+.footerSection a:hover {
+  color: #C084FC;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Mobile (320px - 767px) */
+@media (max-width: 767px) {
+  .heroSection,
+  .whatIsSection,
+  .chooseTrackSection,
+  .whyJoinSection,
+  .knowMoreSection,
+  .footer {
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .navLinks { display: none; }
+  
+  .heroText h1 { font-size: 1.8rem; }
+  .heroText p { font-size: 0.85rem; }
+  
+  .heroButtons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  .btnApply,
+  .btnExplore {
+    width: 100%;
+  }
+  
+  .whatIsContent {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .whatIsText,
+  .whatIsImage {
+    flex: 1 1 100%;
+  }
+  
+  .whatIsText h2 { font-size: 1.8rem; }
+  
+  .trackCards { grid-template-columns: 1fr; }
+  .reasonCardsGrid { grid-template-columns: 1fr; }
+  .infoCardsGrid { grid-template-columns: 1fr; }
+  
+  .whyJoinContent {
+    flex-direction: column;
+  }
+  
+  .footerContent {
+    flex-direction: column;
+  }
+  
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .heroSection,
+  .whatIsSection,
+  .chooseTrackSection,
+  .whyJoinSection,
+  .knowMoreSection,
+  .footer {
+    background-size: 100% 100%;
+  }
+  
+  .heroText h1 { font-size: 2.2rem; }
+  .whatIsText h2 { font-size: 2.2rem; }
+  
+  .trackCards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .infoCardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (1024px - 1919px) */
+@media (min-width: 1024px) and (max-width: 1919px) {
+  .heroSection,
+  .whatIsSection,
+  .chooseTrackSection,
+  .whyJoinSection,
+  .knowMoreSection,
+  .footer {
+    background-size: 100% 100%;
+  }
+}
+
+/* Large Desktop (1920px - 2559px) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .heroSection,
+  .whatIsSection,
+  .chooseTrackSection,
+  .whyJoinSection,
+  .knowMoreSection,
+  .footer {
+    background-size: 100% 100%;
+  }
+  
+  .heroContent,
+  .container {
+    max-width: 1600px;
+  }
+  
+  .heroText h1 { font-size: 3.5rem; }
+  .whatIsText h2 { font-size: 3rem; }
+  .sectionTitle { font-size: 2.8rem; }
+}
+
+/* Ultra-wide (2560px+) */
+@media (min-width: 2560px) {
+  .heroSection,
+  .whatIsSection,
+  .chooseTrackSection,
+  .whyJoinSection,
+  .knowMoreSection,
+  .footer {
+    background-size: 100% 100%;
+  }
+  
+  .heroContent,
+  .container {
+    max-width: 2000px;
+  }
+  
+  .heroText h1 { font-size: 4rem; }
+  .whatIsText h2 { font-size: 3.5rem; }
+  .sectionTitle { font-size: 3.2rem; }
+}
