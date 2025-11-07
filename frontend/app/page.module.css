@@ -470,10 +470,12 @@
 
 /* CARD */
 .featureCard {
-  background: #111;
+  background: rgba(94, 94, 94, 0.27);
+  border: 2px solid;
+  border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.53) 0%, rgba(188, 185, 185, 0.53) 47.12%, rgba(255, 255, 255, 0.53) 100%);
+  backdrop-filter: blur(17.399999618530273px);
   border-radius: 20px;
   padding: 2.5rem 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
   height: 100%;

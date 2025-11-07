@@ -1,7 +1,6 @@
 import { Poppins, Montserrat } from 'next/font/google'
 import './globals.css'
 import { TransitionProvider } from './context/TransitionContext'
-import PageTransition from './components/PageTransition'
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -51,7 +50,6 @@ export default function RootLayout({ children }) {
       </head>
       <body className={poppins.className} suppressHydrationWarning={true}>
         <TransitionProvider>
-          <PageTransition />
           {children}
         </TransitionProvider>
         

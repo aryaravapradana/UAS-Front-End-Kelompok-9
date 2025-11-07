@@ -1,21 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import Link from "next/link"; 
 import Image from 'next/image';
 import styles from './bootcamp.module.css';
+import { useRouter } from 'next/navigation';
+import Header from '../components/Header';
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
 
   return (
     <div className={styles.bootcampPage}>
-      <Navbar />
+      <Header />
       <HeroSection />
       <WhatIsSection />
       <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
       <WhyJoinSection />
       <KnowMoreSection />
-      <Footer />
+      <NewFooter />
     </div>
   );
 }
@@ -70,8 +73,13 @@ function HeroSection() {
     <section className={styles.heroSection}>
       <div className={styles.heroContent}>
         <div className={styles.heroText}>
-          <h1>A Learning Experience That<br />Transforms Potential into Skill</h1>
-          <p>An intensive learning program designed by UCCD to help FTI students gain real-world experience in UI Design,<br />Web Development, and Data Science guided by mentors and industry experts.</p>
+          <h1>
+            A Learning Experience That<br />
+            Transforms Potential into Skill
+          </h1>
+          <p>
+            An intensive learning program designed by UCCD to help FTI students gain real-world experience in UI Design, Web Development, and Data Science guided by mentors and industry experts.
+          </p>
           <div className={styles.heroButtons}>
             <button className={styles.btnApply}>Apply Now</button>
             <button className={styles.btnExplore}>Explore Now</button>
@@ -141,8 +149,12 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
 
   return (
     <section className={styles.chooseTrackSection}>
-      <div className={styles.container}>
-        <h2 className={styles.sectionTitle}>→ Choose Your Track ←</h2>
+      <div className="container text-center">
+        <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+          <span className={`${styles.dot} ${styles.dotLeft}`}></span>
+          <h2 className={styles.sectionTitle}>Choose Your Track</h2>
+          <span className={`${styles.dot} ${styles.dotRight}`}></span>
+        </div>
         <p className={styles.sectionSubtitle}>Choose the path that matches your passion and start mastering the digital skills of tomorrow.</p>
         
         <div className={styles.trackFilter}>
@@ -231,7 +243,7 @@ function WhyJoinSection() {
 
   return (
     <section className={styles.whyJoinSection}>
-      <div className="container-fluid">
+      <div className="container text-center">
         <div className="row align-items-center">
           <div className="col-lg-5">
             <div className={styles.leftContent}>
@@ -282,127 +294,127 @@ function WhyJoinSection() {
 
 // ==================== KNOW MORE ====================
 function KnowMoreSection() {
-  const infoCards = [
-    { 
-      icon: 'bootcamp', 
-      title: 'BOOTCAMP', 
-      description: 'Explore all the details about the bootcamp and prepare yourself for success!' 
-    },
-    { 
-      icon: 'insight', 
-      title: 'INSIGHT', 
-      description: 'Explore all the details about the bootcamp and prepare yourself for success!' 
-    },
-    { 
-      icon: 'glory', 
-      title: 'GLORY', 
-      description: 'Explore all the details about the bootcamp and prepare yourself for success!' 
-    },
-    { 
-      icon: 'info', 
-      title: 'INFO', 
-      description: 'Explore all the details about the bootcamp and prepare yourself for success!' 
-    },
-    { 
-      icon: 'talks', 
-      title: 'TALKS', 
-      description: 'Explore all the details about the bootcamp and prepare yourself for success!' 
-    }
-  ];
-
-  const getIcon = (type) => {
-    const icons = {
-      bootcamp: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <rect x="5" y="4" width="14" height="17" rx="2" stroke="white" strokeWidth="1.5" fill="none"/>
-          <rect x="8" y="2" width="8" height="4" rx="1" fill="white"/>
-        </svg>
-      ),
-      insight: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <circle cx="12" cy="8" r="3" fill="white"/>
-          <path d="M12 14C8 14 4 16 4 19V21H20V19C20 16 16 14 12 14Z" fill="white"/>
-        </svg>
-      ),
-      glory: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <path d="M20 7H17L15 4H9L7 7H4C2.9 7 2 7.9 2 9V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V9C22 7.9 21.1 7 20 7ZM12 18C9.24 18 7 15.76 7 13C7 10.24 9.24 8 12 8C14.76 8 17 10.24 17 13C17 15.76 14.76 18 12 18Z" fill="white"/>
-        </svg>
-      ),
-      info: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" fill="none"/>
-          <path d="M12 8V12M12 16H12.01" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-      ),
-      talks: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="white"/>
-        </svg>
-      )
-    };
-    return icons[type];
-  };
-
+    const router = useRouter();
   return (
     <section className={styles.knowMoreSection}>
-      <div className={styles.container}>
-        <h2 className={styles.sectionTitle}>→ Get To Know More ←</h2>
-        <p className={styles.sectionSubtitle}>Get the information you need to best prepare for your bootcamp journey!</p>
-
-        <div className={styles.infoCardsGrid}>
-          {infoCards.map((card, index) => (
-            <div key={index} className={styles.infoCard}>
-              <div className={styles.infoIconWrapper}>
-                {getIcon(card.icon)}
-              </div>
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-              <a href="#" className={styles.infoLink}>Coming Soon</a>
+        <div className="container text-center">
+          <div className="mb-5">
+            <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+              <span className={`${styles.dot} ${styles.dotLeft}`}></span>
+              <h2 className={styles.newSectionTitle}>Get To Know More</h2>
+              <span className={`${styles.dot} ${styles.dotRight}`}></span>
             </div>
-          ))}
+            <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
+          </div>
+
+          <div className={styles.cardGrid}>
+            <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/bootcamp')}>
+              <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
+              <h3>BOOTCAMP</h3>
+              <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
+            </div>
+            <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/insight')}>
+              <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
+              <h3>INSIGHT</h3>
+              <p>Articles and discussions on current issues in technology and digital developments.</p>
+            </div>
+            <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/glory')}>
+              <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+              <h3>GLORY</h3>
+              <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+            </div>
+            <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/info')}>
+              <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+              <h3>INFO</h3>
+              <p>Updates on tech competitions and scholarships to support student growth.</p>
+            </div>
+            <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/talks')}>
+              <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+              <h3>TALKS</h3>
+              <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }
 
 // ==================== FOOTER ====================
-function Footer() {
+function NewFooter() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.container}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerLeft}>
-            <div className={styles.footerLogo}>
-              <Image 
-                src="/uccd-logo@2x.png" 
-                alt="UCCD" 
-                width={24} 
-                height={24}
-              />
-              <span>UCCD</span>
+    <footer className={styles.newFooter}>
+        <div className="container">
+          <div className="row g-5">
+            <div className="col-lg-4 col-md-6">
+              <div className="d-flex align-items-start gap-3 mb-3">
+                <div className={styles.footerLogo}>
+                  <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} />
+                </div>
+                <div>
+                  <span className={styles.footerLogoText}>UCCD</span>
+                  <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
+                    Untar Computer<br />Club Development
+                  </p>
+                </div>
+              </div>
+              <p className={styles.footerText}>
+                UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
+              </p>
             </div>
-            <p>UCCD is a student organization under HIMTI, dedicated to empowering students with skills in UI/UX Design, Web Development, and Game Development.</p>
-          </div>
-          <div className={styles.footerRight}>
-            <div className={styles.footerSection}>
-              <h4>Contact</h4>
-              <p>Email: uccd@example.com</p>
-              <p>Phone: +62 123 4567 890</p>
+
+            <div className="col-lg-4 col-md-3">
+              <h4 className={styles.footerTitle}>Contact</h4>
+              <ul className="list-unstyled">
+              <li className="mb-3">
+                <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
+                  <i className="fas fa-envelope me-2"></i>
+                  uccd@untar.ac.id
+                </a>
+              </li>
+              <li className="mb-3">
+                <a
+                  href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
+                  className={`${styles.footerLink} ${styles.instagramLink}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className={`fab fa-instagram ${styles.instagramIcon} me-2`}></i>
+                  @uccdfti.untar
+                </a>
+              </li>
+            </ul>
             </div>
-            <div className={styles.footerSection}>
-              <h4>About</h4>
-              <a href="#">Home</a>
-              <a href="#">Bootcamp</a>
-              <a href="#">Insight</a>
-              <a href="#">Glory</a>
-              <a href="#">Talks</a>
-              <a href="#">Info</a>
-            </div>
+            
+<div className="col-lg-4 col-md-3">
+  <h4 className={styles.footerTitle}>About</h4>
+  <ul className="list-unstyled">
+    <li className="mb-2">
+      <Link href="/home" className={styles.footerLink}>Home</Link>
+    </li>
+    <li className="mb-2">
+      <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
+    </li>
+    <li className="mb-2">
+      <Link href="/insight" className={styles.footerLink}>Insight</Link>
+    </li>
+    <li className="mb-2">
+      <Link href="/glory" className={styles.footerLink}>Glory</Link>
+    </li>
+    <li className="mb-2">
+      <Link href="/talks" className={styles.footerLink}>Talks</Link>
+    </li>
+    <li className="mb-2">
+      <Link href="/info" className={styles.footerLink}>Info</Link>
+    </li>
+  </ul>
+</div>
           </div>
         </div>
-      </div>
-    </footer>
+        <div className="text-center">
+            <p className={styles.footerCopyright}>
+              © 2025 UCCD - Untar Computer Club Development. All rights reserved.
+            </p>
+        </div>
+      </footer>
   );
 }

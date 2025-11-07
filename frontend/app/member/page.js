@@ -1,3 +1,5 @@
+import Header from '../components/Header';
+
 async function getMember() {
   const res = await fetch('http://127.0.0.1:8000/api/member', { cache: 'no-store' });
   if (!res.ok) {
@@ -11,6 +13,7 @@ export default async function MemberPage() {
 
   return (
     <div>
+      <Header />
       <h1 className="text-center mb-4">Daftar Member</h1>
       <table className="table table-striped table-bordered">
         <thead className="thead-dark">
