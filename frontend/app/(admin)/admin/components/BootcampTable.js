@@ -23,10 +23,9 @@ const BootcampTable = ({ bootcamps, onEdit, onDelete }) => {
         <thead>
           <tr>
             <th>Nama Bootcamp</th>
-            <th>Mentor</th>
-            <th>Mulai</th>
-            <th>Selesai</th>
-            <th>Lokasi</th>
+            <th>Penyelenggara</th>
+            <th>Deadline</th>
+            <th>Biaya</th>
             <th>Poster</th>
             <th>Actions</th>
           </tr>
@@ -34,11 +33,10 @@ const BootcampTable = ({ bootcamps, onEdit, onDelete }) => {
         <tbody>
           {bootcamps.map((bootcamp) => (
             <tr key={bootcamp.id}>
-              <td>{bootcamp.nama}</td>
-              <td>{bootcamp.mentor}</td>
-              <td>{formatDate(bootcamp.jadwal_mulai)}</td>
-              <td>{formatDate(bootcamp.jadwal_selesai)}</td>
-              <td>{bootcamp.lokasi}</td>
+              <td>{bootcamp.nama_bootcamp}</td>
+              <td>{bootcamp.penyelenggara}</td>
+              <td>{formatDate(bootcamp.tanggal_deadline)}</td>
+              <td>{bootcamp.biaya_daftar ? `Rp ${bootcamp.biaya_daftar.toLocaleString()}` : 'Free'}</td>
               <td>
                 {bootcamp.posterUrl ? (
                   <a href={bootcamp.posterUrl} target="_blank" rel="noopener noreferrer">

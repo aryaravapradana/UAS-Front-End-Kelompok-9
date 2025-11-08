@@ -22,8 +22,23 @@ exports.getTalkById = async (req, res) => {
   }
 };
 
+const R2_HOSTNAME = 'uccd.3760decf39ba4d09d0252a7a33b7d78b.r2.cloudflarestorage.com';
+const WORKER_HOSTNAME = 'uccdphoto.aryaravathird.workers.dev';
+
+const transformUrl = (url) => {
+  if (!url) return null;
+  const urlObject = new URL(url);
+  if (urlObject.hostname === R2_HOSTNAME) {
+    urlObject.hostname = WORKER_HOSTNAME;
+    return urlObject.toString();
+  }
+  return url;
+};
+
 exports.createTalk = async (req, res) => {
   const { nama_seminar, penyelenggara, tanggal_pelaksanaan, biaya_daftar, feedback_member } = req.body;
+  let posterUrl = req.file ? req.file.location : null;
+  posterUrl = transformUrl(posterUrl);
 
   try {
     const newTalk = await prisma.talk.create({
@@ -31,8 +46,9 @@ exports.createTalk = async (req, res) => {
         nama_seminar,
         penyelenggara,
         tanggal_pelaksanaan: new Date(tanggal_pelaksanaan),
-        biaya_daftar,
+        biaya_daftar: biaya_daftar ? parseFloat(biaya_daftar) : null,
         feedback_member,
+        posterUrl,
       },
     });
     res.status(201).json(newTalk);
@@ -42,10 +58,23 @@ exports.createTalk = async (req, res) => {
 };
 
 exports.updateTalk = async (req, res) => {
+  const { nama_seminar, penyelenggara, tanggal_pelaksanaan, biaya_daftar, feedback_member } = req.body;
+  let dataToUpdate = {
+    nama_seminar,
+    penyelenggara,
+    tanggal_pelaksanaan: tanggal_pelaksanaan ? new Date(tanggal_pelaksanaan) : undefined,
+    biaya_daftar: biaya_daftar ? parseFloat(biaya_daftar) : undefined,
+    feedback_member,
+  };
+
+  if (req.file) {
+    dataToUpdate.posterUrl = transformUrl(req.file.location);
+  }
+
   try {
     const updatedTalk = await prisma.talk.update({
       where: { id: req.params.id },
-      data: req.body,
+      data: dataToUpdate,
     });
     res.status(200).json(updatedTalk);
   } catch (error) {

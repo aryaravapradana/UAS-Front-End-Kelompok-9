@@ -22,10 +22,10 @@ const TalkTable = ({ talks, onEdit, onDelete }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Judul Talk</th>
-            <th>Pembicara</th>
+            <th>Nama Seminar</th>
+            <th>Penyelenggara</th>
             <th>Tanggal</th>
-            <th>Lokasi</th>
+            <th>Biaya</th>
             <th>Poster</th>
             <th>Actions</th>
           </tr>
@@ -33,10 +33,10 @@ const TalkTable = ({ talks, onEdit, onDelete }) => {
         <tbody>
           {talks.map((talk) => (
             <tr key={talk.id}>
-              <td>{talk.judul}</td>
-              <td>{talk.pembicara}</td>
-              <td>{formatDate(talk.tanggal)}</td>
-              <td>{talk.lokasi}</td>
+              <td>{talk.nama_seminar}</td>
+              <td>{talk.penyelenggara}</td>
+              <td>{formatDate(talk.tanggal_pelaksanaan)}</td>
+              <td>{talk.biaya_daftar ? `Rp ${talk.biaya_daftar.toLocaleString()}` : 'Free'}</td>
               <td>
                 {talk.posterUrl ? (
                   <a href={talk.posterUrl} target="_blank" rel="noopener noreferrer">
