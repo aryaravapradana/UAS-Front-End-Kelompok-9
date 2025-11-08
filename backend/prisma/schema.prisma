@@ -11,23 +11,28 @@ datasource db {
 }
 
 model Member {
-  id                String            @id @default(auto()) @map("_id") @db.ObjectId
-  nim               String            @unique
-  password          String
-  nama_lengkap      String
-  prodi             String
-  angkatan          String
-  role              String            @default("member")
-  profilePictureUrl String?           @map("profile_picture_url")
-  rememberToken     String?           @map("remember_token")
-  createdAt         DateTime          @default(now()) @map("created_at")
-  updatedAt         DateTime          @updatedAt @map("updated_at")
-  lombas            PesertaLomba[]
-  beasiswas         PesertaBeasiswa[]
-  talks             PesertaTalk[]
-  bootcamps         PesertaBootcamp[]
-  Lomba             Lomba[]
-  Beasiswa          Beasiswa[]
+  id                     String            @id @default(auto()) @map("_id") @db.ObjectId
+  nim                    String            @unique
+  password               String
+  nama_lengkap           String
+  prodi                  String
+  angkatan               String
+  email                  String?           @unique
+  isEmailVerified        Boolean           @default(false) @map("is_email_verified")
+  emailVerificationToken String?           @unique @map("email_verification_token")
+  passwordResetToken     String?           @unique @map("password_reset_token")
+  passwordResetExpires   DateTime?         @map("password_reset_expires")
+  role                   String            @default("member")
+  profilePictureUrl      String?           @map("profile_picture_url")
+  rememberToken          String?           @map("remember_token")
+  createdAt              DateTime          @default(now()) @map("created_at")
+  updatedAt              DateTime          @updatedAt @map("updated_at")
+  lombas                 PesertaLomba[]
+  beasiswas              PesertaBeasiswa[]
+  talks                  PesertaTalk[]
+  bootcamps              PesertaBootcamp[]
+  Lomba                  Lomba[]
+  Beasiswa               Beasiswa[]
 }
 
 model Lomba {
