@@ -22,8 +22,23 @@ exports.getBootcampById = async (req, res) => {
   }
 };
 
+const R2_HOSTNAME = 'uccd.3760decf39ba4d09d0252a7a33b7d78b.r2.cloudflarestorage.com';
+const WORKER_HOSTNAME = 'uccdphoto.aryaravathird.workers.dev';
+
+const transformUrl = (url) => {
+  if (!url) return null;
+  const urlObject = new URL(url);
+  if (urlObject.hostname === R2_HOSTNAME) {
+    urlObject.hostname = WORKER_HOSTNAME;
+    return urlObject.toString();
+  }
+  return url;
+};
+
 exports.createBootcamp = async (req, res) => {
   const { nama_bootcamp, penyelenggara, tanggal_deadline, biaya_daftar } = req.body;
+  let posterUrl = req.file ? req.file.location : null;
+  posterUrl = transformUrl(posterUrl);
 
   try {
     const newBootcamp = await prisma.bootcamp.create({
@@ -31,7 +46,8 @@ exports.createBootcamp = async (req, res) => {
         nama_bootcamp,
         penyelenggara,
         tanggal_deadline: new Date(tanggal_deadline),
-        biaya_daftar,
+        biaya_daftar: biaya_daftar ? parseFloat(biaya_daftar) : null,
+        posterUrl,
       },
     });
     res.status(201).json(newBootcamp);
@@ -41,10 +57,22 @@ exports.createBootcamp = async (req, res) => {
 };
 
 exports.updateBootcamp = async (req, res) => {
+  const { nama_bootcamp, penyelenggara, tanggal_deadline, biaya_daftar } = req.body;
+  let dataToUpdate = {
+    nama_bootcamp,
+    penyelenggara,
+    tanggal_deadline: tanggal_deadline ? new Date(tanggal_deadline) : undefined,
+    biaya_daftar: biaya_daftar ? parseFloat(biaya_daftar) : undefined,
+  };
+
+  if (req.file) {
+    dataToUpdate.posterUrl = transformUrl(req.file.location);
+  }
+
   try {
     const updatedBootcamp = await prisma.bootcamp.update({
       where: { id: req.params.id },
-      data: req.body,
+      data: dataToUpdate,
     });
     res.status(200).json(updatedBootcamp);
   } catch (error) {
