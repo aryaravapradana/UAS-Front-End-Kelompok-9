@@ -1,14 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import styles from './ProfileButton.module.css'; // Using a CSS module for styling
 
 export default function ProfileButton() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
+  // Fetch user profile
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -28,7 +32,6 @@ export default function ProfileButton() {
           const data = await res.json();
           setUser(data);
         } else {
-          // Token might be expired or invalid
           localStorage.removeItem('token');
         }
       } catch (error) {
@@ -42,8 +45,24 @@ export default function ProfileButton() {
     fetchUserProfile();
   }, []);
 
-  const handleProfileClick = () => {
-    router.push('/dashboard');
+  // Handle clicks outside the dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    setIsDropdownOpen(false);
+    router.push('/login');
   };
 
   if (isLoading) {
@@ -55,37 +74,52 @@ export default function ProfileButton() {
   }
 
   return (
-    <button
-      onClick={handleProfileClick}
-      className="btn btn-info rounded-pill px-3 px-md-4 py-2 fw-semibold shadow-sm d-flex align-items-center gap-2"
-      style={{
-        background: 'linear-gradient(135deg, #bebebeff 0%, #2a3134ff 100%)',
-        border: 'none',
-        transition: 'all 0.3s ease',
-        fontSize: '0.9rem',
-        color: 'white',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-3px)';
-        e.currentTarget.style.boxShadow = '0 10px 30px rgba(128, 128, 128, 0.4)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
-      }}
-    >
-      <Image
-        src={user.profilePictureUrl || '/default-profile.png'} // Use a default image if none
-        alt="Profile"
-        width={30}
-        height={30}
-        style={{
-          borderRadius: '50%',
-          objectFit: 'cover',
-          marginRight: '8px',
-        }}
-      />
-      <span>{user.nama_lengkap}</span>
-    </button>
+    <div className={styles.profileContainer} ref={dropdownRef}>
+      <button
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        className={styles.profileButton}
+      >
+        <Image
+          src={user.profilePictureUrl || '/default-profile.png'}
+          alt="Profile"
+          width={30}
+          height={30}
+          className={styles.profileImage}
+        />
+        <span>{user.nama_lengkap}</span>
+        <i className={`fas fa-chevron-down ${styles.chevron} ${isDropdownOpen ? styles.chevronOpen : ''}`}></i>
+      </button>
+
+      {isDropdownOpen && (
+        <div className={styles.dropdownMenu}>
+          <button
+            onClick={() => {
+              router.push('/dashboard');
+              setIsDropdownOpen(false);
+            }}
+            className={styles.dropdownItem}
+          >
+            <i className="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </button>
+          <button
+            onClick={() => {
+              router.push('/profile/edit');
+              setIsDropdownOpen(false);
+            }}
+            className={styles.dropdownItem}
+          >
+            <i className="fas fa-user-edit"></i>
+            <span>Ubah Data</span>
+          </button>
+          <div className={styles.dropdownDivider}></div>
+          <button onClick={handleLogout} className={`${styles.dropdownItem} ${styles.logoutButton}`}>
+            <i className="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
+

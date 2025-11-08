@@ -21,12 +21,27 @@ exports.getProfile = async (req, res) => {
 // @route   PUT /api/profile
 // @access  Private
 exports.updateProfile = async (req, res) => {
-  const { nama_lengkap, password } = req.body;
+  const { nama_lengkap, currentPassword, newPassword } = req.body;
   try {
-    let dataToUpdate = { nama_lengkap };
+    const dataToUpdate = {};
 
-    if (password) {
-      dataToUpdate.password = await bcrypt.hash(password, 12);
+    if (nama_lengkap) {
+      dataToUpdate.nama_lengkap = nama_lengkap;
+    }
+
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ message: 'Current password is required to change password' });
+      }
+
+      const member = await prisma.member.findUnique({ where: { nim: req.member.nim } });
+      const isMatch = await bcrypt.compare(currentPassword, member.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Incorrect current password' });
+      }
+
+      dataToUpdate.password = await bcrypt.hash(newPassword, 12);
     }
 
     const updatedMember = await prisma.member.update({
@@ -34,7 +49,10 @@ exports.updateProfile = async (req, res) => {
       data: dataToUpdate,
     });
 
-    res.status(200).json(updatedMember);
+    // Omit password from the response
+    const { password, ...memberWithoutPassword } = updatedMember;
+
+    res.status(200).json(memberWithoutPassword);
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
