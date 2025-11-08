@@ -160,6 +160,7 @@ const DashboardPage = () => {
               <h2 className={styles.cardTitle}>My Profile</h2>
               <div className={styles.profileDetails}>
                 <div className={styles.detailItem}><strong>Name:</strong> {user.nama_lengkap}</div>
+                <div className={styles.detailItem}><strong>Email:</strong> {user.email || 'Not set'}</div>
                 <div className={styles.detailItem}><strong>NIM:</strong> {user.nim}</div>
                 <div className={styles.detailItem}><strong>Prodi:</strong> {user.prodi}</div>
                 <div className={styles.detailItem}><strong>Angkatan:</strong> 20{user.angkatan}</div>
