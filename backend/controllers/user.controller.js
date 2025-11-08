@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const { sendVerificationEmail } = require('../utils/mailer');
 const prisma = new PrismaClient();
 
 // @desc    Get logged in member's profile
@@ -21,12 +23,36 @@ exports.getProfile = async (req, res) => {
 // @route   PUT /api/profile
 // @access  Private
 exports.updateProfile = async (req, res) => {
-  const { nama_lengkap, password } = req.body;
+  const { nama_lengkap, email, currentPassword, newPassword } = req.body;
   try {
-    let dataToUpdate = { nama_lengkap };
+    const member = await prisma.member.findUnique({ where: { nim: req.member.nim } });
+    const dataToUpdate = {};
+    let emailChanged = false;
 
-    if (password) {
-      dataToUpdate.password = await bcrypt.hash(password, 12);
+    if (nama_lengkap && nama_lengkap !== member.nama_lengkap) {
+      dataToUpdate.nama_lengkap = nama_lengkap;
+    }
+
+    if (email && email !== member.email) {
+      dataToUpdate.email = email;
+      dataToUpdate.isEmailVerified = false;
+      dataToUpdate.emailVerificationToken = crypto.randomBytes(32).toString('hex');
+      emailChanged = true;
+    }
+
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ message: 'Current password is required to change password' });
+      }
+      const isMatch = await bcrypt.compare(currentPassword, member.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Incorrect current password' });
+      }
+      dataToUpdate.password = await bcrypt.hash(newPassword, 12);
+    }
+    
+    if (Object.keys(dataToUpdate).length === 0) {
+      return res.status(200).json({ message: 'No changes provided' });
     }
 
     const updatedMember = await prisma.member.update({
@@ -34,8 +60,16 @@ exports.updateProfile = async (req, res) => {
       data: dataToUpdate,
     });
 
-    res.status(200).json(updatedMember);
+    if (emailChanged) {
+      await sendVerificationEmail(updatedMember.email, updatedMember.emailVerificationToken);
+    }
+
+    const { password, ...memberWithoutPassword } = updatedMember;
+    res.status(200).json(memberWithoutPassword);
   } catch (error) {
+    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
+      return res.status(409).json({ message: 'Email address is already in use.' });
+    }
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
