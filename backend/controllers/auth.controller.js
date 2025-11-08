@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { sendVerificationEmail } = require('../utils/mailer');
+const { sendVerificationEmail, sendPasswordResetEmail } = require('../utils/mailer');
 
 const prisma = new PrismaClient();
 
@@ -148,6 +148,73 @@ exports.resendVerificationEmail = async (req, res) => {
     res.status(200).json({ message: 'Verification email sent successfully.' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const member = await prisma.member.findUnique({ where: { email } });
+
+    if (!member) {
+      // Don't reveal that the user doesn't exist.
+      // Send a success response to prevent user enumeration.
+      return res.status(200).json({ message: 'If an account with this email exists, a password reset link has been sent.' });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const passwordResetExpires = new Date(Date.now() + 3600000); // 1 hour from now
+
+    await prisma.member.update({
+      where: { email },
+      data: {
+        passwordResetToken: resetToken,
+        passwordResetExpires: passwordResetExpires,
+      },
+    });
+
+    await sendPasswordResetEmail(member.email, resetToken);
+
+    res.status(200).json({ message: 'If an account with this email exists, a password reset link has been sent.' });
+  } catch (error) {
+    // Generic error message
+    res.status(500).json({ message: 'Something went wrong. Please try again.' });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { token, password } = req.body;
+
+  if (!token || !password) {
+    return res.status(400).json({ message: 'Token and new password are required.' });
+  }
+
+  try {
+    const member = await prisma.member.findFirst({
+      where: {
+        passwordResetToken: token,
+        passwordResetExpires: { gt: new Date() }, // Check if the token has not expired
+      },
+    });
+
+    if (!member) {
+      return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    await prisma.member.update({
+      where: { id: member.id },
+      data: {
+        password: hashedPassword,
+        passwordResetToken: null,
+        passwordResetExpires: null,
+      },
+    });
+
+    res.status(200).json({ message: 'Password has been reset successfully.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong. Please try again.' });
   }
 };
 

@@ -302,6 +302,25 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
+.extraOptions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+  margin-top: -8px;
+}
+
+.forgotPassword {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.forgotPassword:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 @media (max-width: 480px) {
   .form {
     padding: 38px 28px 34px;

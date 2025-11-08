@@ -20,6 +20,8 @@ model Member {
   email                  String?           @unique
   isEmailVerified        Boolean           @default(false) @map("is_email_verified")
   emailVerificationToken String?           @unique @map("email_verification_token")
+  passwordResetToken     String?           @unique @map("password_reset_token")
+  passwordResetExpires   DateTime?         @map("password_reset_expires")
   role                   String            @default("member")
   profilePictureUrl      String?           @map("profile_picture_url")
   rememberToken          String?           @map("remember_token")

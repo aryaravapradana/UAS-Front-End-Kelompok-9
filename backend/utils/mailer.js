@@ -19,9 +19,6 @@ const sendVerificationEmail = async (to, token) => {
     console.error('*** ERROR: EMAIL SERVICE NOT CONFIGURED                      ***');
     console.error('*** Please update the EMAIL_* variables in backend/.env      ***');
     console.error('****************************************************************');
-    // We don't throw an error here, so the API request doesn't fail,
-    // but the email will not be sent. The user sees a success message,
-    // but the developer sees this clear error in the logs.
     return;
   }
 
@@ -50,9 +47,49 @@ const sendVerificationEmail = async (to, token) => {
     console.log('Verification email sent to:', to);
   } catch (error) {
     console.error('Error sending verification email:', error);
-    // In a real app, you might want to handle this more gracefully
     throw new Error('Could not send verification email.');
   }
 };
 
-module.exports = { sendVerificationEmail };
+const sendPasswordResetEmail = async (to, token) => {
+  if (process.env.EMAIL_USER === 'user@example.com') {
+    console.error('****************************************************************');
+    console.error('*** ERROR: EMAIL SERVICE NOT CONFIGURED                      ***');
+    console.error('*** Please update the EMAIL_* variables in backend/.env      ***');
+    console.error('****************************************************************');
+    return;
+  }
+
+  const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password?token=${token}`;
+
+  const mailOptions = {
+    from: `"UCCD FTI" <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
+    to: to,
+    subject: 'Password Reset Request',
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2>Password Reset Request</h2>
+        <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
+        <p>Please click on the button below to reset your password:</p>
+        <a href="${resetUrl}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+        <p>If you cannot click the button, please copy and paste the following link into your browser:</p>
+        <p><a href="${resetUrl}">${resetUrl}</a></p>
+        <p>This link will expire in one hour.</p>
+        <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+        <hr/>
+        <p>UCCD FTI UNTAR</p>
+      </div>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Password reset email sent to:', to);
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    throw new Error('Could not send password reset email.');
+  }
+};
+
+module.exports = { sendVerificationEmail, sendPasswordResetEmail };
+
