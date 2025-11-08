@@ -35,16 +35,20 @@ exports.createLomba = async (req, res) => {
   const { nama_lomba, penyelenggara, batasan_tahun, batasan_prodi, tanggal_deadline, biaya_daftar } = req.body;
 
   try {
-    const newLomba = await prisma.lomba.create({
-      data: {
-        nama_lomba,
-        penyelenggara,
-        batasan_tahun,
-        batasan_prodi,
-        tanggal_deadline: new Date(tanggal_deadline),
-        biaya_daftar,
-      },
-    });
+    const data = {
+      nama_lomba,
+      penyelenggara,
+      batasan_tahun,
+      batasan_prodi,
+      tanggal_deadline: new Date(tanggal_deadline),
+      biaya_daftar: parseFloat(biaya_daftar),
+    };
+
+    if (req.file) {
+      data.posterUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`;
+    }
+
+    const newLomba = await prisma.lomba.create({ data });
     res.status(201).json(newLomba);
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
@@ -55,13 +59,36 @@ exports.createLomba = async (req, res) => {
 // @route   PUT /api/lombas/:id
 // @access  Private
 exports.updateLomba = async (req, res) => {
+  const { nama_lomba, penyelenggara, batasan_tahun, batasan_prodi, tanggal_deadline, biaya_daftar } = req.body;
+  const { id } = req.params;
+
   try {
+    const dataToUpdate = {};
+
+    if (nama_lomba) dataToUpdate.nama_lomba = nama_lomba;
+    if (penyelenggara) dataToUpdate.penyelenggara = penyelenggara;
+    if (batasan_tahun) dataToUpdate.batasan_tahun = batasan_tahun;
+    if (batasan_prodi) dataToUpdate.batasan_prodi = batasan_prodi;
+    if (tanggal_deadline) dataToUpdate.tanggal_deadline = new Date(tanggal_deadline);
+    if (biaya_daftar) dataToUpdate.biaya_daftar = parseFloat(biaya_daftar);
+
+    if (req.file) {
+      dataToUpdate.posterUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`;
+    }
+
+    if (Object.keys(dataToUpdate).length === 0) {
+      return res.status(400).json({ message: 'No update data provided.' });
+    }
+
     const updatedLomba = await prisma.lomba.update({
-      where: { id: req.params.id },
-      data: req.body,
+      where: { id },
+      data: dataToUpdate,
     });
     res.status(200).json(updatedLomba);
   } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: `Lomba with ID ${id} not found.` });
+    }
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
@@ -74,6 +101,9 @@ exports.deleteLomba = async (req, res) => {
     await prisma.lomba.delete({ where: { id: req.params.id } });
     res.status(200).json({ message: 'Lomba deleted successfully' });
   } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: `Lomba with ID ${req.params.id} not found.` });
+    }
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
@@ -97,31 +127,6 @@ exports.getLombaPeserta = async (req, res) => {
       },
     });
     res.status(200).json(peserta);
-  } catch (error) {
-    res.status(500).json({ message: 'Something went wrong', error: error.message });
-  }
-};
-
-// @desc    Upload lomba poster
-// @route   POST /api/lombas/:id/poster
-// @access  Private/Admin
-exports.uploadLombaPoster = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    const posterUrl = req.file.location; // URL from Cloudflare R2
-
-    const updatedLomba = await prisma.lomba.update({
-      where: { id: req.params.id },
-      data: { posterUrl: posterUrl },
-    });
-
-    res.status(200).json({
-      message: 'Lomba poster uploaded successfully',
-      posterUrl: updatedLomba.posterUrl,
-    });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }

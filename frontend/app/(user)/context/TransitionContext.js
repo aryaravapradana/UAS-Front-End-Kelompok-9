@@ -1,4 +1,3 @@
-
 "use client";
 
 import { createContext, useState, useContext, useCallback } from 'react';
@@ -12,13 +11,19 @@ export const TransitionProvider = ({ children }) => {
 
   const startTransition = useCallback((url) => {
     setIsTransitioning(true);
+    document.body.classList.add('page-transition-exit-active');
     setTimeout(() => {
       router.push(url);
-    }, 500); // Duration should match the CSS transition duration for the curtain closing
+    }, 500); // Duration should match the CSS transition duration
   }, [router]);
 
   const endTransition = useCallback(() => {
     setIsTransitioning(false);
+    document.body.classList.remove('page-transition-exit-active');
+    document.body.classList.add('page-transition-enter-active');
+    setTimeout(() => {
+      document.body.classList.remove('page-transition-enter-active');
+    }, 500); // Duration should match the CSS transition duration
   }, []);
 
   return (

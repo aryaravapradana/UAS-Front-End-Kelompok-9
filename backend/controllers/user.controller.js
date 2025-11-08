@@ -103,17 +103,101 @@ exports.getUserByNim = async (req, res) => {
   }
 };
 
+// @desc    Create a new user
+// @route   POST /api/users
+// @access  Private/Admin
+exports.createUser = async (req, res) => {
+  const { nim, password, nama_lengkap, role } = req.body;
+
+  if (!nim || !password || !nama_lengkap) {
+    return res.status(400).json({ message: 'Please provide nim, password, and nama_lengkap.' });
+  }
+
+  // NIM validation
+  const nimRegex = /^(535|825)\d{6}$/;
+  if (!nimRegex.test(nim)) {
+    return res.status(400).json({ message: 'Invalid NIM format. NIM must be 9 digits and start with 535 or 825.' });
+  }
+
+  try {
+    const existingMember = await prisma.member.findUnique({ where: { nim } });
+    if (existingMember) {
+      return res.status(409).json({ message: 'Member with this NIM already exists.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    
+    // Helper functions to derive prodi and angkatan from NIM
+    const getProdi = (nim) => {
+      const prodiCode = nim.substring(0, 3);
+      return prodiCode === '535' ? 'Teknik Informatika' : prodiCode === '825' ? 'Sistem Informasi' : 'Lainnya';
+    };
+    const getAngkatan = (nim) => nim.substring(3, 5);
+
+    const prodi = getProdi(nim);
+    const angkatan = getAngkatan(nim);
+
+    const data = {
+      nim,
+      password: hashedPassword,
+      nama_lengkap,
+      prodi,
+      angkatan,
+      role: role || 'user',
+    };
+
+    if (req.file) {
+      data.profilePictureUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`;
+    }
+
+    const newUser = await prisma.member.create({ data });
+
+    const { password: _, ...userWithoutPassword } = newUser;
+    res.status(201).json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
+
 // @desc    Update user
 // @route   PUT /api/users/:nim
 // @access  Private/Admin
 exports.updateUser = async (req, res) => {
+  const { nama_lengkap, role, password } = req.body;
+  const { nim } = req.params;
+
   try {
+    const dataToUpdate = {};
+
+    if (nama_lengkap) {
+      dataToUpdate.nama_lengkap = nama_lengkap;
+    }
+    if (role) {
+      dataToUpdate.role = role;
+    }
+    if (password) {
+      dataToUpdate.password = await bcrypt.hash(password, 12);
+    }
+    if (req.file) {
+      dataToUpdate.profilePictureUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`;
+    }
+
+    if (Object.keys(dataToUpdate).length === 0) {
+      return res.status(400).json({ message: 'No update data provided.' });
+    }
+
     const updatedUser = await prisma.member.update({
-      where: { nim: req.params.nim },
-      data: req.body, // Allows admin to update any field, including role
+      where: { nim },
+      data: dataToUpdate,
     });
-    res.status(200).json(updatedUser);
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+    res.status(200).json(userWithoutPassword);
   } catch (error) {
+    // Handle case where user to update is not found
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: `User with NIM ${nim} not found.` });
+    }
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };

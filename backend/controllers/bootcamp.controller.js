@@ -85,6 +85,45 @@ exports.getBootcampPeserta = async (req, res) => {
   }
 };
 
+exports.registerBootcamp = async (req, res) => {
+  const { id: id_bootcamp } = req.params;
+  const { nim } = req.member;
+
+  try {
+    // Check if the user is already registered
+    const existingRegistration = await prisma.pesertaBootcamp.findFirst({
+      where: {
+        id_bootcamp,
+        nim,
+      },
+    });
+
+    if (existingRegistration) {
+      return res.status(400).json({ message: 'You are already registered for this bootcamp' });
+    }
+
+    // Create new registration
+    const newRegistration = await prisma.pesertaBootcamp.create({
+      data: {
+        id_bootcamp,
+        nim,
+        tanggal_daftar: new Date(),
+        status_pembayaran: 'unpaid', // or 'paid' if free/handled differently
+        status_hasil: 'pending',
+      },
+    });
+
+    res.status(201).json({ message: 'Successfully registered for the bootcamp', registration: newRegistration });
+  } catch (error) {
+    console.error(error);
+    // Handle specific Prisma errors if needed, e.g., foreign key constraint
+    if (error.code === 'P2003') { // Foreign key constraint failed
+      return res.status(404).json({ message: 'Bootcamp or Member not found' });
+    }
+    res.status(500).json({ message: 'Something went wrong during registration', error: error.message });
+  }
+};
+
 // @desc    Upload bootcamp poster
 // @route   POST /api/bootcamps/:id/poster
 // @access  Private/Admin

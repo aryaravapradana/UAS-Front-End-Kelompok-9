@@ -53,7 +53,14 @@ export default function LoginPage() {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('token', data.token);
-        router.push('/?status=loggedin');
+        localStorage.setItem('user', JSON.stringify(data.result)); // Save user data
+
+        // Redirect based on user role
+        if (data.result.role === 'admin') {
+          router.push('/admin');
+        } else {
+          router.push('/?status=loggedin');
+        }
       } else {
         const errorData = await res.json();
         setError(errorData.message || 'Login failed');
