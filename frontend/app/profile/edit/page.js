@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './edit.module.css';
-import Header from '../../components/Header'; // Assuming Header is in components
+import Header from '../../components/Header';
 
 export default function EditProfilePage() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [namaLengkap, setNamaLengkap] = useState('');
+  const [email, setEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -16,35 +17,36 @@ export default function EditProfilePage() {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
+  const fetchUserProfile = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    try {
+      const res = await fetch('http://localhost:3001/api/profile', {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data);
+        setNamaLengkap(data.nama_lengkap);
+        setEmail(data.email || '');
+      } else {
+        localStorage.removeItem('token');
         router.push('/login');
-        return;
       }
+    } catch (err) {
+      setError('Failed to fetch profile data.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      try {
-        const res = await fetch('http://localhost:3001/api/profile', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data);
-          setNamaLengkap(data.nama_lengkap);
-        } else {
-          localStorage.removeItem('token');
-          router.push('/login');
-        }
-      } catch (err) {
-        setError('Failed to fetch profile data.');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchUserProfile();
   }, [router]);
 
@@ -60,6 +62,7 @@ export default function EditProfilePage() {
 
     const payload = {
       nama_lengkap: namaLengkap,
+      email: email,
     };
 
     if (newPassword) {
@@ -78,17 +81,17 @@ export default function EditProfilePage() {
         body: JSON.stringify(payload),
       });
 
+      const responseData = await res.json();
+
       if (res.ok) {
-        setSuccess('Profile updated successfully!');
+        setSuccess('Profile updated successfully! If you changed your email, a verification link has been sent.');
         setCurrentPassword('');
         setNewPassword('');
         setConfirmNewPassword('');
-        // Optionally, refetch user data or update state
-        const updatedUser = await res.json();
-        setNamaLengkap(updatedUser.nama_lengkap);
+        // Refetch user data to get the latest verification status
+        fetchUserProfile();
       } else {
-        const errorData = await res.json();
-        setError(errorData.message || 'Failed to update profile.');
+        setError(responseData.message || 'Failed to update profile.');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -96,8 +99,29 @@ export default function EditProfilePage() {
     }
   };
 
+  const handleResendVerification = async () => {
+    setError('');
+    setSuccess('');
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:3001/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+
+      const responseData = await res.json();
+      if (res.ok) {
+        setSuccess(responseData.message);
+      } else {
+        setError(responseData.message);
+      }
+    } catch (err) {
+      setError('Failed to resend verification email.');
+    }
+  };
+
   if (isLoading) {
-    return <div>Loading...</div>; // Or a proper loading spinner
+    return <div>Loading...</div>;
   }
 
   return (
@@ -106,12 +130,13 @@ export default function EditProfilePage() {
       <main className={styles.main}>
         <div className={styles.formContainer}>
           <h1 className={styles.title}>Ubah Data Profil</h1>
-          <p className={styles.subtitle}>Update your name or change your password.</p>
+          <p className={styles.subtitle}>Update your name, email, or change your password.</p>
 
           {error && <div className={styles.alertError}>{error}</div>}
           {success && <div className={styles.alertSuccess}>{success}</div>}
 
           <form onSubmit={handleSubmit}>
+            <h2 className={styles.sectionTitle}>Informasi Akun</h2>
             <div className={styles.inputGroup}>
               <label htmlFor="namaLengkap">Nama Lengkap</label>
               <input
@@ -122,6 +147,30 @@ export default function EditProfilePage() {
                 className={styles.input}
                 required
               />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="email">Email</label>
+              <div className={styles.emailGroup}>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={styles.input}
+                  placeholder="user@example.com"
+                />
+                {user?.email && (
+                  user.isEmailVerified 
+                    ? <span className={`${styles.verificationStatus} ${styles.verified}`}>Verified</span>
+                    : <span className={`${styles.verificationStatus} ${styles.unverified}`}>Not Verified</span>
+                )}
+              </div>
+              {user?.email && !user.isEmailVerified && (
+                <button type="button" onClick={handleResendVerification} className={styles.resendButton}>
+                  Resend Verification Email
+                </button>
+              )}
             </div>
 
             <h2 className={styles.sectionTitle}>Ubah Password</h2>
@@ -172,3 +221,4 @@ export default function EditProfilePage() {
     </>
   );
 }
+
