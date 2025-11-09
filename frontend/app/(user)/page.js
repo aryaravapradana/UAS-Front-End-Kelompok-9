@@ -186,7 +186,7 @@ export default function Home() {
                 <li className="mb-2"><Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link></li>
                 
                 <li className="mb-2"><Link href="/glory" className={styles.footerLink}>Glory</Link></li>
-                <li className="mb-2"><Link href="/talks" className={styles.footerLink}>Talks</Link></li>
+                <li className="mb-2"><Link href="/talk" className={styles.footerLink}>Talks</Link></li>
                 <li className="mb-2"><Link href="/info" className={styles.footerLink}>Info</Link></li>
               </ul>
             </div>

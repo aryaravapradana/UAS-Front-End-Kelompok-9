@@ -323,7 +323,7 @@ function AppFooter() {
             <Link href="/" className={styles.footerLink}>Home</Link>
             <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
             <Link href="/glory" className={styles.footerLink}>Glory</Link>
-            <Link href="/talks" className={styles.footerLink}>Talks</Link>
+            <Link href="/talk" className={styles.footerLink}>Talks</Link>
             <Link href="/info" className={styles.footerLink}>Info</Link>
           </div>
         </div>
