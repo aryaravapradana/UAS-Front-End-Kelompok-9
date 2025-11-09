@@ -476,7 +476,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  text-decoration: none; /* Remove underline from link */
+  text-decoration: none;
 }
 
 .featureCard:hover {
@@ -503,8 +503,8 @@
   filter: brightness(0) invert(1);
   opacity: 0.9;
   transition: all 0.3s ease;
-  width: 64px; /* Explicit size */
-  height: 64px; /* Explicit size */
+  width: 64px; 
+  height: 64px; 
   object-fit: contain;
 }
 
@@ -518,7 +518,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #fff; /* Ensure text color is not blue */
+  color: #fff;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
   text-decoration: none;
@@ -528,7 +528,7 @@
 .featureCard p {
   font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
-  color: #b0b0b0; /* Ensure text color is not blue */
+  color: #b0b0b0; 
   line-height: 1.6;
   max-width: 100%;
   text-decoration: none;
@@ -666,6 +666,7 @@
   .featuresTitle { font-size: 1.5rem; }
   .featureCard { padding: 2.25rem 1.8rem; }
 }
+
 /* CARD HOVER STYLES */
 .bootcampCard:hover {
   border-color: #B040DD;

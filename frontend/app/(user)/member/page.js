@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 
 async function getMember() {
-  const res = await fetch('http://127.0.0.1:8000/api/member', { cache: 'no-store' });
+  const res = await fetch('http://127.0.0.1:3001/api/member', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }

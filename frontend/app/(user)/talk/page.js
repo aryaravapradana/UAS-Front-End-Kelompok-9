@@ -262,14 +262,6 @@ function WhatsInItForYouSection() {
             </Link>
           </div>
 
-          <div className="col-lg-3 col-md-6" key="talks-col">
-            <Link href="/talks" className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`}>
-              <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
-              <h3>TALKS</h3>
-              <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
-            </Link>
-          </div>
-
           <div className="col-lg-3 col-md-6" key="glory-col">
             <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`}>
               <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
