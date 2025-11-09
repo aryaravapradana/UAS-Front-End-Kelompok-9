@@ -75,25 +75,43 @@ function WhatIsSection() {
 }
 
 function ChooseTrackSection({ activeTrack, setActiveTrack }) {
-  const [bootcamps, setBootcamps] = useState([]);
+  const [allBootcamps, setAllBootcamps] = useState([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const fetchBootcamps = async () => {
       try {
-        const res = await fetch('/api/bootcamps');
+        const res = await fetch('http://localhost:3001/api/bootcamps');
         if (!res.ok) {
           throw new Error('Failed to fetch bootcamps');
         }
         const data = await res.json();
-        setBootcamps(data);
+        setAllBootcamps(data);
       } catch (error) {
         console.error("Error fetching bootcamps:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchBootcamps();
   }, []);
+
+  const filterBootcamps = (bootcamps, type) => {
+    if (!bootcamps) return [];
+    const now = new Date();
+    return bootcamps.filter(bootcamp => {
+      const deadline = new Date(bootcamp.tanggal_deadline);
+      if (type === 'upcoming') {
+        return deadline >= now;
+      } else { // complete
+        return deadline < now;
+      }
+    });
+  };
+
+  const bootcampsToDisplay = activeTrack === 'upcoming' ? filterBootcamps(allBootcamps, 'upcoming') : filterBootcamps(allBootcamps, 'complete');
 
   const handleRegister = async (bootcampId) => {
     const token = localStorage.getItem('token');
@@ -156,42 +174,48 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
       </div>
 
         <div className={styles.trackCards}>
-          {bootcamps.map((bootcamp) => (
-            <div key={bootcamp.id} className={styles.trackCard}>
-              <div className={styles.trackImage}>
-                <Image
-                  src={bootcamp.posterUrl || '/bootcamp/bootcamp.png'}
-                  alt={bootcamp.nama_bootcamp}
-                  fill
-                  className={styles.trackImg}
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div className={styles.trackInfo}>
-                <div className={styles.trackTitleRow}>
-                  <h3>{bootcamp.nama_bootcamp}</h3>
-                  <span className={styles.trackBadge}>See Details</span>
+          {loading ? (
+            <p>Loading bootcamps...</p>
+          ) : bootcampsToDisplay.length > 0 ? (
+            bootcampsToDisplay.map((bootcamp) => (
+              <div key={bootcamp.id} className={styles.trackCard}>
+                <div className={styles.trackImage}>
+                  <Image
+                    src={bootcamp.posterUrl || '/bootcamp/bootcamp.png'}
+                    alt={bootcamp.nama_bootcamp}
+                    fill
+                    className={styles.trackImg}
+                    style={{ objectFit: 'cover' }}
+                  />
                 </div>
-                <ul className={styles.trackDetails}>
-                  <li>
-                    <Image src="/bootcamp/material-symbols_date-range.png" alt="" width={14} height={14} />
-                    <span>Deadline: {formatDate(bootcamp.tanggal_deadline)}</span>
-                  </li>
-                  <li>
-                    <Image src="/bootcamp/person_icon.png" alt="" width={14} height={14} />
-                    <span>By: {bootcamp.penyelenggara}</span>
-                  </li>
-                  <li>
-                    <Image src="/bootcamp/si_pin-fill.png" alt="" width={14} height={14} />
-                    <span>Fee: {bootcamp.biaya_daftar ? `Rp ${bootcamp.biaya_daftar.toLocaleString()}` : 'Free'}</span>
-                  </li>
-                </ul>
-                <button className={styles.btnApply} onClick={() => handleRegister(bootcamp.id)}>
-                  Register Now
-                </button>
+                <div className={styles.trackInfo}>
+                  <div className={styles.trackTitleRow}>
+                    <h3>{bootcamp.nama_bootcamp}</h3>
+                    <span className={styles.trackBadge}>See Details</span>
+                  </div>
+                  <ul className={styles.trackDetails}>
+                    <li>
+                      <Image src="/bootcamp/material-symbols_date-range.png" alt="" width={14} height={14} />
+                      <span>Deadline: {formatDate(bootcamp.tanggal_deadline)}</span>
+                    </li>
+                    <li>
+                      <Image src="/bootcamp/person_icon.png" alt="" width={14} height={14} />
+                      <span>By: {bootcamp.penyelenggara}</span>
+                    </li>
+                    <li>
+                      <Image src="/bootcamp/si_pin-fill.png" alt="" width={14} height={14} />
+                      <span>Fee: {bootcamp.biaya_daftar ? `Rp ${bootcamp.biaya_daftar.toLocaleString()}` : 'Free'}</span>
+                    </li>
+                  </ul>
+                  <button className={styles.btnApply} onClick={() => handleRegister(bootcamp.id)}>
+                    Register Now
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No {activeTrack === 'upcoming' ? 'upcoming' : 'completed'} bootcamps available.</p>
+          )}
         </div>
       </div>
     </section>

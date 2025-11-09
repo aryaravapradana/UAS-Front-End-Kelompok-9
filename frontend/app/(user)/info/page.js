@@ -404,10 +404,10 @@ function InfoKnowMoreSection() {
     <section className={styles.infoFeaturesSection}>
       <div className="container text-center">
         <div className="mb-5">
-          <div className={styles.infoTitleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
-            <span className={`${styles.infoDot} ${styles.infoDotLeft}`}></span>
+          <div className={styles.infoFeaturesTitleWrapper}>
+            <span className={`${styles.infoFeaturesDot} ${styles.infoFeaturesDotLeft}`}></span>
             <h2 className={styles.infoFeaturesTitle}>Get To Know More</h2>
-            <span className={`${styles.infoDot} ${styles.infoDotRight}`}></span>
+            <span className={`${styles.infoFeaturesDot} ${styles.infoFeaturesDotRight}`}></span>
           </div>
           <p className={styles.infoFeaturesSubtext}>Gain the information you need to level up your skills here</p>
         </div>
@@ -422,26 +422,10 @@ function InfoKnowMoreSection() {
           </div>
 
           <div className="col-lg-4 col-md-6">
-            <Link href="/info" className={`${styles.infoFeatureCard} ${styles.infoInfoCard} shadow-sm h-100`}>
-              <Image src="/info.png" width={80} height={80} alt="Insight" className={styles.infoFeatureImg} />
-              <h3>INSIGHT</h3>
-              <p>Articles and discussions on current issues in technology and digital developments.</p>
-            </Link>
-          </div>
-
-          <div className="col-lg-4 col-md-6">
             <Link href="/glory" className={`${styles.infoFeatureCard} ${styles.infoGloryCard} shadow-sm h-100`}>
               <Image src="/glory.png" width={80} height={80} alt="Glory" className={styles.infoFeatureImg} />
               <h3>GLORY</h3>
               <p>Platform to showcase and appreciate achievements of FTI students in competitions.</p>
-            </Link>
-          </div>
-
-          <div className="col-lg-6 col-md-6">
-            <Link href="/info" className={`${styles.infoFeatureCard} ${styles.infoInfoCard} shadow-sm h-100`}>
-              <Image src="/info.png" width={80} height={80} alt="Info" className={styles.infoFeatureImg} />
-              <h3>INFO</h3>
-              <p>Updates on tech competitions and scholarships to support student growth and opportunities.</p>
             </Link>
           </div>
 
@@ -502,7 +486,6 @@ function AppFooter() {
             <h4 className={styles.infoFooterTitle}>About</h4>
             <Link href="/" className={styles.infoFooterLink}>Home</Link>
             <Link href="/bootcamp" className={styles.infoFooterLink}>Bootcamp</Link>
-            <Link href="/insight" className={styles.infoFooterLink}>Insight</Link>
             <Link href="/glory" className={styles.infoFooterLink}>Glory</Link>
             <Link href="/talk" className={styles.infoFooterLink}>Talks</Link>
             <Link href="/info" className={styles.infoFooterLink}>Info</Link>
