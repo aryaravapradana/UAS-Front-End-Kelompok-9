@@ -1,9 +1,4 @@
 /* ========================================
-   IMPORT MODERN FONTS - POPPINS & MONTSERRAT
-   ======================================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
-
-/* ========================================
    MAIN CONTAINER
    ======================================== */
 .main {
@@ -83,7 +78,7 @@
 
 .logoText {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 800;
   background: white;
   -webkit-background-clip: text;
@@ -95,7 +90,7 @@
 
 .navLink {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -124,12 +119,12 @@
 
 .btnPrimary {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
   color: #fff;
   border: none;
-  padding: 0.6rem 1.5rem;
+  padding: 0.55rem 1.4rem;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -139,12 +134,12 @@
 
 .btnOutline {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   background: transparent;
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 0.6rem 2rem;
+  padding: 0.55rem 1.8rem;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -174,7 +169,7 @@
 .heroTitle {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 3.5rem;
+  font-size: 2.75rem;
   line-height: 1.15;
   text-align: center;
   letter-spacing: -0.01em;
@@ -191,7 +186,7 @@
 
 .heroSubtext {
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
@@ -205,11 +200,11 @@
   position: relative;
   display: inline-block;
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem; 
+  font-size: 0.875rem; 
   font-weight: 600;
   color: #fff;
   background: linear-gradient(180deg, #1a1a1a 0%, #2b2b2b 100%);
-  padding: 0.85rem 3rem; 
+  padding: 0.8rem 2.8rem; 
   border: none;
   border-radius: 999px;
   cursor: pointer;
@@ -316,7 +311,7 @@
 .sectionTitle {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 3.3rem;
+  font-size: 2.5rem;
   line-height: 1.2;
   color: #f2f2f2;
   margin-bottom: 1.5rem;
@@ -325,7 +320,7 @@
 
 .sectionText {
   font-family: "Poppins", sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.9;
   color: rgba(255, 255, 255, 0.9);
   max-width: 90%;
@@ -356,7 +351,7 @@
   }
   .textBlock { padding-left: 0; }
   .logoBlock { margin-left: 0; }
-  .sectionTitle { font-size: 2.3rem; }
+  .sectionTitle { font-size: 2.1rem; }
   .sectionText { margin: 0 auto; max-width: 100%; }
   .logoTilt { transform: none; margin-top: 0; }
   .uccdLogo { max-width: 300px; }
@@ -433,28 +428,26 @@
 
 .featuresTitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 3rem;
+  font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
   margin: 0;
   text-transform: none;
 
-  /* ✨ Gradient nempel di huruf */
   background-image: linear-gradient(
     to bottom,
-    #f8f8f8 0%,    /* putih terang di atas */
-    #e0e0e0 25%,   /* abu muda */
-    #b5b5b5 50%,   /* abu sedang */
-    #8f8f8f 75%,   /* abu tua */
-    #707070 100%   /* abu metalik bawah */
+    #f8f8f8 0%,
+    #e0e0e0 25%,
+    #b5b5b5 50%,
+    #8f8f8f 75%,
+    #707070 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 
-  /* ✨ Sedikit efek kilau lembut */
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 3;
@@ -463,7 +456,7 @@
 
 .featuresSubtext {
   font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
   margin-top: 0.8rem;
 }
@@ -471,20 +464,23 @@
 /* CARD */
 .featureCard {
   background: rgba(94, 94, 94, 0.27);
-  border: 2px solid;
-  border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.53) 0%, rgba(188, 185, 185, 0.53) 47.12%, rgba(255, 255, 255, 0.53) 100%);
-  backdrop-filter: blur(17.399999618530273px);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+  border: 2px solid rgba(188, 185, 185, 0.4);
   border-radius: 20px;
   padding: 2.5rem 2rem;
   transition: all 0.3s ease;
   cursor: pointer;
   height: 100%;
   text-align: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .featureCard:hover {
   transform: translateY(-6px);
-  border-color: rgba(150, 150, 150, 0.4);
+  border-color: rgba(200, 200, 200, 0.6);
   box-shadow: 0 10px 25px rgba(150, 150, 150, 0.15);
 }
 
@@ -501,7 +497,7 @@
 }
 
 .featureCard:hover .featureImg {
-  filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.8));
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
   opacity: 1;
 }
 
@@ -509,14 +505,15 @@
 .featureCard h3 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #fff;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
 }
+
 .featureCard p {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #b0b0b0;
   line-height: 1.6;
   max-width: 100%;
@@ -528,7 +525,7 @@
     padding: 2rem 1.2rem;
   }
   .featuresTitle {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 }
 
@@ -557,7 +554,7 @@
 
 .footerLogoText {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #000000;
   letter-spacing: 0.05em;
@@ -565,7 +562,7 @@
 
 .footerTitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #000000;
   margin-bottom: 1.25rem;
@@ -573,14 +570,14 @@
 
 .footerText {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #000000;
   line-height: 1;
 }
 
 .footerLink {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #4a4a4a;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -593,7 +590,7 @@
 
 .footerCopyright {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: rgb(0, 0, 0);
   margin: 0;
 }
@@ -617,7 +614,7 @@
   background: linear-gradient(45deg, #c31f1f, #dd2a7b, #8134af, #515bd4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 
@@ -625,30 +622,31 @@
    RESPONSIVE
    ======================================== */
 @media (max-width: 1200px) {
-  .heroTitle { font-size: 3.2rem; }
-  .sectionTitle { font-size: 2.8rem; }
+  .heroTitle { font-size: 2.5rem; }
+  .sectionTitle { font-size: 2.3rem; }
 }
 
 @media (max-width: 992px) {
-  .heroTitle { font-size: 2.8rem; }
-  .heroSubtext { font-size: 0.95rem; }
-  .sectionTitle { font-size: 2.4rem; }
+  .heroTitle { font-size: 2.25rem; }
+  .heroSubtext { font-size: 0.9rem; }
+  .sectionTitle { font-size: 2rem; }
+  .featuresTitle { font-size: 1.9rem; }
 }
 
 @media (max-width: 768px) {
-  .heroTitle { font-size: 2.3rem; }
-  .heroSubtext { font-size: 0.9rem; }
-  .btnExplore { padding: 1rem 2.5rem; font-size: 1rem; }
-  .sectionTitle { font-size: 2rem; }
-  .sectionText { font-size: 1rem; }
-  .featuresTitle { font-size: 2.2rem; }
+  .heroTitle { font-size: 1.95rem; }
+  .heroSubtext { font-size: 0.85rem; }
+  .btnExplore { padding: 0.9rem 2.3rem; font-size: 0.875rem; }
+  .sectionTitle { font-size: 1.8rem; }
+  .sectionText { font-size: 0.9rem; }
+  .featuresTitle { font-size: 1.7rem; }
 }
 
 @media (max-width: 576px) {
-  .logoText { font-size: 1.3rem; }
-  .heroTitle { font-size: 1.8rem; }
-  .heroSubtext { font-size: 0.85rem; }
-  .btnExplore { padding: 0.9rem 2rem; font-size: 0.95rem; }
-  .featuresTitle { font-size: 1.8rem; }
-  .featureCard { padding: 2.5rem 2rem; }
+  .logoText { font-size: 1.15rem; }
+  .heroTitle { font-size: 1.75rem; }
+  .heroSubtext { font-size: 0.8rem; }
+  .btnExplore { padding: 0.85rem 1.9rem; font-size: 0.85rem; }
+  .featuresTitle { font-size: 1.5rem; }
+  .featureCard { padding: 2.25rem 1.8rem; }
 }

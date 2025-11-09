@@ -6,14 +6,17 @@ import styles from "./page.module.css";
 import Header from "./components/Header";
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTransition } from './context/TransitionContext';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const searchParams = useSearchParams();
+  const { endTransition } = useTransition();
 
   useEffect(() => {
+    endTransition();
     const message = searchParams.get('message');
     if (message === 'login-success') {
       setSuccessMessage('Login berhasil! Selamat datang di UCCD.');
@@ -24,7 +27,7 @@ export default function Home() {
     // Check for token to determine login status
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-  }, [searchParams]);
+  }, [searchParams, endTransition]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -97,9 +100,9 @@ export default function Home() {
             <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
           </div>
 
-          <div className="row gy-4 justify-content-center" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="row gy-4 justify-content-center">
             <div className="col-lg-4 col-md-6">
-              <Link href="/bootcamp" className={`${styles.featureCard} shadow-sm`}>
+              <Link href="/bootcamp" className={`${styles.featureCard} shadow-sm h-100`}>
                 <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
                 <h3>BOOTCAMP</h3>
                 <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
@@ -107,7 +110,7 @@ export default function Home() {
             </div>
 
             <div className="col-lg-4 col-md-6">
-              <Link href="/insight" className={`${styles.featureCard} shadow-sm`}>
+              <Link href="/insight" className={`${styles.featureCard} shadow-sm h-100`}>
                 <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
                 <h3>INSIGHT</h3>
                 <p>Articles and discussions on current issues in technology and digital developments.</p>
@@ -115,7 +118,7 @@ export default function Home() {
             </div>
 
             <div className="col-lg-4 col-md-6">
-              <Link href="/glory" className={`${styles.featureCard} shadow-sm`}>
+              <Link href="/glory" className={`${styles.featureCard} shadow-sm h-100`}>
                 <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
                 <h3>GLORY</h3>
                 <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
@@ -123,7 +126,7 @@ export default function Home() {
             </div>
 
             <div className="col-lg-4 col-md-6">
-              <Link href="/info" className={`${styles.featureCard} shadow-sm`}>
+              <Link href="/info" className={`${styles.featureCard} shadow-sm h-100`}>
                 <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
                 <h3>INFO</h3>
                 <p>Updates on tech competitions and scholarships to support student growth.</p>
@@ -131,7 +134,7 @@ export default function Home() {
             </div>
 
             <div className="col-lg-4 col-md-6">
-              <Link href="/talks" className={`${styles.featureCard} shadow-sm`}>
+              <Link href="/talks" className={`${styles.featureCard} shadow-sm h-100`}>
                 <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
                 <h3>TALKS</h3>
                 <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>

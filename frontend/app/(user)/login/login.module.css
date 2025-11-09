@@ -100,7 +100,7 @@
 
 .logo span {
   color: #ffffff;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.3px;
 }
@@ -152,7 +152,7 @@
 
 .title {
   color: #ffffff;
-  font-size: 30px;
+  font-size: 1.875rem;
   font-weight: 600;
   margin-bottom: 8px;
   text-align: center;
@@ -162,7 +162,7 @@
 
 .subtitle {
   color: rgba(255, 255, 255, 0.58);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   text-align: center;
   line-height: 1.4;
@@ -175,7 +175,7 @@
   padding: 11px 14px;
   border-radius: 10px;
   margin-bottom: 18px;
-  font-size: 13.5px;
+  font-size: 0.84rem;
   text-align: center;
   font-weight: 500;
 }
@@ -187,7 +187,7 @@
   padding: 11px 14px;
   border-radius: 10px;
   margin-bottom: 18px;
-  font-size: 13.5px;
+  font-size: 0.84rem;
   text-align: center;
   font-weight: 500;
   opacity: 0;
@@ -212,7 +212,7 @@
   position: absolute;
   left: 16px;
   color: rgba(255, 255, 255, 0.38);
-  font-size: 15px;
+  font-size: 1rem;
   pointer-events: none;
   z-index: 1;
 }
@@ -224,7 +224,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: all 0.25s ease;
   outline: none;
   font-family: inherit;
@@ -255,7 +255,7 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
   transition: all 0.22s ease;
   margin-top: 6px;
@@ -285,7 +285,7 @@
   text-align: center;
   margin-top: 26px;
   color: rgba(255, 255, 255, 0.54);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
 }
 
@@ -310,7 +310,7 @@
 }
 
 .forgotPassword {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   transition: all 0.2s ease;
@@ -319,6 +319,15 @@
 .forgotPassword:hover {
   color: #ffffff;
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .form {
+    padding: 40px 32px;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -330,11 +339,11 @@
   }
   
   .title {
-    font-size: 26px;
+    font-size: 1.6rem;
   }
   
   .subtitle {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   
   .logo {
@@ -347,7 +356,7 @@
   }
   
   .logo span {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
   
   .formIcon {

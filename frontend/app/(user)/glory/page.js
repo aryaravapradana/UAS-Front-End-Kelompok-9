@@ -2,10 +2,12 @@
 
 import styles from '../page.module.css';
 import Header from '../components/Header';
+import PageTransitionLoader from '../components/PageTransitionLoader';
 
 export default function GloryPage() {
   return (
     <main className={styles.main}>
+      <PageTransitionLoader />
       <Header />
       <div className="container py-5 mt-5">
         <h1 className="text-center text-white">Glory</h1>

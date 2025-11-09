@@ -14,7 +14,7 @@ export const TransitionProvider = ({ children }) => {
     document.body.classList.add('page-transition-exit-active');
     setTimeout(() => {
       router.push(url);
-    }, 500); // Duration should match the CSS transition duration
+    }, 250); // Duration should match the CSS transition duration
   }, [router]);
 
   const endTransition = useCallback(() => {

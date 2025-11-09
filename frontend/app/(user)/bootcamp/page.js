@@ -6,9 +6,15 @@ import Image from 'next/image';
 import styles from './bootcamp.module.css';
 import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
+import { useTransition } from '../context/TransitionContext';
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
+  const { endTransition } = useTransition();
+
+  useEffect(() => {
+    endTransition();
+  }, [endTransition]);
 
   return (
     <div className={styles.bootcampPage}>
@@ -75,7 +81,7 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
   useEffect(() => {
     const fetchBootcamps = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/bootcamps');
+        const res = await fetch('/api/bootcamps');
         if (!res.ok) {
           throw new Error('Failed to fetch bootcamps');
         }
@@ -127,7 +133,7 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
   return (
     <section className={styles.chooseTrackSection}>
       <div className="container text-center">
-        <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+        <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '140px', '--line-right-offset': '-140px', '--line-right-length': '140px' }}>
           <span className={`${styles.dot} ${styles.dotLeft}`}></span>
           <h2 className={styles.sectionTitle}>Choose Your Track</h2>
           <span className={`${styles.dot} ${styles.dotRight}`}></span>
@@ -135,19 +141,19 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
         <p className={styles.sectionSubtitle}>Choose the path that matches your passion and start mastering the digital skills of tomorrow.</p>
 
         <div className={styles.trackFilter}>
-          <button
-            className={activeTrack === 'complete' ? styles.active : ''}
-            onClick={() => setActiveTrack('complete')}
-          >
-            Completed
-          </button>
-          <button
-            className={activeTrack === 'upcoming' ? styles.active : ''}
-            onClick={() => setActiveTrack('upcoming')}
-          >
-            Coming Soon
-          </button>
-        </div>
+        <button
+          className={activeTrack === 'upcoming' ? styles.active : ''}
+          onClick={() => setActiveTrack('upcoming')}
+        >
+          Coming Soon
+        </button>
+        <button
+          className={activeTrack === 'complete' ? styles.active : ''}
+          onClick={() => setActiveTrack('complete')}
+        >
+          Completed
+        </button>
+      </div>
 
         <div className={styles.trackCards}>
           {bootcamps.map((bootcamp) => (
@@ -164,6 +170,7 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
               <div className={styles.trackInfo}>
                 <div className={styles.trackTitleRow}>
                   <h3>{bootcamp.nama_bootcamp}</h3>
+                  <span className={styles.trackBadge}>See Details</span>
                 </div>
                 <ul className={styles.trackDetails}>
                   <li>
@@ -221,27 +228,25 @@ function WhyJoinSection() {
   
     return (
       <section className={styles.whyJoinSection}>
-        <div className="container text-center">
-          <div className="row align-items-center">
-            <div className="col-lg-5">
-              <div className={styles.leftContent}>
-                <h2 className={styles.mainTitle}>
-                  Why You Should<br />
-                  <span className={styles.gradientText}>Join the Bootcamp</span>
-                </h2>
-                <div className={styles.whyJoinImage}>
-                  <Image 
-                    src="/bootcamp/bootcamp.png" 
-                    alt="Students Celebrating" 
-                    width={400}
-                    height={300}
-                    className={`${styles.whyImg} img-fluid`}
-                  />
-                </div>
+        <div className="container">
+          <div className={styles.whyJoinContent}>
+            <div className={styles.whyJoinLeft}>
+              <h2 className={styles.mainTitle}>
+                Why You Should<br />
+                <span className={styles.gradientText}>Join the Bootcamp</span>
+              </h2>
+              <div className={styles.whyJoinImage}>
+                <Image 
+                  src="/bootcamp/bootcamp.png" 
+                  alt="Students Celebrating" 
+                  width={400}
+                  height={300}
+                  className={styles.whyImg}
+                />
               </div>
             </div>
             
-            <div className="col-lg-7">
+            <div className={styles.whyJoinRight}>
               <div className="row g-3">
                 {reasons.map((reason, index) => (
                   <div key={index} className="col-md-6">
@@ -284,31 +289,43 @@ function WhyJoinSection() {
               <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
             </div>
   
-            <div className={styles.cardGrid}>
-              <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/bootcamp')}>
-                <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
-                <h3>BOOTCAMP</h3>
-                <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
+            <div className="row justify-content-center mb-4">
+              <div className="col-lg-4 col-md-6 mb-4">
+                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/insight')}>
+                  <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
+                  <h3>INSIGHT</h3>
+                  <p>Articles and discussions on current issues in technology and digital developments.</p>
+                </div>
               </div>
-              <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/insight')}>
-                <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
-                <h3>INSIGHT</h3>
-                <p>Articles and discussions on current issues in technology and digital developments.</p>
+              <div className="col-lg-4 col-md-6 mb-4">
+                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/glory')}>
+                  <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                  <h3>GLORY</h3>
+                  <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+                </div>
               </div>
-              <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/glory')}>
-                <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-                <h3>GLORY</h3>
-                <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+              <div className="col-lg-4 col-md-6 mb-4">
+                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/info')}>
+                  <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+                  <h3>INFO</h3>
+                  <p>Updates on tech competitions and scholarships to support student growth.</p>
+                </div>
               </div>
-              <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/info')}>
-                <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
-                <h3>INFO</h3>
-                <p>Updates on tech competitions and scholarships to support student growth.</p>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-lg-4 col-md-6 mb-4">
+                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/talks')}>
+                  <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+                  <h3>TALKS</h3>
+                  <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+                </div>
               </div>
-              <div className={`${styles.newFeatureCard} shadow-sm`} onClick={() => router.push('/talks')}>
-                <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
-                <h3>TALKS</h3>
-                <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+              <div className="col-lg-4 col-md-6 mb-4">
+                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/member')}>
+                  <Image src="/globe.svg" width={64} height={64} alt="Members" className={styles.featureImg} />
+                  <h3>MEMBERS</h3>
+                  <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -320,9 +337,9 @@ function WhyJoinSection() {
     return (
       <footer className={styles.newFooter}>
           <div className="container">
-            <div className="row g-5">
-              <div className="col-lg-4 col-md-6">
-                <div className="d-flex align-items-start gap-3 mb-3">
+            <div className="row g-5 justify-content-center">
+              <div className="col-lg-4 col-md-6 text-center text-lg-start">
+                <div className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 mb-3">
                   <div className={styles.footerLogo}>
                     <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} />
                   </div>
@@ -338,7 +355,7 @@ function WhyJoinSection() {
                 </p>
               </div>
   
-              <div className="col-lg-4 col-md-3">
+              <div className="col-lg-auto col-md-3 text-center text-lg-start">
                 <h4 className={styles.footerTitle}>Contact</h4>
                 <ul className="list-unstyled">
                 <li className="mb-3">
@@ -361,32 +378,32 @@ function WhyJoinSection() {
               </ul>
               </div>
               
-  <div className="col-lg-4 col-md-3">
-    <h4 className={styles.footerTitle}>About</h4>
-    <ul className="list-unstyled">
-      <li className="mb-2">
-        <Link href="/home" className={styles.footerLink}>Home</Link>
-      </li>
-      <li className="mb-2">
-        <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
-      </li>
-      <li className="mb-2">
-        <Link href="/insight" className={styles.footerLink}>Insight</Link>
-      </li>
-      <li className="mb-2">
-        <Link href="/glory" className={styles.footerLink}>Glory</Link>
-      </li>
-      <li className="mb-2">
-        <Link href="/talks" className={styles.footerLink}>Talks</Link>
-      </li>
-      <li className="mb-2">
-        <Link href="/info" className={styles.footerLink}>Info</Link>
-      </li>
-    </ul>
-  </div>
+              <div className="col-lg-auto col-md-3 text-center text-lg-start">
+                <h4 className={styles.footerTitle}>About</h4>
+                <ul className="list-unstyled">
+                  <li className="mb-2">
+                    <Link href="/home" className={styles.footerLink}>Home</Link>
+                  </li>
+                  <li className="mb-2">
+                    <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
+                  </li>
+                  <li className="mb-2">
+                    <Link href="/insight" className={styles.footerLink}>Insight</Link>
+                  </li>
+                  <li className="mb-2">
+                    <Link href="/glory" className={styles.footerLink}>Glory</Link>
+                  </li>
+                  <li className="mb-2">
+                    <Link href="/talks" className={styles.footerLink}>Talks</Link>
+                  </li>
+                  <li className="mb-2">
+                    <Link href="/info" className={styles.footerLink}>Info</Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center mt-4">
               <p className={styles.footerCopyright}>
                 © 2025 UCCD - Untar Computer Club Development. All rights reserved.
               </p>
