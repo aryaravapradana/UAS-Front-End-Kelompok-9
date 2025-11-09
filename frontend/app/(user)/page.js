@@ -76,7 +76,7 @@ export default function Home() {
               <p className={styles.sectionText}>
                 UCCD is an organization under the Student Executive Board (BEM) of FTI UNTAR, established to develop
                 academic extracurricular activities, particularly in the field of information technology. Currently,
-                UCCD consists of five main programs: Insight, Talks, Bootcamp, Glory, and Info.
+                UCCD consists of four main programs: Talks, Bootcamp, Glory, and Info.
               </p>
             </div>
 
@@ -101,43 +101,35 @@ export default function Home() {
           </div>
 
           <div className="row gy-4 justify-content-center">
-            <div className="col-lg-4 col-md-6">
-              <Link href="/bootcamp" className={`${styles.featureCard} shadow-sm h-100`}>
+            <div className="col-lg-3 col-md-6">
+              <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm h-100`}>
                 <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
                 <h3>BOOTCAMP</h3>
                 <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
               </Link>
             </div>
 
-            <div className="col-lg-4 col-md-6">
-              <Link href="/insight" className={`${styles.featureCard} shadow-sm h-100`}>
-                <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
-                <h3>INSIGHT</h3>
-                <p>Articles and discussions on current issues in technology and digital developments.</p>
-              </Link>
-            </div>
-
-            <div className="col-lg-4 col-md-6">
-              <Link href="/glory" className={`${styles.featureCard} shadow-sm h-100`}>
-                <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-                <h3>GLORY</h3>
-                <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
-              </Link>
-            </div>
-
-            <div className="col-lg-4 col-md-6">
-              <Link href="/info" className={`${styles.featureCard} shadow-sm h-100`}>
+            <div className="col-lg-3 col-md-6">
+              <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`}>
                 <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
                 <h3>INFO</h3>
                 <p>Updates on tech competitions and scholarships to support student growth.</p>
               </Link>
             </div>
 
-            <div className="col-lg-4 col-md-6">
-              <Link href="/talks" className={`${styles.featureCard} shadow-sm h-100`}>
+            <div className="col-lg-3 col-md-6">
+              <Link href="/talks" className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`}>
                 <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
                 <h3>TALKS</h3>
                 <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+              </Link>
+            </div>
+
+            <div className="col-lg-3 col-md-6">
+              <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`}>
+                <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                <h3>GLORY</h3>
+                <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
               </Link>
             </div>
           </div>
@@ -192,7 +184,7 @@ export default function Home() {
               <ul className="list-unstyled">
                 <li className="mb-2"><Link href="/" className={styles.footerLink}>Home</Link></li>
                 <li className="mb-2"><Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link></li>
-                <li className="mb-2"><Link href="/insight" className={styles.footerLink}>Insight</Link></li>
+                
                 <li className="mb-2"><Link href="/glory" className={styles.footerLink}>Glory</Link></li>
                 <li className="mb-2"><Link href="/talks" className={styles.footerLink}>Talks</Link></li>
                 <li className="mb-2"><Link href="/info" className={styles.footerLink}>Info</Link></li>
