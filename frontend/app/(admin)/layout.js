@@ -20,6 +20,8 @@ export const metadata = {
   description: 'Admin dashboard for UCCD',
 };
 
+export const viewport = 'width=device-width, initial-scale=1';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>

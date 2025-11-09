@@ -858,232 +858,6 @@
   margin-bottom: 0;
 }
 
-/* ==================== KNOW MORE SECTION ==================== */
-.knowMoreSection {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 5rem 0;
-  margin: 0;
-  background-color: #000000;
-  background-image: url('/bootcamp/get_to_know_more.png');
-  background-size: 100% 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-
-.knowMoreBackground {
-  display: none;
-}
-
-.newSectionTitle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 550;
-  font-size: 4rem;
-  line-height: 98%;
-  letter-spacing: -4%;
-  text-align: center;
-  background: linear-gradient(270deg, #8316AE 0%, #FFFFFF 33.17%, #FFFFFF 73.08%, #AE10EC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.infoCardsGrid {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  margin-top: 3rem;
-}
-
-.infoCard {
-  flex: 1 1 300px;
-  max-width: 350px;
-  min-height: 260px;
-  background: rgba(58, 10, 88, 0.55);
-  border: 1.5px solid rgba(168, 85, 247, 0.35);
-  border-radius: 20px;
-  text-align: center;
-  padding: 2.5rem 2rem;
-  transition: all 0.35s ease;
-  box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-}
-
-/* efek border gradient halus di pinggir */
-.infoCard::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: 20px;
-  background: linear-gradient(315deg, #C763EE, #FFFFFF, #C763EE);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.infoCard:hover::before {
-  opacity: 1;
-}
-
-.infoCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(168, 85, 247, 0.35);
-  border-color: rgba(199, 99, 238, 0.55);
-  background: rgba(100, 35, 150, 0.65);
-}
-
-/* icon + teks */
-.infoIconWrapper {
-  width: 90px;
-  height: 90px;
-  border-radius: 20px;
-  background: rgba(168, 85, 247, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.infoIconWrapper img {
-  width: 55px;
-  height: 55px;
-  filter: brightness(1.1);
-  transition: all 0.3s ease;
-}
-
-.infoCard:hover .infoIconWrapper {
-  background: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-}
-
-.infoCard h3 {
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
-}
-
-.infoCard p {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-
-.infoLink {
-  display: inline-block;
-  color: #C084FC;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.8rem;
-  transition: color 0.3s;
-}
-
-.infoLink:hover {
-  color: #E0B3FF;
-}
-
-.newFeatureCard {
-  background: rgba(94, 94, 94, 0.27);
-  border: 2px solid transparent;
-  backdrop-filter: blur(17.399999618530273px);
-  padding: 2rem;
-  border-radius: 15px;
-  text-align: left;
-  transition: all 0.3s;
-  position: relative;
-  width: 100%;
-  max-width: 350px;
-}
-
-.newFeatureCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 15px;
-  border: 2px solid transparent;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.53) 0%, rgba(188, 185, 185, 0.53) 47.12%, rgba(255, 255, 255, 0.53) 100%) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-}
-
-.newFeatureCard:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.newFeatureCard:hover .featureImg {
-  transform: scale(1.1);
-}
-
-.newFeatureCard h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #fff;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-}
-
-.newFeatureCard p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  color: #b0b0b0;
-  line-height: 1.6;
-  max-width: 100%;
-}
-
-.featureImg {
-  display: block;
-  margin: 0 0 2rem 0;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
-  transition: all 0.3s ease;
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-}
-
-.newFeatureCard:nth-child(1) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #B040DD);
-}
-
-.newFeatureCard:nth-child(2) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #C763EE);
-}
-
-.newFeatureCard:nth-child(3) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #8316AE);
-}
-
-.newFeatureCard:nth-child(4) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #A855F7);
-}
-
-.newFeatureCard:nth-child(5) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #C084FC);
-}
-
-.newFeatureCard:nth-child(6) .featureImg:hover {
-  filter: brightness(0) invert(1) drop-shadow(0 0 20px #E0B3FF);
-}
-
 /* ==================== FOOTER ==================== */
 .footer {
   position: relative;
@@ -1689,23 +1463,6 @@
   }
 }
 
-/* ==================== RESPONSIVE - KNOW MORE SECTION ==================== */
-@media (max-width: 767px) {
-  .knowMoreSection {
-    background-size: cover;
-  }
-  
-  .infoCardsGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .infoCardsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 /* ==================== RESPONSIVE - FOOTER ==================== */
 @media (max-width: 767px) {
   .footer {
@@ -1761,4 +1518,189 @@
   .container {
     max-width: 2000px;
   }
+}
+
+/* ========================================
+   BOOTCAMP FEATURES SECTION (Get To Know More)
+   ======================================== */
+.bootcampFeaturesSection {
+  background-image: url('/bootcamp/get_to_know_more.png'); /* Changed image path */
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 8rem 0;
+  margin: 0;
+  position: relative;
+  overflow: visible;
+  background-color: #000000;
+  min-height: 80vh;
+}
+
+.bootcampTitleWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 2rem;
+  z-index: 2;
+}
+
+.bootcampTitleWrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: var(--line-left-offset, -120px);
+  width: var(--line-left-length, 100px);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.9));
+  transform: translateY(-50%);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.bootcampTitleWrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: var(--line-right-offset, -120px);
+  width: var(--line-right-length, 100px);
+  height: 1px;
+  background: linear-gradient(to left, transparent, rgba(255,255,255,0.9));
+  transform: translateY(-50%);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.bootcampDotLeft {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--line-left-offset, -120px) + var(--line-left-length, 100px));
+  transform: translateY(-50%);
+}
+
+.bootcampDotRight {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--line-right-offset, -120px) + var(--line-right-length, 100px));
+  transform: translateY(-50%);
+}
+
+.bootcampDot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 70%, rgba(255,255,255,0.7));
+  box-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 25px rgba(255,255,255,0.5);
+  z-index: 2;
+}
+
+.bootcampFeaturesTitle {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 98%;
+  letter-spacing: -0.04em;
+  text-align: center;
+  background: linear-gradient(270deg, #0E9BDB 0%, #FFFFFF 33.17%, #FFFFFF 73.08%, #0E9BDB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 3;
+  display: inline-block;
+}
+
+.bootcampFeaturesSubtext {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 0.8rem;
+}
+
+.bootcampFeatureCard {
+  background: rgba(94, 94, 94, 0.27);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+  border: 2px solid rgba(188, 185, 185, 0.4);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  text-align: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+}
+
+.bootcampFeatureCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(150, 150, 150, 0.15);
+}
+
+.bootcampFeatureImg {
+  display: block;
+  margin: 0 0 2rem 0;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.bootcampFeatureCard:hover .bootcampFeatureImg {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+.bootcampFeatureCard h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  text-align: left;
+}
+
+.bootcampFeatureCard p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  max-width: 100%;
+  text-decoration: none;
+  text-align: left;
+}
+
+.bootcampCard:hover {
+  border-color: #B040DD;
+}
+.bootcampInfoCard:hover {
+  border-color: #EBE643;
+}
+.bootcampTalksCard:hover {
+  border-color: #44C3DC;
+}
+.bootcampGloryCard:hover {
+  border-color: #E53935;
+}
+
+.bootcampCard:hover .bootcampFeatureImg {
+  filter: brightness(0) invert(1) drop-shadow(0 0 12px #B040DD);
+}
+.bootcampInfoCard:hover .bootcampFeatureImg {
+  filter: brightness(0) invert(1) drop-shadow(0 0 12px #EBE643);
+}
+.bootcampTalksCard:hover .bootcampFeatureImg {
+  filter: brightness(0) invert(1) drop-shadow(0 0 12px #44C3DC);
+}
+.bootcampGloryCard:hover .bootcampFeatureImg {
+  filter: brightness(0) invert(1) drop-shadow(0 0 12px #E53935);
 }

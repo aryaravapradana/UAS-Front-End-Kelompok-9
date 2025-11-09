@@ -23,7 +23,7 @@ export default function BootcampPage() {
       <WhatIsSection />
       <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
       <WhyJoinSection />
-      <KnowMoreSection />
+      <BootcampKnowMoreSection />
       <NewFooter />
     </div>
   );
@@ -275,50 +275,48 @@ function WhyJoinSection() {
     );
   }
   
-  function KnowMoreSection() {
-      const router = useRouter();
-    return (
-      <section className={styles.knowMoreSection}>
-          <div className="container text-center">
-            <div className="mb-5">
-              <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
-                <span className={`${styles.dot} ${styles.dotLeft}`}></span>
-                <h2 className={styles.newSectionTitle}>Get To Know More</h2>
-                <span className={`${styles.dot} ${styles.dotRight}`}></span>
-              </div>
-              <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
-            </div>
-  
-<div className="row justify-content-center">
-  <div className="col-lg-4 col-md-6 mb-4">
-    <div className={`${styles.infoCard} ${styles.info} shadow-sm h-100`} onClick={() => router.push('/info')}>
-      <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
-      <h3>INFO</h3>
-      <p>Updates on tech competitions and scholarships to support student growth.</p>
-    </div>
-  </div>
-
-  <div className="col-lg-4 col-md-6 mb-4">
-    <div className={`${styles.infoCard} ${styles.talks} shadow-sm h-100`} onClick={() => router.push('/talk')}>
-      <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
-      <h3>TALKS</h3>
-      <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
-    </div>
-  </div>
-
-  <div className="col-lg-4 col-md-6 mb-4">
-    <div className={`${styles.infoCard} ${styles.glory} shadow-sm h-100`} onClick={() => router.push('/glory')}>
-      <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-      <h3>GLORY</h3>
-      <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
-    </div>
-  </div>
-</div>
-
+  function BootcampKnowMoreSection() {
+  return (
+    <section className={styles.bootcampFeaturesSection}>
+      <div className="container text-center">
+        <div className="mb-5">
+          <div className={styles.bootcampTitleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+            <span className={`${styles.bootcampDot} ${styles.bootcampDotLeft}`}></span>
+            <h2 className={styles.bootcampFeaturesTitle}>Get To Know More</h2>
+            <span className={`${styles.bootcampDot} ${styles.bootcampDotRight}`}></span>
           </div>
-        </section>
-    );
-  }
+          <p className={styles.bootcampFeaturesSubtext}>Gain the information you need to level up your skills here</p>
+        </div>
+
+        <div className="row gy-4 justify-content-center">
+          <div className="col-lg-3 col-md-6" key="info-col">
+            <Link href="/info" className={`${styles.bootcampFeatureCard} ${styles.bootcampInfoCard} shadow-sm h-100`}>
+              <Image src="/info.png" width={64} height={64} alt="Info" className={styles.bootcampFeatureImg} />
+              <h3>INFO</h3>
+              <p>Updates on tech competitions and scholarships to support student growth.</p>
+            </Link>
+          </div>
+
+          <div className="col-lg-3 col-md-6" key="talks-col">
+            <Link href="/talks" className={`${styles.bootcampFeatureCard} ${styles.bootcampTalksCard} shadow-sm h-100`}>
+              <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.bootcampFeatureImg} />
+              <h3>TALKS</h3>
+              <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+            </Link>
+          </div>
+
+          <div className="col-lg-3 col-md-6" key="glory-col">
+            <Link href="/glory" className={`${styles.bootcampFeatureCard} ${styles.bootcampGloryCard} shadow-sm h-100`}>
+              <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.bootcampFeatureImg} />
+              <h3>GLORY</h3>
+              <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
   
   function NewFooter() {
     return (

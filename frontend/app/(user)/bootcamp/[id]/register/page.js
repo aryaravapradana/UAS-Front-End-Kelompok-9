@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Header from '../../../../components/Header';
-import { useTransition } from '../../../../context/TransitionContext';
+import Header from '../../../components/Header';
+import { useTransition } from '../../../context/TransitionContext';
 
 async function getBootcamp(id) {
   const res = await fetch(`http://127.0.0.1:3001/api/bootcamps/${id}`, { cache: 'no-store' });

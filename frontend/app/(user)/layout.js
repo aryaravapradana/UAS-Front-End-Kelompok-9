@@ -23,8 +23,9 @@ export const metadata = {
   title: 'UCCD - Untar Computer Club Development',
   description: 'Empowering FTI Students Through Technology & Innovation - The official platform for sharing insights, learning and growing in the world of technology',
   keywords: 'UCCD, Untar, Computer Club, FTI, Technology, Innovation, Bootcamp, Insight, Glory, Talks, Info',
-  viewport: 'width=device-width, initial-scale=1',
 }
+
+export const viewport = 'width=device-width, initial-scale=1';
 
 export default function RootLayout({ children }) {
   return (

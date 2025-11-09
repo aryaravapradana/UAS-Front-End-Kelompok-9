@@ -35,7 +35,6 @@ body {
   background: #666;
 }
 
-/* Basic Fade Transition */
 .page-transition-enter {
   opacity: 0;
 }
