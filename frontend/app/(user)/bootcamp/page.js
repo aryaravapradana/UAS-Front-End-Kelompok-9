@@ -298,7 +298,7 @@ function WhyJoinSection() {
           </div>
 
           <div className="col-lg-3 col-md-6" key="talks-col">
-            <Link href="/talks" className={`${styles.bootcampFeatureCard} ${styles.bootcampTalksCard} shadow-sm h-100`}>
+            <Link href="/talk" className={`${styles.bootcampFeatureCard} ${styles.bootcampTalksCard} shadow-sm h-100`}>
               <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.bootcampFeatureImg} />
               <h3>TALKS</h3>
               <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
