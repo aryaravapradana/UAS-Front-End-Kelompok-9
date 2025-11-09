@@ -471,12 +471,6 @@
   overflow: visible;
 }
 
-.trackFilter button:first-child {
-  background: rgba(55, 55, 55, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
 .trackFilter button:hover {
   background: rgba(70, 70, 70, 0.4);
   color: #FFFFFF;

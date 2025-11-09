@@ -33,10 +33,10 @@ const Header = () => {
         </TransitionLink>
         <nav className="d-none d-lg-flex align-items-center gap-4">
           <TransitionLink href="/" className={styles.navLink}>Home</TransitionLink>
-          <TransitionLink href="/beasiswa" className={styles.navLink}>Beasiswa</TransitionLink>
-          <TransitionLink href="/lomba" className={styles.navLink}>Lomba</TransitionLink>
           <TransitionLink href="/bootcamp" className={styles.navLink}>Bootcamp</TransitionLink>
+          <TransitionLink href="/info" className={styles.navLink}>Info</TransitionLink>
           <TransitionLink href="/talk" className={styles.navLink}>Talks</TransitionLink>
+          <TransitionLink href="/glory" className={styles.navLink}>Glory</TransitionLink>
           <TransitionLink href="/dashboard" className={styles.navLink}>Dashboard</TransitionLink>
         </nav>
         <div className="d-flex align-items-center gap-3">

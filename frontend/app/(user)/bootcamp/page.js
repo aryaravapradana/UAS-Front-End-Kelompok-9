@@ -289,42 +289,26 @@ function WhyJoinSection() {
               <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
             </div>
   
-            <div className="row justify-content-center mb-4">
+            <div className="row justify-content-center">
               <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/insight')}>
-                  <Image src="/insight.png" width={64} height={64} alt="Insight" className={styles.featureImg} />
-                  <h3>INSIGHT</h3>
-                  <p>Articles and discussions on current issues in technology and digital developments.</p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/glory')}>
-                  <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-                  <h3>GLORY</h3>
-                  <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/info')}>
+                <div className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`} onClick={() => router.push('/info')}>
                   <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
                   <h3>INFO</h3>
                   <p>Updates on tech competitions and scholarships to support student growth.</p>
                 </div>
               </div>
-            </div>
-            <div className="row justify-content-center">
               <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/talks')}>
+                <div className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`} onClick={() => router.push('/talks')}>
                   <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
                   <h3>TALKS</h3>
                   <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.newFeatureCard} shadow-sm h-100`} onClick={() => router.push('/member')}>
-                  <Image src="/globe.svg" width={64} height={64} alt="Members" className={styles.featureImg} />
-                  <h3>MEMBERS</h3>
-                  <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+                <div className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`} onClick={() => router.push('/glory')}>
+                  <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                  <h3>GLORY</h3>
+                  <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
                 </div>
               </div>
             </div>
@@ -336,7 +320,7 @@ function WhyJoinSection() {
   function NewFooter() {
     return (
       <footer className={styles.newFooter}>
-          <div className="container">
+          <div className="container text-center">
             <div className="row g-5 justify-content-center">
               <div className="col-lg-4 col-md-6 text-center text-lg-start">
                 <div className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 mb-3">
@@ -387,9 +371,7 @@ function WhyJoinSection() {
                   <li className="mb-2">
                     <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
                   </li>
-                  <li className="mb-2">
-                    <Link href="/insight" className={styles.footerLink}>Insight</Link>
-                  </li>
+                  
                   <li className="mb-2">
                     <Link href="/glory" className={styles.footerLink}>Glory</Link>
                   </li>
