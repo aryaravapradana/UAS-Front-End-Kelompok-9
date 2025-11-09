@@ -476,7 +476,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   text-decoration: none; /* Remove underline from link */
 }
 
@@ -485,19 +484,32 @@
   box-shadow: 0 10px 25px rgba(150, 150, 150, 0.15);
 }
 
+/* ICON WRAPPER */
+.featureImgWrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.3s ease, background-image 0.3s ease;
+  align-self: center;
+}
+
 /* ICON */
 .featureImg {
-  display: block;
-  margin: 0 0 2rem 0;
   filter: brightness(0) invert(1);
   opacity: 0.9;
   transition: all 0.3s ease;
-  width: 80px;
-  height: 80px;
+  width: 64px; /* Explicit size */
+  height: 64px; /* Explicit size */
   object-fit: contain;
 }
 
 .featureCard:hover .featureImg {
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
   opacity: 1;
 }
 
@@ -510,7 +522,7 @@
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
 }
 
 .featureCard p {
@@ -520,7 +532,7 @@
   line-height: 1.6;
   max-width: 100%;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
 }
 
 /* RESPONSIVE */
@@ -654,7 +666,6 @@
   .featuresTitle { font-size: 1.5rem; }
   .featureCard { padding: 2.25rem 1.8rem; }
 }
-
 /* CARD HOVER STYLES */
 .bootcampCard:hover {
   border-color: #B040DD;
@@ -669,15 +680,15 @@
   border-color: #E53935;
 }
 
-.bootcampCard:hover .featureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #B040DD);
+.bootcampCard:hover .featureImgWrapper {
+  background: linear-gradient(90deg, #B040DD 0%, #8316AE 100%);
 }
-.infoCard:hover .featureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #EBE643);
+.infoCard:hover .featureImgWrapper {
+  background: linear-gradient(90deg, #EBE643 0%, #D8B92C 100%);
 }
-.talksCard:hover .featureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #44C3DC);
+.talksCard:hover .featureImgWrapper {
+  background: linear-gradient(90deg, #44C3DC 0%, #0E9BDB 100%);
 }
-.gloryCard:hover .featureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #E53935);
+.gloryCard:hover .featureImgWrapper {
+  background: linear-gradient(90deg, #E53935 0%, #C62828 100%);
 }
