@@ -289,29 +289,32 @@ function WhyJoinSection() {
               <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
             </div>
   
-            <div className="row justify-content-center">
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`} onClick={() => router.push('/info')}>
-                  <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
-                  <h3>INFO</h3>
-                  <p>Updates on tech competitions and scholarships to support student growth.</p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`} onClick={() => router.push('/talks')}>
-                  <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
-                  <h3>TALKS</h3>
-                  <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`} onClick={() => router.push('/glory')}>
-                  <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-                  <h3>GLORY</h3>
-                  <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
-                </div>
-              </div>
-            </div>
+<div className="row justify-content-center">
+  <div className="col-lg-4 col-md-6 mb-4">
+    <div className={`${styles.infoCard} ${styles.info} shadow-sm h-100`} onClick={() => router.push('/info')}>
+      <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+      <h3>INFO</h3>
+      <p>Updates on tech competitions and scholarships to support student growth.</p>
+    </div>
+  </div>
+
+  <div className="col-lg-4 col-md-6 mb-4">
+    <div className={`${styles.infoCard} ${styles.talks} shadow-sm h-100`} onClick={() => router.push('/talk')}>
+      <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+      <h3>TALKS</h3>
+      <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+    </div>
+  </div>
+
+  <div className="col-lg-4 col-md-6 mb-4">
+    <div className={`${styles.infoCard} ${styles.glory} shadow-sm h-100`} onClick={() => router.push('/glory')}>
+      <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+      <h3>GLORY</h3>
+      <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+    </div>
+  </div>
+</div>
+
           </div>
         </section>
     );
@@ -376,7 +379,7 @@ function WhyJoinSection() {
                     <Link href="/glory" className={styles.footerLink}>Glory</Link>
                   </li>
                   <li className="mb-2">
-                    <Link href="/talks" className={styles.footerLink}>Talks</Link>
+                    <Link href="/talk" className={styles.footerLink}>Talks</Link>
                   </li>
                   <li className="mb-2">
                     <Link href="/info" className={styles.footerLink}>Info</Link>

@@ -39,8 +39,7 @@ export default function TalkPage() {
       <TalksHeroSection />
       <TalksAboutSection />
       <TalksWhyJoinSection />
-      <TalksCollaborationSection />
-      {data && <TalksCardsSection data={data} />}
+      <TalksCollaborationSection data={data} />
       <WhatsInItForYouSection />
       <AppFooter />
     </div>
@@ -80,10 +79,8 @@ function TalksAboutSection() {
     <section className={styles.talksAboutSection}>
       <div className="container">
         <div className="row align-items-center">
-          {/* LEFT SIDE - IMAGES */}
           <div className="col-lg-6">
             <div className={styles.talksAboutImagesContainer}>
-              {/* Main large image - img1 */}
               <div className={styles.talksMainImageFrame}>
                 <Image 
                   src="/glory.png" 
@@ -94,7 +91,6 @@ function TalksAboutSection() {
                 />
               </div>
               
-              {/* Small overlay image - img2 */}
               <div className={styles.talksOverlayImage}>
                 <Image 
                   src="/talks.png" 
@@ -107,7 +103,6 @@ function TalksAboutSection() {
             </div>
           </div>
 
-          {/* RIGHT SIDE - TEXT */}
           <div className="col-lg-6">
             <div className={styles.talksAboutContent}>
               <h2 className={styles.talksAboutTitle}>
@@ -143,7 +138,6 @@ function TalksWhyJoinSection() {
         
         <div className={styles.talksWhyContent}>
           <div className={styles.talksWhyCardsContainer}>
-            {/* Left Column - 2 boxes */}
             <div className={styles.talksWhyCardsLeft}>
               <div className={styles.talksFeatureBox}>
                 <h4>Direct insights from tech professionals and innovators</h4>
@@ -153,7 +147,6 @@ function TalksWhyJoinSection() {
               </div>
             </div>
             
-            {/* Right Column - 2 boxes */}
             <div className={styles.talksWhyCardsRight}>
               <div className={styles.talksFeatureBox}>
                 <h4>Updated knowledge about the latest technology trends</h4>
@@ -182,14 +175,12 @@ function TalksCollaborationSection({ data }) {
             At UCCD Talks, we believe that growth begins with connection.
           </p>
           
-          {/* Tabs */}
           <div className={styles.talksCollabTabs}>
             <button className={styles.talksTabBtn}>Completed</button>
             <button className={`${styles.talksTabBtn} ${styles.talksTabActive}`}>Coming Soon</button>
           </div>
         </div>
 
-        {/* Cards */}
         <div className="row g-4">
           {data && data.slice(0, 3).map((talk) => (
             <div key={`talk-${talk.id}`} className="col-lg-4 col-md-6">
@@ -239,11 +230,6 @@ function TalksCollaborationSection({ data }) {
       </div>
     </section>
   );
-}
-
-function TalksCardsSection({ data }) {
-  // This section is now merged into TalksCollaborationSection
-  return null;
 }
 
 function WhatsInItForYouSection() {
@@ -301,64 +287,59 @@ function AppFooter() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <div className="row g-5">
-          <div className="col-lg-4 col-md-6">
-            <div className="d-flex align-items-start gap-3 mb-3">
+        <div className={styles.footerContent}>
+          {/* Left Column - UCCD Description */}
+          <div className={styles.footerLeft}>
+            <div className={styles.footerLogoWrapper}>
               <div className={styles.footerLogo}>
-                <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} unoptimized />
+                <Image src="/uccd-logo@2x.png" alt="UCCD" width={50} height={50} className={styles.footerLogoImg} unoptimized />
               </div>
               <div>
-                <span className={styles.footerLogoText}>UCCD</span>
-                <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
-                  Untar Computer<br />Club Development
-                </p>
+                <div className={styles.footerLogoText}>UCCD</div>
+                <div className={styles.footerLogoSubtext}>
+                  UNTAR COMPUTER<br />
+                  CLUB DEVELOPMENT
+                </div>
               </div>
             </div>
-            <p className={styles.footerText}>
+            <p className={styles.footerDescription}>
               UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
             </p>
           </div>
 
-          <div className="col-lg-4 col-md-3">
+          {/* Middle Column - Contact */}
+          <div className={styles.footerMiddle}>
             <h4 className={styles.footerTitle}>Contact</h4>
-            <ul className="list-unstyled">
-            <li className="mb-3">
-              <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
-                <i className="fas fa-envelope me-2"></i>
-                uccd@untar.ac.id
-              </a>
-            </li>
-            <li className="mb-3">
-              <a
-                href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
-                className={`${styles.footerLink} ${styles.instagramLink}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className={`fab fa-instagram ${styles.instagramIcon} me-2`}></i>
-                @uccdfti.untar
-              </a>
-            </li>
-          </ul>
+            <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
+              <i className="fas fa-envelope me-2"></i>
+              uccd@untar.ac.id
+            </a>
+            <a
+              href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
+              className={`${styles.footerLink} ${styles.instagramLink}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className={`fab fa-instagram ${styles.instagramIcon}`}></i>
+              @uccdfti.untar
+            </a>
           </div>
           
-          <div className="col-lg-4 col-md-3">
+          {/* Right Column - About */}
+          <div className={styles.footerRight}>
             <h4 className={styles.footerTitle}>About</h4>
-            <ul className="list-unstyled">
-              <li className="mb-2"><Link href="/" className={styles.footerLink}>Home</Link></li>
-              <li className="mb-2"><Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link></li>
-              
-              <li className="mb-2"><Link href="/glory" className={styles.footerLink}>Glory</Link></li>
-              <li className="mb-2"><Link href="/talks" className={styles.footerLink}>Talks</Link></li>
-              <li className="mb-2"><Link href="/info" className={styles.footerLink}>Info</Link></li>
-            </ul>
+            <Link href="/" className={styles.footerLink}>Home</Link>
+            <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
+            <Link href="/glory" className={styles.footerLink}>Glory</Link>
+            <Link href="/talks" className={styles.footerLink}>Talks</Link>
+            <Link href="/info" className={styles.footerLink}>Info</Link>
           </div>
         </div>
-      </div>
-      <div className="text-center">
-          <p className={styles.footerCopyright}>
-            © 2025 UCCD - Untar Computer Club Development. All rights reserved.
-          </p>
+
+        {/* Copyright */}
+        <p className={styles.footerCopyright}>
+          © 2025 UCCD - Untar Computer Club Development. All rights reserved.
+        </p>
       </div>
     </footer>
   );
