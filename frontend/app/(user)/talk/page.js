@@ -163,6 +163,44 @@ function TalksWhyJoinSection() {
 }
 
 function TalksCollaborationSection({ data }) {
+  const [activeTab, setActiveTab] = useState('comingSoon'); // Default to Coming Soon
+
+  const filterTalks = (talks, type) => {
+    if (!talks) return [];
+    const now = new Date();
+    return talks.filter(talk => {
+      const talkDate = new Date(talk.tanggal_pelaksanaan);
+      if (type === 'comingSoon') {
+        return talkDate >= now;
+      } else { // completed
+        return talkDate < now;
+      }
+    });
+  };
+
+  const comingSoonTalks = filterTalks(data, 'comingSoon');
+  const completedTalks = filterTalks(data, 'completed');
+
+  const talksToDisplay = activeTab === 'comingSoon' ? comingSoonTalks : completedTalks;
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  };
+
+  const formatTime = (dateString) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleTimeString('id-ID', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+  };
+
   return (
     <section className={styles.talksCollaborationSection}>
       <div className="container">
@@ -176,56 +214,64 @@ function TalksCollaborationSection({ data }) {
           </p>
           
           <div className={styles.talksCollabTabs}>
-            <button className={styles.talksTabBtn}>Completed</button>
-            <button className={`${styles.talksTabBtn} ${styles.talksTabActive}`}>Coming Soon</button>
+            <button
+              className={`${styles.talksTabBtn} ${activeTab === 'completed' ? styles.talksTabActive : ''}`}
+              onClick={() => setActiveTab('completed')}
+            >
+              Completed
+            </button>
+            <button
+              className={`${styles.talksTabBtn} ${activeTab === 'comingSoon' ? styles.talksTabActive : ''}`}
+              onClick={() => setActiveTab('comingSoon')}
+            >
+              Coming Soon
+            </button>
           </div>
         </div>
 
         <div className="row g-4">
-          {data && data.slice(0, 3).map((talk) => (
-            <div key={`talk-${talk.id}`} className="col-lg-4 col-md-6">
-              <div className={styles.talkCard}>
-                <div className={styles.talkCardImage}>
-                  <Image 
-                    src={talk.posterUrl || '/talk/about.png'} 
-                    alt={talk.nama_seminar || 'UCCD Talk'}
-                    width={400}
-                    height={300}
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
-                <div className={styles.talkCardContent}>
-                  <h3 className={styles.talkCardTitle}>{talk.nama_seminar}</h3>
-                  <p className={styles.talkCardDesc}>{talk.deskripsi || 'Breaking Into Action: Transforming Work, Business Models, and Customer Journeys'}</p>
-                  
-                  <div className={styles.talkCardInfo}>
-                    <div className={styles.talkCardInfoItem}>
-                      <i className="far fa-clock"></i>
-                      <span>{new Date(talk.tanggal_pelaksanaan).toLocaleTimeString('id-ID', { 
-                        hour: '2-digit', 
-                        minute: '2-digit',
-                        hour12: false 
-                      })}</span>
-                    </div>
-                    <div className={styles.talkCardInfoItem}>
-                      <i className="far fa-calendar"></i>
-                      <span>{new Date(talk.tanggal_pelaksanaan).toLocaleDateString('id-ID', { 
-                        day: 'numeric', 
-                        month: 'long',
-                        year: 'numeric'
-                      }).replace(' ', ' ')}, {new Date(talk.tanggal_pelaksanaan).toLocaleDateString('en-US', { weekday: 'long' })}</span>
-                    </div>
-                    <div className={styles.talkCardInfoItem}>
-                      <i className="fas fa-map-marker-alt"></i>
-                      <span>{talk.lokasi || 'Ruang Seminar Lt. 11, Gedung R - Universitas Tarumanagara'}</span>
-                    </div>
+          {talksToDisplay.length > 0 ? (
+            talksToDisplay.map((talk) => (
+              <div key={`talk-${talk.id}`} className="col-lg-4 col-md-6">
+                <div className={styles.talkCard}>
+                  <div className={styles.talkCardImage}>
+                    <Image 
+                      src={talk.posterUrl || '/talk/about.png'} 
+                      alt={talk.nama_seminar || 'UCCD Talk'}
+                      width={400}
+                      height={300}
+                      style={{ objectFit: 'cover' }}
+                    />
                   </div>
-                  
-                  <button className={styles.talkCardBtn}>See Details</button>
+                  <div className={styles.talkCardContent}>
+                    <h3 className={styles.talkCardTitle}>{talk.nama_seminar}</h3>
+                    <p className={styles.talkCardDesc}>{talk.deskripsi || 'Breaking Into Action: Transforming Work, Business Models, and Customer Journeys'}</p>
+                    
+                    <div className={styles.talkCardInfo}>
+                      <div className={styles.talkCardInfoItem}>
+                        <i className="far fa-clock"></i>
+                        <span>{formatTime(talk.tanggal_pelaksanaan)}</span>
+                      </div>
+                      <div className={styles.talkCardInfoItem}>
+                        <i className="far fa-calendar"></i>
+                        <span>{formatDate(talk.tanggal_pelaksanaan)}</span>
+                      </div>
+                      <div className={styles.talkCardInfoItem}>
+                        <i className="fas fa-map-marker-alt"></i>
+                        <span>{talk.lokasi || 'Ruang Seminar Lt. 11, Gedung R - Universitas Tarumanagara'}</span>
+                      </div>
+                    </div>
+                    
+                    <button className={styles.talkCardBtn}>See Details</button>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="col-12 text-center text-white">
+              <p>No {activeTab === 'comingSoon' ? 'upcoming' : 'completed'} talks available.</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>
