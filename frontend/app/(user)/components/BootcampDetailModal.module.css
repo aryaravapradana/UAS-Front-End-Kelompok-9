@@ -1,0 +1,205 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7); /* Dark, semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Ensure it's on top of everything */
+  backdrop-filter: blur(5px); /* Optional: subtle blur effect */
+}
+
+.modalContent {
+  position: relative;
+  background: #1a1a1a; /* Dark background for the modal itself */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: 90vw; /* Max width of the modal */
+  max-height: 90vh; /* Max height of the modal */
+  overflow: hidden; /* Hide overflow if image is too large */
+  display: flex; /* Use flexbox for two halves */
+  color: #ffffff; /* Default text color for modal content */
+}
+
+.leftHalf {
+  position: relative;
+  flex: 1; /* Takes up half the space */
+  min-width: 300px; /* Minimum width for the image side */
+  max-width: 50%; /* Max width for the image side */
+  background-color: #000; /* Ensure black background for poster */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Padding around the image */
+}
+
+.posterImage {
+  position: relative !important; /* Override next/image default positioning */
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.noPoster {
+  color: #ccc;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.backButton {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+  z-index: 10001;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.rightHalf {
+  flex: 1; /* Takes up the other half */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content vertically */
+  gap: 15px; /* Space between elements */
+}
+
+.bootcampName {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #B040DD 0%, #8316AE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bootcampDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.detailItem i {
+  color: #B040DD; /* Icon color */
+  font-size: 1.1rem;
+}
+
+.detailLabel {
+  font-weight: 600;
+}
+
+.detailValue {
+  color: #aaa;
+}
+
+.benefitsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+  margin-top: 5px;
+}
+
+.benefitsList li {
+  margin-bottom: 5px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.benefitsList li::before {
+  content: '•'; /* Bullet point */
+  color: #B040DD; /* Bullet color */
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.registerButton {
+  background: linear-gradient(90deg, #B040DD 0%, #8316AE 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px; /* Pill shape */
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto; /* Push to bottom */
+  align-self: flex-start; /* Align to start of flex container */
+}
+
+.registerButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(176, 64, 221, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .modalContent {
+    flex-direction: column; /* Stack halves vertically on smaller screens */
+    max-width: 95vw;
+    max-height: 95vh;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
+
+  .leftHalf {
+    max-width: 100%;
+    min-height: 300px; /* Give some height to the image */
+    padding: 15px;
+  }
+
+  .rightHalf {
+    padding: 20px;
+    gap: 10px;
+  }
+
+  .bootcampName {
+    font-size: 2rem;
+  }
+
+  .bootcampDescription {
+    font-size: 0.9rem;
+  }
+
+  .detailItem, .benefitsList {
+    font-size: 0.9rem;
+  }
+
+  .registerButton {
+    width: 100%; /* Full width button */
+    align-self: stretch;
+  }
+}
