@@ -16,6 +16,7 @@ const talkRoutes = require('./routes/talk.routes.js');
 const bootcampRoutes = require('./routes/bootcamp.routes.js');
 const memberRoutes = require('./routes/member.routes.js');
 const userRoutes = require('./routes/user.routes.js');
+const notificationRoutes = require('./routes/notification.routes.js'); // Import notification routes
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lombas', lombaRoutes);
@@ -24,6 +25,7 @@ app.use('/api/talks', talkRoutes);
 app.use('/api/bootcamps', bootcampRoutes);
 app.use('/api', memberRoutes);
 app.use('/api', userRoutes);
+app.use('/api/notifications', notificationRoutes); // Use notification routes
 
 const PORT = process.env.PORT || 3001;
 
