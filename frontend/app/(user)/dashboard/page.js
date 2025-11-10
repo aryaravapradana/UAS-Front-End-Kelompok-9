@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
@@ -8,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
@@ -131,31 +131,34 @@ const DashboardPage = () => {
     <div className={styles.main}>
       <Header />
       <main className={styles.container}>
-        <section className={styles.heroSection}>
-            <div className={styles.profilePictureContainer} onClick={() => fileInputRef.current.click()}>
-                <Image
-                    src={user.profilePictureUrl || '/uccd-logo@2x.png'}
-                    alt="Profile Picture"
-                    width={120}
-                    height={120}
-                    className={styles.profilePicture}
-                />
-                <div className={styles.editIcon}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                </div>
-            </div>
-            <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleFileChange} 
-                style={{ display: 'none' }} 
-                accept="image/*"
-            />
-            <h1 className={styles.heroTitle}>Welcome, {user.nama_lengkap}</h1>
-            <p className={styles.heroSubtitle}>Here is your personal dashboard.</p>
-        </section>
+        <FadeInOnScroll>
+          <section className={styles.heroSection}>
+              <div className={styles.profilePictureContainer} onClick={() => fileInputRef.current.click()}>
+                  <Image
+                      src={user.profilePictureUrl || '/uccd-logo@2x.png'}
+                      alt="Profile Picture"
+                      width={120}
+                      height={120}
+                      className={styles.profilePicture}
+                  />
+                  <div className={styles.editIcon}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  </div>
+              </div>
+              <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} 
+                  style={{ display: 'none' }} 
+                  accept="image/*"
+              />
+              <h1 className={styles.heroTitle}>Welcome, {user.nama_lengkap}</h1>
+              <p className={styles.heroSubtitle}>Here is your personal dashboard.</p>
+          </section>
+        </FadeInOnScroll>
 
         <div className={styles.contentGrid}>
+          <FadeInOnScroll>
             <section className={styles.contentCard}>
               <h2 className={styles.cardTitle}>My Profile</h2>
               <div className={styles.profileDetails}>
@@ -166,7 +169,9 @@ const DashboardPage = () => {
                 <div className={styles.detailItem}><strong>Angkatan:</strong> 20{user.angkatan}</div>
               </div>
             </section>
+          </FadeInOnScroll>
 
+          <FadeInOnScroll>
             <section className={`${styles.contentCard} ${styles.eventsCard}`}>
               <h2 className={styles.cardTitle}>My Events</h2>
               <div className={styles.eventList}>
@@ -185,13 +190,16 @@ const DashboardPage = () => {
                 )}
               </div>
             </section>
+          </FadeInOnScroll>
         </div>
 
-        <section className={styles.accountActions}>
-            <button onClick={handleLogout} className={styles.logoutButton}>
-                Logout
-            </button>
-        </section>
+        <FadeInOnScroll>
+          <section className={styles.accountActions}>
+              <button onClick={handleLogout} className={styles.logoutButton}>
+                  Logout
+              </button>
+          </section>
+        </FadeInOnScroll>
       </main>
     </div>
   );

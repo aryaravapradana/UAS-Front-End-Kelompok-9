@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './register.module.css';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 const getProdi = (nim) => {
   if (nim.length < 3) return '';
@@ -70,104 +71,108 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
-        <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
-        <span>UCCD</span>
-      </div>
+      <FadeInOnScroll>
+        <div className={styles.logo}>
+          <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
+          <span>UCCD</span>
+        </div>
+      </FadeInOnScroll>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.formHeader}>
-          <div className={styles.formIcon}>
-            <Image src="/uccd-logo@2x.png" alt="Code" width={40} height={40} className={styles.formIconImage} />
+      <FadeInOnScroll>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formHeader}>
+            <div className={styles.formIcon}>
+              <Image src="/uccd-logo@2x.png" alt="Code" width={40} height={40} className={styles.formIconImage} />
+            </div>
+            <h1 className={styles.title}>Create an account</h1>
+            <p className={styles.subtitle}>Please enter your details to register</p>
           </div>
-          <h1 className={styles.title}>Create an account</h1>
-          <p className={styles.subtitle}>Please enter your details to register</p>
-        </div>
 
-        {error && <p className={styles.error}>{error}</p>}
+          {error && <p className={styles.error}>{error}</p>}
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="namaLengkap">Name</label>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-user"></i>
-            <input
-              type="text"
-              id="namaLengkap"
-              value={namaLengkap}
-              onChange={(e) => setNamaLengkap(e.target.value)}
-              placeholder="Enter your name"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <label htmlFor="namaLengkap">Name</label>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-user"></i>
+              <input
+                type="text"
+                id="namaLengkap"
+                value={namaLengkap}
+                onChange={(e) => setNamaLengkap(e.target.value)}
+                placeholder="Enter your name"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="nim">Student ID</label>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-id-card"></i>
-            <input
-              type="text"
-              id="nim"
-              value={nim}
-              onChange={(e) => setNim(e.target.value)}
-              placeholder="Enter your student id"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <label htmlFor="nim">Student ID</label>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-id-card"></i>
+              <input
+                type="text"
+                id="nim"
+                value={nim}
+                onChange={(e) => setNim(e.target.value)}
+                placeholder="Enter your student id"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <label>Prodi</label>
-          <div className={styles.inputWrapper}>
-            <input type="text" value={prodi} disabled />
+          <div className={styles.inputGroup}>
+            <label>Prodi</label>
+            <div className={styles.inputWrapper}>
+              <input type="text" value={prodi} disabled />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <label>Angkatan</label>
-          <div className={styles.inputWrapper}>
-            <input type="text" value={angkatan} disabled />
+          <div className={styles.inputGroup}>
+            <label>Angkatan</label>
+            <div className={styles.inputWrapper}>
+              <input type="text" value={angkatan} disabled />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="password">Password</label>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-key"></i>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">Password</label>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-key"></i>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-key"></i>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm Password"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-key"></i>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <button type="submit" className={styles.button}>
-          Get Started
-        </button>
+          <button type="submit" className={styles.button}>
+            Get Started
+          </button>
 
-        <div className={styles.signinLink}>
-          Already have an account? <Link href="/login">Sign in</Link>
-        </div>
-      </form>
+          <div className={styles.signinLink}>
+            Already have an account? <Link href="/login">Sign in</Link>
+          </div>
+        </form>
+      </FadeInOnScroll>
     </div>
   );
 }

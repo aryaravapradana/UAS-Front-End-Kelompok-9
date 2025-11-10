@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './login.module.css';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 export default function LoginPage() {
   const [nim, setNim] = useState('');
@@ -73,69 +74,73 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
-        <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
-        <span>UCCD</span>
-      </div>
+      <FadeInOnScroll>
+        <div className={styles.logo}>
+          <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
+          <span>UCCD</span>
+        </div>
+      </FadeInOnScroll>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.formHeader}>
-          <div className={styles.formIcon}>
-            <Image src="/uccd-logo@2x.png" alt="Code" width={40} height={40} className={styles.formIconImage} />
+      <FadeInOnScroll>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formHeader}>
+            <div className={styles.formIcon}>
+              <Image src="/uccd-logo@2x.png" alt="Code" width={40} height={40} className={styles.formIconImage} />
+            </div>
+            <h1 className={styles.title}>Sign In</h1>
+            <p className={styles.subtitle}>Please enter your details to sign in</p>
           </div>
-          <h1 className={styles.title}>Sign In</h1>
-          <p className={styles.subtitle}>Please enter your details to sign in</p>
-        </div>
 
-        {error && <p className={styles.error}>{error}</p>}
-        {successMessage && (
-          <p className={`${styles.success} ${isMessageVisible ? styles.visible : ''}`}>
-            {successMessage}
-          </p>
-        )}
+          {error && <p className={styles.error}>{error}</p>}
+          {successMessage && (
+            <p className={`${styles.success} ${isMessageVisible ? styles.visible : ''}`}>
+              {successMessage}
+            </p>
+          )}
 
-        <div className={styles.inputGroup}>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-id-card"></i>
-            <input
-              type="text"
-              id="nim"
-              value={nim}
-              onChange={(e) => setNim(e.target.value)}
-              placeholder="Enter your Student ID (NIM)"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-id-card"></i>
+              <input
+                type="text"
+                id="nim"
+                value={nim}
+                onChange={(e) => setNim(e.target.value)}
+                placeholder="Enter your Student ID (NIM)"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.inputGroup}>
-          <div className={styles.inputWrapper}>
-            <i className="fas fa-key"></i>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
+          <div className={styles.inputGroup}>
+            <div className={styles.inputWrapper}>
+              <i className="fas fa-key"></i>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={styles.extraOptions}>
-          <Link href="/auth/forgot-password" className={styles.forgotPassword}>
-            Forgot Password?
-          </Link>
-        </div>
+          <div className={styles.extraOptions}>
+            <Link href="/auth/forgot-password" className={styles.forgotPassword}>
+              Forgot Password?
+            </Link>
+          </div>
 
-        <button type="submit" className={styles.button}>
-          Sign in
-        </button>
+          <button type="submit" className={styles.button}>
+            Sign in
+          </button>
 
-        <div className={styles.signupLink}>
-          Dont have an account? <Link href="/register">Sign up</Link>
-        </div>
-      </form>
+          <div className={styles.signupLink}>
+            Dont have an account? <Link href="/register">Sign up</Link>
+          </div>
+        </form>
+      </FadeInOnScroll>
     </div>
   );
 }

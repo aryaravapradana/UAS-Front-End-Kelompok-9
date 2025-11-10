@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Header from '../components/Header';
 import styles from './glory.module.css';
 import { useTransition } from '../context/TransitionContext';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 export default function GloryPage() {
   const { endTransition } = useTransition();
@@ -41,57 +42,61 @@ export default function GloryPage() {
     <div className={styles.gloryPage}>
       <Header />
 
-      <section className={styles.heroSection}>
-        <Image
-          src="/glory/hero.png"
-          alt="Glory Hero"
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-        />
-        <div className={styles.heroOverlay} />
-        <div className={`container ${styles.heroContent}`}>
-          <h1 className={styles.heroTitle}>Hall of Achievement</h1>
-          <p className={styles.heroSubtitle}>
-            Celebrating the outstanding achievements of our members in the tech world.
-          </p>
-        </div>
-      </section>
-
-      <section className="py-5">
-        <div className="container">
-          <div className="text-center mb-5">
-            <h2 className={styles.sectionTitle}>Our Champions</h2>
-            <p className={styles.sectionSubtitle}>
-              Meet the brilliant minds who have brought glory to our community.
+      <FadeInOnScroll>
+        <section className={styles.heroSection}>
+          <Image
+            src="/glory/hero.png"
+            alt="Glory Hero"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+          />
+          <div className={styles.heroOverlay} />
+          <div className={`container ${styles.heroContent}`}>
+            <h1 className={styles.heroTitle}>Hall of Achievement</h1>
+            <p className={styles.heroSubtitle}>
+              Celebrating the outstanding achievements of our members in the tech world.
             </p>
           </div>
+        </section>
+      </FadeInOnScroll>
 
-          <div className="row gy-4">
-            {champions.map((champion) => (
-              <div key={champion.id} className="col-lg-4 col-md-6">
-                <div className={`card h-100 shadow-sm ${styles.championCard}`}>
-                  <Image
-                    src={champion.image}
-                    alt={champion.name}
-                    width={400}
-                    height={250}
-                    className="card-img-top"
-                    objectFit="cover"
-                  />
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title">{champion.name}</h5>
-                    <p className={`card-text ${styles.achievementText}`}>{champion.achievement}</p>
-                    <p className="card-text text-muted mt-auto">
-                      <small>{champion.competition}</small>
-                    </p>
+      <FadeInOnScroll>
+        <section className="py-5">
+          <div className="container">
+            <div className="text-center mb-5">
+              <h2 className={styles.sectionTitle}>Our Champions</h2>
+              <p className={styles.sectionSubtitle}>
+                Meet the brilliant minds who have brought glory to our community.
+              </p>
+            </div>
+
+            <div className="row gy-4">
+              {champions.map((champion) => (
+                <div key={champion.id} className="col-lg-4 col-md-6">
+                  <div className={`card h-100 shadow-sm ${styles.championCard}`}>
+                    <Image
+                      src={champion.image}
+                      alt={champion.name}
+                      width={400}
+                      height={250}
+                      className="card-img-top"
+                      objectFit="cover"
+                    />
+                    <div className="card-body d-flex flex-column">
+                      <h5 className="card-title">{champion.name}</h5>
+                      <p className={`card-text ${styles.achievementText}`}>{champion.achievement}</p>
+                      <p className="card-text text-muted mt-auto">
+                        <small>{champion.competition}</small>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </FadeInOnScroll>
     </div>
   );
 }
