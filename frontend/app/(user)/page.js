@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTransition } from './context/TransitionContext';
+import FadeInOnScroll from './components/FadeInOnScroll';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
@@ -50,16 +51,22 @@ export default function Home() {
           <div className="row justify-content-center">
             <div className="col-12 col-xl-10">
               <div className="text-center">
-                <h1 className={styles.heroTitle}>
-                  Empowering FTI Students<br />
-                  Through Technology & Innovation
-                </h1>
-                <p className={styles.heroSubtext}>
-                  The official platform for sharing insights, learning and growing in the world of technology
-                </p>
-                <button className={styles.btnExplore}>
-                  <span>Explore Now</span>
-                </button>
+                <FadeInOnScroll>
+                  <h1 className={styles.heroTitle}>
+                    Empowering FTI Students<br />
+                    Through Technology & Innovation
+                  </h1>
+                </FadeInOnScroll>
+                <FadeInOnScroll>
+                  <p className={styles.heroSubtext}>
+                    The official platform for sharing insights, learning and growing in the world of technology
+                  </p>
+                </FadeInOnScroll>
+                <FadeInOnScroll>
+                  <button className={styles.btnExplore}>
+                    <span>Explore Now</span>
+                  </button>
+                </FadeInOnScroll>
               </div>
             </div>
           </div>
@@ -70,20 +77,24 @@ export default function Home() {
         <div className="container">
           <div className="row align-items-center">
             <div className={`col-lg-6 col-md-12 ${styles.textBlock}`}>
-              <h2 className={styles.sectionTitle}>
-                Untar Computer<br />Club Development
-              </h2>
-              <p className={styles.sectionText}>
-                UCCD is an organization under the Student Executive Board (BEM) of FTI UNTAR, established to develop
-                academic extracurricular activities, particularly in the field of information technology. Currently,
-                UCCD consists of four main programs: Talks, Bootcamp, Glory, and Info.
-              </p>
+              <FadeInOnScroll>
+                <h2 className={styles.sectionTitle}>
+                  Untar Computer<br />Club Development
+                </h2>
+                <p className={styles.sectionText}>
+                  UCCD is an organization under the Student Executive Board (BEM) of FTI UNTAR, established to develop
+                  academic extracurricular activities, particularly in the field of information technology. Currently,
+                  UCCD consists of four main programs: Talks, Bootcamp, Glory, and Info.
+                </p>
+              </FadeInOnScroll>
             </div>
 
             <div className={`col-lg-6 col-md-12 text-center ${styles.logoBlock}`}>
-              <div className={styles.logoTilt}>
-                <Image src="/pc-homepage.png" alt="UCCD Logo" width={520} height={520} className={styles.uccdLogo} style={{ objectFit: "contain" }} />
-              </div>
+              <FadeInOnScroll>
+                <div className={styles.logoTilt}>
+                  <Image src="/pc-homepage.png" alt="UCCD Logo" width={520} height={520} className={styles.uccdLogo} style={{ objectFit: "contain" }} />
+                </div>
+              </FadeInOnScroll>
             </div>
           </div>
         </div>
@@ -92,45 +103,55 @@ export default function Home() {
       <section className={styles.featuresSection}>
         <div className="container text-center">
           <div className="mb-5">
-            <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
-              <span className={`${styles.dot} ${styles.dotLeft}`}></span>
-              <h2 className={styles.featuresTitle}>Whats in it for you?</h2>
-              <span className={`${styles.dot} ${styles.dotRight}`}></span>
-            </div>
-            <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
+            <FadeInOnScroll>
+              <div className={styles.titleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
+                <span className={`${styles.dot} ${styles.dotLeft}`}></span>
+                <h2 className={styles.featuresTitle}>Whats in it for you?</h2>
+                <span className={`${styles.dot} ${styles.dotRight}`}></span>
+              </div>
+              <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
+            </FadeInOnScroll>
           </div>
 
           <div className="row gy-4 justify-content-center">
             <div className="col-lg-3 col-md-6">
-              <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm h-100`}>
-                <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
-                <h3>BOOTCAMP</h3>
-                <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
-              </Link>
+              <FadeInOnScroll>
+                <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm h-100`}>
+                  <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
+                  <h3>BOOTCAMP</h3>
+                  <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
+                </Link>
+              </FadeInOnScroll>
             </div>
 
             <div className="col-lg-3 col-md-6">
-              <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`}>
-                <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
-                <h3>INFO</h3>
-                <p>Updates on tech competitions and scholarships to support student growth.</p>
-              </Link>
+              <FadeInOnScroll>
+                <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`}>
+                  <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
+                  <h3>INFO</h3>
+                  <p>Updates on tech competitions and scholarships to support student growth.</p>
+                </Link>
+              </FadeInOnScroll>
             </div>
 
             <div className="col-lg-3 col-md-6">
-              <Link href="/talks" className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`}>
-                <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
-                <h3>TALKS</h3>
-                <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
-              </Link>
+              <FadeInOnScroll>
+                <Link href="/talks" className={`${styles.featureCard} ${styles.talksCard} shadow-sm h-100`}>
+                  <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
+                  <h3>TALKS</h3>
+                  <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
+                </Link>
+              </FadeInOnScroll>
             </div>
 
             <div className="col-lg-3 col-md-6">
-              <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`}>
-                <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
-                <h3>GLORY</h3>
-                <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
-              </Link>
+              <FadeInOnScroll>
+                <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`}>
+                  <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
+                  <h3>GLORY</h3>
+                  <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
+                </Link>
+              </FadeInOnScroll>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../bootcamp.module.css';
+import FadeInOnScroll from '../../components/FadeInOnScroll';
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
@@ -10,11 +11,21 @@ export default function BootcampPage() {
   return (
     <div className={styles.bootcampPage}>
       <Navbar />
-      <HeroSection />
-      <WhatIsSection />
-      <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
-      <WhyJoinSection />
-      <KnowMoreSection />
+      <FadeInOnScroll>
+        <HeroSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <WhatIsSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <WhyJoinSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <KnowMoreSection />
+      </FadeInOnScroll>
       <Footer />
     </div>
   );

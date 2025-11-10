@@ -7,6 +7,7 @@ import styles from './bootcamp.module.css';
 import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
@@ -19,11 +20,21 @@ export default function BootcampPage() {
   return (
     <div className={styles.bootcampPage}>
       <Header />
-      <HeroSection />
-      <WhatIsSection />
-      <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
-      <WhyJoinSection />
-      <BootcampKnowMoreSection />
+      <FadeInOnScroll>
+        <HeroSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <WhatIsSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <WhyJoinSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <BootcampKnowMoreSection />
+      </FadeInOnScroll>
       <NewFooter />
     </div>
   );
@@ -355,7 +366,8 @@ function WhyJoinSection() {
                   <div>
                     <span className={styles.footerLogoText}>UCCD</span>
                     <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
-                      Untar Computer<br />Club Development
+                      Untar Computer<br />
+                      Club Development
                     </p>
                   </div>
                 </div>

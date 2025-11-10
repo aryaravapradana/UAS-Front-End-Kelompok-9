@@ -6,6 +6,7 @@ import { useTransition } from '../context/TransitionContext';
 import styles from './info.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 async function getBeasiswa() {
   const res = await fetch('http://127.0.0.1:3001/api/beasiswas', { cache: 'no-store' });
@@ -49,11 +50,21 @@ export default function InfoPage() {
   return (
     <div className={styles.infoPage}>
       <Header />
-      <InfoHeroSection />
-      <InfoAboutSection />
-      <InfoWhyJoinSection />
-      <InfoOpportunitiesSection beasiswaData={beasiswaData} lombaData={lombaData} loading={loading} />
-      <InfoKnowMoreSection />
+      <FadeInOnScroll>
+        <InfoHeroSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <InfoAboutSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <InfoWhyJoinSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <InfoOpportunitiesSection beasiswaData={beasiswaData} lombaData={lombaData} loading={loading} />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <InfoKnowMoreSection />
+      </FadeInOnScroll>
       <AppFooter />
     </div>
   );

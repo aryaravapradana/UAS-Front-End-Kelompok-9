@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 async function getBeasiswa() {
   const res = await fetch('http://127.0.0.1:3001/api/beasiswas', { cache: 'no-store' });
@@ -43,35 +44,39 @@ export default function BeasiswaPage() {
     <div>
       <Header />
       <main className="container py-5" style={{ marginTop: '80px' }}>
-        <h1 className="text-center mb-4">Daftar Beasiswa</h1>
-        <div className="table-responsive">
-          <table className="table table-striped table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th>Nama Beasiswa</th>
-                <th>Penyelenggara</th>
-                <th>Batasan Tahun</th>
-                <th>Batasan Prodi</th>
-                <th>Deadline</th>
-                <th>Biaya</th>
-                <th>Penerima UCCD</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((beasiswa) => (
-                <tr key={beasiswa.id}>
-                  <td>{beasiswa.nama_beasiswa}</td>
-                  <td>{beasiswa.penyelenggara}</td>
-                  <td>{beasiswa.batasan_tahun}</td>
-                  <td>{beasiswa.batasan_prodi}</td>
-                  <td>{new Date(beasiswa.tanggal_deadline).toLocaleDateString()}</td>
-                  <td>Rp {beasiswa.biaya_daftar ? parseInt(beasiswa.biaya_daftar).toLocaleString('id-ID') : '-'}</td>
-                  <td>{beasiswa.penerima_uccd}</td>
+        <FadeInOnScroll>
+          <h1 className="text-center mb-4">Daftar Beasiswa</h1>
+        </FadeInOnScroll>
+        <FadeInOnScroll>
+          <div className="table-responsive">
+            <table className="table table-striped table-bordered">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Nama Beasiswa</th>
+                  <th>Penyelenggara</th>
+                  <th>Batasan Tahun</th>
+                  <th>Batasan Prodi</th>
+                  <th>Deadline</th>
+                  <th>Biaya</th>
+                  <th>Penerima UCCD</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {data.map((beasiswa) => (
+                  <tr key={beasiswa.id}>
+                    <td>{beasiswa.nama_beasiswa}</td>
+                    <td>{beasiswa.penyelenggara}</td>
+                    <td>{beasiswa.batasan_tahun}</td>
+                    <td>{beasiswa.batasan_prodi}</td>
+                    <td>{new Date(beasiswa.tanggal_deadline).toLocaleDateString()}</td>
+                    <td>Rp {beasiswa.biaya_daftar ? parseInt(beasiswa.biaya_daftar).toLocaleString('id-ID') : '-'}</td>
+                    <td>{beasiswa.penerima_uccd}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </FadeInOnScroll>
       </main>
     </div>
   );

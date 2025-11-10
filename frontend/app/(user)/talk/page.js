@@ -6,6 +6,7 @@ import { useTransition } from '../context/TransitionContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './talk.module.css';
+import FadeInOnScroll from '../components/FadeInOnScroll';
 
 async function getTalk() {
   const res = await fetch('http://127.0.0.1:3001/api/talks', { cache: 'no-store' });
@@ -36,11 +37,21 @@ export default function TalkPage() {
   return (
     <div className={styles.talksPage}>
       <Header />
-      <TalksHeroSection />
-      <TalksAboutSection />
-      <TalksWhyJoinSection />
-      <TalksCollaborationSection data={data} />
-      <WhatsInItForYouSection />
+      <FadeInOnScroll>
+        <TalksHeroSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <TalksAboutSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <TalksWhyJoinSection />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <TalksCollaborationSection data={data} />
+      </FadeInOnScroll>
+      <FadeInOnScroll>
+        <WhatsInItForYouSection />
+      </FadeInOnScroll>
       <AppFooter />
     </div>
   );
