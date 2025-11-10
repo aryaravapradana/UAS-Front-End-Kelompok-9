@@ -35,7 +35,7 @@ export default function BootcampPage() {
       <FadeInOnScroll>
         <BootcampKnowMoreSection />
       </FadeInOnScroll>
-      <NewFooter />
+      <AppFooter />
     </div>
   );
 }
@@ -317,32 +317,32 @@ function WhyJoinSection() {
         <div className="mb-5">
           <div className={styles.bootcampTitleWrapper} style={{ '--line-left-offset': '-140px', '--line-left-length': '130px', '--line-right-offset': '-140px', '--line-right-length': '130px' }}>
             <span className={`${styles.bootcampDot} ${styles.bootcampDotLeft}`}></span>
-            <h2 className={styles.bootcampFeaturesTitle}>Get To Know More</h2>
+            <h2 className={styles.bootcampFeaturesTitle}>Explore Our Programs</h2>
             <span className={`${styles.bootcampDot} ${styles.bootcampDotRight}`}></span>
           </div>
           <p className={styles.bootcampFeaturesSubtext}>Gain the information you need to level up your skills here</p>
         </div>
 
         <div className={`row gy-4 justify-content-center ${styles.featureCardsContainer}`}>
-          <div className="col-lg-3 col-md-6" key="info-col">
-            <Link href="/info" className={`${styles.bootcampFeatureCard} ${styles.bootcampInfoCard} shadow-sm`}>
-              <Image src="/info.png" width={64} height={64} alt="Info" className={styles.bootcampFeatureImg} />
+          <div className="col-lg-4 col-md-6">
+            <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm`}>
+              <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
               <h3>INFO</h3>
               <p>Updates on tech competitions and scholarships to support student growth.</p>
             </Link>
           </div>
 
-          <div className="col-lg-3 col-md-6" key="talks-col">
-            <Link href="/talk" className={`${styles.bootcampFeatureCard} ${styles.bootcampTalksCard} shadow-sm`}>
-              <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.bootcampFeatureImg} />
+          <div className="col-lg-4 col-md-6">
+            <Link href="/talk" className={`${styles.featureCard} ${styles.talksCard} shadow-sm`}>
+              <Image src="/talks.png" width={64} height={64} alt="Talks" className={styles.featureImg} />
               <h3>TALKS</h3>
               <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
             </Link>
           </div>
 
-          <div className="col-lg-3 col-md-6" key="glory-col">
-            <Link href="/glory" className={`${styles.bootcampFeatureCard} ${styles.bootcampGloryCard} shadow-sm`}>
-              <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.bootcampFeatureImg} />
+          <div className="col-lg-4 col-md-6">
+            <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm`}>
+              <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
               <h3>GLORY</h3>
               <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>
             </Link>
@@ -353,80 +353,60 @@ function WhyJoinSection() {
   );
 }
   
-  function NewFooter() {
-    return (
-      <footer className={styles.newFooter}>
-          <div className="container text-center">
-            <div className="row g-5 justify-content-center">
-              <div className="col-lg-4 col-md-6 text-center text-lg-start">
-                <div className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 mb-3">
-                  <div className={styles.footerLogo}>
-                    <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} />
-                  </div>
-                  <div>
-                    <span className={styles.footerLogoText}>UCCD</span>
-                    <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
-                      Untar Computer<br />
-                      Club Development
-                    </p>
-                  </div>
+  function AppFooter() {
+  return (
+    <footer className={styles.infoFooter}>
+      <div className="container">
+        <div className={styles.infoFooterContent}>
+          <div className={styles.infoFooterLeft}>
+            <div className={styles.infoFooterLogoWrapper}>
+              <div className={styles.infoFooterLogo}>
+                <Image src="/uccd-logo@2x.png" alt="UCCD" width={50} height={50} className={styles.infoFooterLogoImg} unoptimized />
+              </div>
+              <div>
+                <div className={styles.infoFooterLogoText}>UCCD</div>
+                <div className={styles.infoFooterLogoSubtext}>
+                  UNTAR COMPUTER<br />
+                  CLUB DEVELOPMENT
                 </div>
-                <p className={styles.footerText}>
-                  UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
-                </p>
-              </div>
-  
-              <div className="col-lg-auto col-md-3 text-center text-lg-start">
-                <h4 className={styles.footerTitle}>Contact</h4>
-                <ul className="list-unstyled">
-                <li className="mb-3">
-                  <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
-                    <i className="fas fa-envelope me-2"></i>
-                    uccd@untar.ac.id
-                  </a>
-                </li>
-                <li className="mb-3">
-                  <a
-                    href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
-                    className={`${styles.footerLink} ${styles.instagramLink}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className={`fab fa-instagram ${styles.instagramIcon} me-2`}></i>
-                    @uccdfti.untar
-                  </a>
-                </li>
-              </ul>
-              </div>
-              
-              <div className="col-lg-auto col-md-3 text-center text-lg-start">
-                <h4 className={styles.footerTitle}>About</h4>
-                <ul className="list-unstyled">
-                  <li className="mb-2">
-                    <Link href="/home" className={styles.footerLink}>Home</Link>
-                  </li>
-                  <li className="mb-2">
-                    <Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link>
-                  </li>
-                  
-                  <li className="mb-2">
-                    <Link href="/glory" className={styles.footerLink}>Glory</Link>
-                  </li>
-                  <li className="mb-2">
-                    <Link href="/talk" className={styles.footerLink}>Talks</Link>
-                  </li>
-                  <li className="mb-2">
-                    <Link href="/info" className={styles.footerLink}>Info</Link>
-                  </li>
-                </ul>
               </div>
             </div>
+            <p className={styles.infoFooterDescription}>
+              UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
+            </p>
           </div>
-          <div className="text-center mt-4">
-              <p className={styles.footerCopyright}>
-                © 2025 UCCD - Untar Computer Club Development. All rights reserved.
-              </p>
+
+          <div className={styles.infoFooterMiddle}>
+            <h4 className={styles.infoFooterTitle}>Contact</h4>
+            <a href="mailto:uccd@untar.ac.id" className={styles.infoFooterLink}>
+              <i className="fas fa-envelope me-2"></i>
+              uccd@untar.ac.id
+            </a>
+            <a
+              href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
+              className={`${styles.infoFooterLink} ${styles.infoInstagramLink}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className={`fab fa-instagram ${styles.infoInstagramIcon}`}></i>
+              @uccdfti.untar
+            </a>
           </div>
-        </footer>
-    );
-  }
+          
+          <div className={styles.infoFooterRight}>
+            <h4 className={styles.infoFooterTitle}>About</h4>
+            <Link href="/" className={styles.infoFooterLink}>Home</Link>
+            <Link href="/bootcamp" className={styles.infoFooterLink}>Bootcamp</Link>
+            <Link href="/glory" className={styles.infoFooterLink}>Glory</Link>
+            <Link href="/talk" className={styles.infoFooterLink}>Talks</Link>
+            <Link href="/info" className={styles.infoFooterLink}>Info</Link>
+          </div>
+        </div>
+
+        <p className={styles.infoFooterCopyright}>
+          © 2025 UCCD - Untar Computer Club Development. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}

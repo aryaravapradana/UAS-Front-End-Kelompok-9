@@ -153,68 +153,65 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <div className="container">
-          <div className="row g-5">
-            <div className="col-lg-4 col-md-6">
-              <div className="d-flex align-items-start gap-3 mb-3">
-                <div className={styles.footerLogo}>
-                  <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.footerLogoImg} />
-                </div>
-                <div>
-                  <span className={styles.footerLogoText}>UCCD</span>
-                  <p className="mb-0" style={{ fontSize: '0.80rem', color: '#000000ff', marginTop: '0.25rem', lineHeight: '1' }}>
-                    Untar Computer<br />Club Development
-                  </p>
+      <AppFooter />
+    </main>
+  );
+}
+
+function AppFooter() {
+  return (
+    <footer className={styles.infoFooter}>
+      <div className="container">
+        <div className={styles.infoFooterContent}>
+          <div className={styles.infoFooterLeft}>
+            <div className={styles.infoFooterLogoWrapper}>
+              <div className={styles.infoFooterLogo}>
+                <Image src="/uccd-logo@2x.png" alt="UCCD" width={50} height={50} className={styles.infoFooterLogoImg} unoptimized />
+              </div>
+              <div>
+                <div className={styles.infoFooterLogoText}>UCCD</div>
+                <div className={styles.infoFooterLogoSubtext}>
+                  UNTAR COMPUTER<br />
+                  CLUB DEVELOPMENT
                 </div>
               </div>
-              <p className={styles.footerText}>
-                UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
-              </p>
             </div>
+            <p className={styles.infoFooterDescription}>
+              UCCD is a student organization under BEM FTI UNTAR focused on developing IT-related academic and extracurricular programs.
+            </p>
+          </div>
 
-            <div className="col-lg-4 col-md-3">
-              <h4 className={styles.footerTitle}>Contact</h4>
-              <ul className="list-unstyled">
-              <li className="mb-3">
-                <a href="mailto:uccd@untar.ac.id" className={styles.footerLink}>
-                  <i className="fas fa-envelope me-2"></i>
-                  uccd@untar.ac.id
-                </a>
-              </li>
-              <li className="mb-3">
-                <a
-                  href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
-                  className={`${styles.footerLink} ${styles.instagramLink}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className={`fab fa-instagram ${styles.instagramIcon} me-2`}></i>
-                  @uccdfti.untar
-                </a>
-              </li>
-            </ul>
-            </div>
-            
-            <div className="col-lg-4 col-md-3">
-              <h4 className={styles.footerTitle}>About</h4>
-              <ul className="list-unstyled">
-                <li className="mb-2"><Link href="/" className={styles.footerLink}>Home</Link></li>
-                <li className="mb-2"><Link href="/bootcamp" className={styles.footerLink}>Bootcamp</Link></li>
-                
-                <li className="mb-2"><Link href="/glory" className={styles.footerLink}>Glory</Link></li>
-                <li className="mb-2"><Link href="/talk" className={styles.footerLink}>Talks</Link></li>
-                <li className="mb-2"><Link href="/info" className={styles.footerLink}>Info</Link></li>
-              </ul>
-            </div>
+          <div className={styles.infoFooterMiddle}>
+            <h4 className={styles.infoFooterTitle}>Contact</h4>
+            <a href="mailto:uccd@untar.ac.id" className={styles.infoFooterLink}>
+              <i className="fas fa-envelope me-2"></i>
+              uccd@untar.ac.id
+            </a>
+            <a
+              href="https://www.instagram.com/uccdfti.untar?igsh=MW00ZjJtZmJpMTEwMQ=="
+              className={`${styles.infoFooterLink} ${styles.infoInstagramLink}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className={`fab fa-instagram ${styles.infoInstagramIcon}`}></i>
+              @uccdfti.untar
+            </a>
+          </div>
+          
+          <div className={styles.infoFooterRight}>
+            <h4 className={styles.infoFooterTitle}>About</h4>
+            <Link href="/" className={styles.infoFooterLink}>Home</Link>
+            <Link href="/bootcamp" className={styles.infoFooterLink}>Bootcamp</Link>
+            <Link href="/glory" className={styles.infoFooterLink}>Glory</Link>
+            <Link href="/talk" className={styles.infoFooterLink}>Talks</Link>
+            <Link href="/info" className={styles.infoFooterLink}>Info</Link>
           </div>
         </div>
-        <div className="text-center">
-            <p className={styles.footerCopyright}>
-              © 2025 UCCD - Untar Computer Club Development. All rights reserved.
-            </p>
-        </div>
-      </footer>
-    </main>
+
+        <p className={styles.infoFooterCopyright}>
+          © 2025 UCCD - Untar Computer Club Development. All rights reserved.
+        </p>
+      </div>
+    </footer>
   );
 }
