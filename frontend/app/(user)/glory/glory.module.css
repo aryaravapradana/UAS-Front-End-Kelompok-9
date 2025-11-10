@@ -49,14 +49,61 @@
   color: #6c757d;
 }
 
-.championCard {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: none;
+.featureCard {
+  background: rgba(94, 94, 94, 0.27);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+  border: 2px solid rgba(188, 185, 185, 0.4);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  height: 300px;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-decoration: none;
 }
 
-.championCard:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+.featureCard:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.featureCardsContainer:hover .featureCard:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.9, 0.9);
+}
+
+.gloryCard:hover {
+  background: linear-gradient(160deg, #dc2626, #991b1b);
+}
+
+.featureCard:hover h5,
+.featureCard:hover p {
+  color: #ffffff;
+}
+
+.card-img-top {
+  margin-bottom: 1rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem; /* Adjust padding as needed */
+}
+
+.card-body h5 {
+  margin-bottom: 0;
+}
+
+.card-body p {
+  margin-bottom: 0;
 }
 
 .achievementText {

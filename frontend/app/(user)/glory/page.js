@@ -71,10 +71,10 @@ export default function GloryPage() {
               </p>
             </div>
 
-            <div className="row gy-4">
+            <div className={`row gy-4 ${styles.featureCardsContainer}`}>
               {champions.map((champion) => (
                 <div key={champion.id} className="col-lg-4 col-md-6">
-                  <div className={`card h-100 shadow-sm ${styles.championCard}`}>
+                  <div className={`card shadow-sm ${styles.championCard}`}>
                     <Image
                       src={champion.image}
                       alt={champion.name}

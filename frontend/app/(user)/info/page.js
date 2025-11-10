@@ -232,7 +232,7 @@ function InfoOpportunitiesSection({ beasiswaData, lombaData, loading }) {
           </div>
         </div>
 
-        <div className="row g-4 justify-content-center">
+        <div className={`row g-4 justify-content-center ${styles.featureCardsContainer}`}>
           {activeTab === 'scholarships' && (
             beasiswaData.length > 0 ? (
               beasiswaData.slice(0, 3).map((beasiswa) => (
@@ -423,9 +423,9 @@ function InfoKnowMoreSection() {
           <p className={styles.infoFeaturesSubtext}>Gain the information you need to level up your skills here</p>
         </div>
 
-        <div className="row gy-4 justify-content-center">
+        <div className={`row gy-4 justify-content-center ${styles.featureCardsContainer}`}>
           <div className="col-lg-4 col-md-6">
-            <Link href="/bootcamp" className={`${styles.infoFeatureCard} ${styles.infoBootcampCard} shadow-sm h-100`}>
+            <Link href="/bootcamp" className={`${styles.infoFeatureCard} ${styles.infoBootcampCard} shadow-sm`}>
               <Image src="/bootcamp.png" width={80} height={80} alt="Bootcamp" className={styles.infoFeatureImg} />
               <h3>BOOTCAMP</h3>
               <p>Intensive training program to build practical skills in UI, web, and data science.</p>
@@ -433,7 +433,7 @@ function InfoKnowMoreSection() {
           </div>
 
           <div className="col-lg-4 col-md-6">
-            <Link href="/glory" className={`${styles.infoFeatureCard} ${styles.infoGloryCard} shadow-sm h-100`}>
+            <Link href="/glory" className={`${styles.infoFeatureCard} ${styles.infoGloryCard} shadow-sm`}>
               <Image src="/glory.png" width={80} height={80} alt="Glory" className={styles.infoFeatureImg} />
               <h3>GLORY</h3>
               <p>Platform to showcase and appreciate achievements of FTI students in competitions.</p>
@@ -441,7 +441,7 @@ function InfoKnowMoreSection() {
           </div>
 
           <div className="col-lg-6 col-md-6">
-            <Link href="/talk" className={`${styles.infoFeatureCard} ${styles.infoTalkCard} shadow-sm h-100`}>
+            <Link href="/talk" className={`${styles.infoFeatureCard} ${styles.infoTalkCard} shadow-sm`}>
               <Image src="/talks.png" width={80} height={80} alt="Talks" className={styles.infoFeatureImg} />
               <h3>TALKS</h3>
               <p>Talkshows with tech professionals sharing industry insights and career experiences.</p>
