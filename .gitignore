@@ -17,3 +17,5 @@ yarn-error.log*
 /frontend/.next/
 
 /frontend/out/
+
+node_modules/
