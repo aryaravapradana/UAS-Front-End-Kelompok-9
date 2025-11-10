@@ -107,7 +107,7 @@ export default function AdminDashboard() {
 
   const fetchTalks = async (token) => {
     try {
-      const res = await fetch('http://localhost:3001/api/talk', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch('http://localhost:3001/api/talks', { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch talks.');
       const data = await res.json();
       setTalks(data);
