@@ -456,16 +456,17 @@
   -webkit-backdrop-filter: blur(17px);
   border: 2px solid rgba(188, 185, 185, 0.4);
   border-radius: 20px;
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem;
   transition: all 0.4s ease;
   cursor: pointer;
-  min-height: 300px;
+  height: 300px;
   text-align: left;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Changed back to space-between */
+  gap: 1rem; /* Added gap back */
   text-decoration: none;
 }
 
@@ -483,7 +484,6 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -513,7 +513,6 @@
   font-size: 1.1rem;
   color: #fff;
   letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
   text-decoration: none;
   text-align: center;
 }
@@ -654,29 +653,34 @@
   .featureCard { padding: 2.25rem 1.8rem; }
 }
 
+.featureCard:hover h3,
+.featureCard:hover p {
+  color: #ffffff;
+}
+
 /* CARD HOVER STYLES */
 .bootcampCard:hover {
-  background: linear-gradient(160deg, #B040DD, #8316AE);
+  background: linear-gradient(160deg, #8316AE, #500d6b);
 }
 .infoCard:hover {
-  background: linear-gradient(160deg, #EBE643, #D8B92C);
+  background: linear-gradient(160deg, #facc15, #b45309);
 }
 .talksCard:hover {
-  background: linear-gradient(160deg, #44C3DC, #0E9BDB);
+  background: linear-gradient(160deg, #0ea5e9, #075985);
 }
 .gloryCard:hover {
-  background: linear-gradient(160deg, #E53935, #C62828);
+  background: linear-gradient(160deg, #dc2626, #991b1b);
 }
 
 .bootcampCard:hover .featureImgWrapper {
-  background: linear-gradient(90deg, #B040DD 0%, #8316AE 100%);
+  background: linear-gradient(90deg, #6d28d9 0%, #4c1d95 100%);
 }
 .infoCard:hover .featureImgWrapper {
-  background: linear-gradient(90deg, #EBE643 0%, #D8B92C 100%);
+  background: linear-gradient(90deg, #facc15 0%, #b45309 100%);
 }
 .talksCard:hover .featureImgWrapper {
-  background: linear-gradient(90deg, #44C3DC 0%, #0E9BDB 100%);
+  background: linear-gradient(90deg, #0ea5e9 0%, #075985 100%);
 }
 .gloryCard:hover .featureImgWrapper {
-  background: linear-gradient(90deg, #E53935 0%, #C62828 100%);
+  background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
 }

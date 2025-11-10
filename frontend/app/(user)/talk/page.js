@@ -302,9 +302,9 @@ function WhatsInItForYouSection() {
           <p className={styles.featuresSubtext}>Gain the information you need to level up your skills here</p>
         </div>
 
-        <div className="row gy-4 justify-content-center">
+        <div className={`row gy-4 justify-content-center ${styles.featureCardsContainer}`}>
           <div className="col-lg-3 col-md-6" key="bootcamp-col">
-            <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm h-100`}>
+            <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm`}>
               <Image src="/bootcamp.png" width={64} height={64} alt="Bootcamp" className={styles.featureImg} />
               <h3>BOOTCAMP</h3>
               <p>Intensive training programs designed to enhance technical skills and knowledge in various tech domains.</p>
@@ -312,7 +312,7 @@ function WhatsInItForYouSection() {
           </div>
 
           <div className="col-lg-3 col-md-6" key="info-col">
-            <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm h-100`}>
+            <Link href="/info" className={`${styles.featureCard} ${styles.infoCard} shadow-sm`}>
               <Image src="/info.png" width={64} height={64} alt="Info" className={styles.featureImg} />
               <h3>INFO</h3>
               <p>Updates on tech competitions and scholarships to support student growth.</p>
@@ -320,7 +320,7 @@ function WhatsInItForYouSection() {
           </div>
 
           <div className="col-lg-3 col-md-6" key="glory-col">
-            <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm h-100`}>
+            <Link href="/glory" className={`${styles.featureCard} ${styles.gloryCard} shadow-sm`}>
               <Image src="/glory.png" width={64} height={64} alt="Glory" className={styles.featureImg} />
               <h3>GLORY</h3>
               <p>Platform to recognize and appreciate outstanding achievements in tech excellence and innovation.</p>

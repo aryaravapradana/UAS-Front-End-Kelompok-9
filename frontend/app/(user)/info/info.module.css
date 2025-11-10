@@ -373,43 +373,50 @@
   pointer-events: none;
 }
 
-.infoCard {
-  background: linear-gradient(183.37deg, #000000 4.43%, #EBE643 47.81%, #000000 95.57%);
-  border: 3.61px solid transparent;
+.featureCard {
+  background: rgba(94, 94, 94, 0.27);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+  border: 2px solid rgba(188, 185, 185, 0.4);
   border-radius: 20px;
-  overflow: hidden;
+  padding: 3rem 2rem;
   transition: all 0.4s ease;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  height: 100%;
+  cursor: pointer;
+  height: 300px;
+  text-align: center;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-decoration: none;
 }
 
-.infoCard::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 3.61px;
-  background: linear-gradient(224.31deg, #FFFFFF 0.59%, #EAE34A 50.48%, #FFFFFF 99.41%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 0;
+.featureCard:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.featureCardsContainer:hover .featureCard:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.9, 0.9);
 }
 
 .infoCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(235, 230, 67, 0.4);
+  background: linear-gradient(160deg, #facc15, #b45309);
+}
+
+.featureCard:hover .infoCardTitle,
+.featureCard:hover .infoCardDesc {
+  color: #ffffff;
 }
 
 .infoCardImage {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 120px; /* Adjusted height for consistency */
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .infoCardImage img {
@@ -419,34 +426,33 @@
 }
 
 .infoCardContent {
-  padding: 1.5rem;
+  padding: 0; /* Removed padding as it's now on the featureCard */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  align-items: center; /* Center content within the card content */
+  gap: 0.5rem; /* Spacing between elements in content */
 }
 
 .infoCardDate {
   font-weight: 500;
   font-size: 12px;
   color: #EBE643;
-  margin-bottom: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .infoCardTitle {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 1.1rem; /* Adjusted font size for consistency */
   color: #FFFFFF;
-  margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 
 .infoCardDesc {
   font-weight: 400;
-  font-size: 13px;
-  color: #B8C5D6;
-  margin-bottom: 1.5rem;
+  font-size: 0.85rem; /* Adjusted font size for consistency */
+  color: #b0b0b0;
   line-height: 1.5;
   flex-grow: 1;
 }
@@ -593,20 +599,42 @@
   -webkit-backdrop-filter: blur(17px);
   border: 2px solid rgba(188, 185, 185, 0.4);
   border-radius: 20px;
-  padding: 2.5rem 2rem;
-  transition: all 0.3s ease;
+  padding: 3rem 2rem;
+  transition: all 0.4s ease;
   cursor: pointer;
-  height: 100%;
-  text-align: left;
+  height: 300px;
+  text-align: center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   text-decoration: none;
 }
 
 .infoFeatureCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(150, 150, 150, 0.15);
+  transform: scale(1.1, 1.1);
+}
+
+.featureCardsContainer:hover .infoFeatureCard:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.9, 0.9);
+}
+
+.infoBootcampCard:hover {
+  background: linear-gradient(160deg, #6d28d9, #4c1d95);
+}
+.infoGloryCard:hover {
+  background: linear-gradient(160deg, #dc2626, #991b1b);
+}
+.infoTalkCard:hover {
+  background: linear-gradient(160deg, #0ea5e9, #075985);
+}
+
+.infoFeatureCard:hover h3,
+.infoFeatureCard:hover p {
+  color: #ffffff;
 }
 
 .infoFeatureImg {
@@ -621,7 +649,7 @@
 }
 
 .infoFeatureCard:hover .infoFeatureImg {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
   opacity: 1;
 }
 
@@ -632,7 +660,7 @@
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
 }
 
 .infoFeatureCard p {
@@ -641,33 +669,7 @@
   line-height: 1.6;
   max-width: 100%;
   text-decoration: none;
-  text-align: left;
-}
-
-.infoBootcampCard:hover {
-  border-color: #B040DD;
-}
-.infoInfoCard:hover {
-  border-color: #EBE643;
-}
-.infoTalkCard:hover {
-  border-color: #44C3DC;
-}
-.infoGloryCard:hover {
-  border-color: #E53935;
-}
-
-.infoBootcampCard:hover .infoFeatureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #B040DD);
-}
-.infoInfoCard:hover .infoFeatureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #EBE643);
-}
-.infoTalkCard:hover .infoFeatureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #44C3DC);
-}
-.infoGloryCard:hover .infoFeatureImg {
-  filter: brightness(0) invert(1) drop-shadow(0 0 12px #E53935);
+  text-align: center;
 }
 
 /* ========================================
