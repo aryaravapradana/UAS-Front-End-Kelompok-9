@@ -1,7 +1,7 @@
 /* ==================== GLOBAL STYLES ==================== */
 .bootcampPage {
   min-height: 100vh;
-  background: #000000;
+  background: linear-gradient(180deg, #000000 0%, #8316AE 100%);
   color: #ffffff;
   overflow-x: hidden;
 }
@@ -150,9 +150,8 @@
   justify-content: center;
   padding: 0;
   margin: 0;
-  background-color: #000000;
-  background-image: url('/bootcamp/hero_section.png');
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -306,9 +305,8 @@
   align-items: center;
   padding: 6rem 0;
   margin: 0;
-  background-color: #000000;
-  background-image: url('/bootcamp/About.png');
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -389,9 +387,8 @@
   align-items: center;
   padding: 6rem 0 3rem;
   margin: 0;
-  background-color: #000000;
-  background-image: url('/bootcamp/choose.png');
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -671,9 +668,8 @@
   align-items: center;
   padding: 6rem 0;
   margin: 0;
-  background-color: #000000;
-  background-image: url('/bootcamp/why_you_should_join.png');
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -849,14 +845,14 @@
    FOOTER
    ======================================== */
 .infoFooter {
-  background-image: url('/bootcamp/footer.png');
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   padding: 5rem 0 3rem;
   margin: 0;
   position: relative;
-  color: #000000;
+  color: #ffffff;
 }
 
 .infoFooterContent {
@@ -890,7 +886,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0);
+  filter: brightness(0) invert(1);
 }
 
 .infoFooterLogoWrapper {
@@ -903,40 +899,40 @@
 .infoFooterLogoText {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #000000;
+  color: #ffffff;
   letter-spacing: 0.05em;
   line-height: 1.2;
 }
 
 .infoFooterLogoSubtext {
   font-size: 0.75rem;
-  color: #000000;
+  color: #ffffff;
   line-height: 1.3;
   margin-top: 0.25rem;
 }
 
 .infoFooterDescription {
   font-size: 0.85rem;
-  color: #000000;
+  color: #ffffff;
   line-height: 1.6;
 }
 
 .infoFooterTitle {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #000000;
+  color: #ffffff;
   margin-bottom: 1.25rem;
 }
 
 .infoFooterText {
   font-size: 0.85rem;
-  color: #000000;
+  color: #ffffff;
   line-height: 1.6;
 }
 
 .infoFooterLink {
   font-size: 0.85rem;
-  color: #4a4a4a;
+  color: #cccccc;
   text-decoration: none;
   transition: all 0.3s ease;
   display: block;
@@ -944,16 +940,16 @@
 }
 
 .infoFooterLink:hover {
-  color: #333333;
+  color: #ffffff;
 }
 
 .infoFooterCopyright {
   font-size: 0.85rem;
-  color: rgb(0, 0, 0);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .infoInstagramLink {
@@ -1439,15 +1435,14 @@
    BOOTCAMP FEATURES SECTION (Get To Know More)
    ======================================== */
 .bootcampFeaturesSection {
-  background-image: url('/bootcamp/get_to_know_more.png'); /* Changed image path */
-  background-size: 100% 100%;
+  background: transparent;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   padding: 8rem 0;
   margin: 0;
   position: relative;
   overflow: visible;
-  background-color: #000000;
   min-height: 80vh;
 }
 
