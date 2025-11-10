@@ -1,15 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TransitionLink from './TransitionLink';
 import Image from 'next/image';
 import styles from './Header.module.css';
 import LoginButton from './LoginButton';
 import ProfileButton from './ProfileButton';
+import NotificationDropdown from './NotificationDropdown'; // Import the new component
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const { isLoggedIn } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
 
   return (
     <header className={styles.navbar}>
@@ -35,6 +54,14 @@ const Header = () => {
           <TransitionLink href="/dashboard" className={styles.navLink}>Dashboard</TransitionLink>
         </nav>
         <div className="d-flex align-items-center gap-3">
+          {isLoggedIn && (
+            <div className={styles.notificationWrapper} ref={dropdownRef}>
+              <button onClick={toggleDropdown} className={styles.notificationBell}>
+                <i className="fas fa-bell"></i>
+              </button>
+              {isDropdownOpen && <NotificationDropdown />}
+            </div>
+          )}
           {!isLoggedIn && <LoginButton />}
           {isLoggedIn && <ProfileButton />}
         </div>

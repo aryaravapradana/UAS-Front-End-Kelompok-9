@@ -155,3 +155,10 @@ model PesertaBootcamp {
 
   @@unique([nim, id_bootcamp])
 }
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  message   String
+  createdAt DateTime @default(now()) @map("created_at")
+  readBy    String[] @map("read_by") // Array of Member IDs who have read this notification
+}

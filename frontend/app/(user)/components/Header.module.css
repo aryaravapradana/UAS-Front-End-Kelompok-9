@@ -97,3 +97,23 @@
 .navLink.active:hover {
   color: #ffffff;
 }
+
+.notificationWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notificationBell {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.notificationBell:hover {
+  color: #ffffff;
+}

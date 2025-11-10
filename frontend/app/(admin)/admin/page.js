@@ -36,6 +36,7 @@ export default function AdminDashboard() {
   const [editingBootcamp, setEditingBootcamp] = useState(null);
   const [isTalkModalOpen, setIsTalkModalOpen] = useState(false);
   const [editingTalk, setEditingTalk] = useState(null);
+  const [notificationMessage, setNotificationMessage] = useState(''); // New state for notification message
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -112,6 +113,33 @@ export default function AdminDashboard() {
       const data = await res.json();
       setTalks(data);
     } catch (err) { setError(err.message); }
+  };
+
+  // Notification Handler
+  const handleSendNotification = async () => {
+    if (!notificationMessage.trim()) {
+      alert('Notification message cannot be empty.');
+      return;
+    }
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch('http://localhost:3001/api/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ message: notificationMessage }),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to send notification.');
+      }
+      alert('Notification sent successfully!');
+      setNotificationMessage(''); // Clear the message input
+    } catch (err) {
+      alert(`Error sending notification: ${err.message}`);
+    }
   };
 
   // Member Handlers
@@ -335,6 +363,24 @@ export default function AdminDashboard() {
             <button onClick={handleAddNewTalk} className={styles.addButton}>Add New Talk</button>
           </div>
           <TalkTable talks={talks} onEdit={handleTalkEdit} onDelete={handleTalkDelete} />
+        </div>
+
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2>Notification Management</h2>
+          </div>
+          <div className={styles.notificationForm}>
+            <textarea
+              className={styles.notificationTextarea}
+              placeholder="Type your notification message here..."
+              value={notificationMessage}
+              onChange={(e) => setNotificationMessage(e.target.value)}
+              rows="4"
+            ></textarea>
+            <button onClick={handleSendNotification} className={styles.sendNotificationButton}>
+              Send Notification
+            </button>
+          </div>
         </div>
       </main>
 
