@@ -1,20 +1,15 @@
-
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TransitionLink from './TransitionLink';
 import Image from 'next/image';
 import styles from './Header.module.css';
 import LoginButton from './LoginButton';
 import ProfileButton from './ProfileButton';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+  const { isLoggedIn } = useAuth();
 
   return (
     <header className={styles.navbar}>

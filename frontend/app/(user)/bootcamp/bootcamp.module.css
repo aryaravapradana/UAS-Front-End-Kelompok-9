@@ -4,7 +4,6 @@
   background: #000000;
   color: #ffffff;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 .container {
@@ -179,7 +178,6 @@
 }
 
 .heroText h1 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 555;
   font-size: 4.25rem;
   line-height: 100%;
@@ -195,7 +193,6 @@
 }
 
 .heroText p {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 115%;
@@ -332,7 +329,6 @@
 }
 
 .whatIsText h2 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 4.5rem;
   font-weight: 550;
   font-style: normal;
@@ -349,7 +345,6 @@
 }
 
 .whatIsText p {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.15rem;
   margin-top: -25px;
   font-weight: 400;
@@ -403,7 +398,6 @@
 }
 
 .sectionTitle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 4rem;
   font-weight: 550;
   line-height: 100%;
@@ -422,7 +416,6 @@
 }
 
 .sectionSubtitle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 98%;
@@ -453,7 +446,6 @@
 }
 
 .trackFilter button {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.05rem;
   font-weight: 500;
   line-height: 1.5;
@@ -606,7 +598,6 @@
 }
 
 .trackInfo h3 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.35rem;
   font-weight: 600;
   color: #ffffff;
@@ -661,7 +652,6 @@
   margin-bottom: 0.85rem;
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .trackDetails li:last-child {
@@ -715,7 +705,6 @@
 }
 
 .mainTitle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 3.85rem;
   font-weight: 550;
   line-height: 1;
@@ -784,7 +773,6 @@
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   font-weight: 700;
   line-height: 1;
@@ -834,7 +822,6 @@
 }
 
 .reasonDescription {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
@@ -850,7 +837,6 @@
 }
 
 .reasonText h3 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: #ffffff;
@@ -906,7 +892,6 @@
 }
 
 .footerLogoText {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: #000000;
@@ -946,7 +931,6 @@
 }
 
 .footerTitle {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   color: #000000;
@@ -954,14 +938,12 @@
 }
 
 .footerText {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #000000;
   line-height: 1;
 }
 
 .footerLink {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #4a4a4a;
   text-decoration: none;
@@ -974,7 +956,6 @@
 }
 
 .footerCopyright {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: rgb(0, 0, 0);
   margin: 0;
@@ -1597,7 +1578,6 @@
 }
 
 .bootcampFeaturesTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 48px;
   line-height: 98%;
@@ -1613,7 +1593,6 @@
 }
 
 .bootcampFeaturesSubtext {
-  font-family: 'Helvetica Neue', sans-serif;
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
   margin-top: 0.8rem;
@@ -1659,7 +1638,6 @@
 }
 
 .bootcampFeatureCard h3 {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: #fff;
@@ -1670,7 +1648,6 @@
 }
 
 .bootcampFeatureCard p {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #b0b0b0;
   line-height: 1.6;

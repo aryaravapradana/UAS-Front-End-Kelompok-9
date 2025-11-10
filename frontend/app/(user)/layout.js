@@ -1,23 +1,9 @@
-import { Poppins, Montserrat } from 'next/font/google'
 import Script from 'next/script'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './globals.css'
 import { TransitionProvider } from './context/TransitionContext'
-
-const poppins = Poppins({
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
-
-const montserrat = Montserrat({
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  display: 'swap',
-})
+import { AuthProvider } from './context/AuthContext'
 
 export const metadata = {
   title: 'UCCD - Untar Computer Club Development',
@@ -29,11 +15,13 @@ export const viewport = 'width=device-width, initial-scale=1';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${poppins.variable} ${montserrat.variable}`}>
-      <body className={poppins.className} suppressHydrationWarning={true}>
-        <TransitionProvider>
-          {children}
-        </TransitionProvider>
+    <html lang="id">
+      <body suppressHydrationWarning={true}>
+        <AuthProvider>
+          <TransitionProvider>
+            {children}
+          </TransitionProvider>
+        </AuthProvider>
         
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
