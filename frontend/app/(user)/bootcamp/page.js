@@ -8,14 +8,29 @@ import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import BootcampDetailModal from '../components/BootcampDetailModal'; // Import the new modal component
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
   const { endTransition } = useTransition();
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [currentBootcamp, setCurrentBootcamp] = useState(null); // State for current bootcamp object
 
   useEffect(() => {
     endTransition();
   }, [endTransition]);
+
+  // Function to open the modal
+  const openDetailModal = (bootcamp) => {
+    setCurrentBootcamp(bootcamp);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeDetailModal = () => {
+    setIsModalOpen(false);
+    setCurrentBootcamp(null);
+  };
 
   return (
     <div className={styles.bootcampPage}>
@@ -27,7 +42,7 @@ export default function BootcampPage() {
         <WhatIsSection />
       </FadeInOnScroll>
       <FadeInOnScroll>
-        <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} />
+        <ChooseTrackSection activeTrack={activeTrack} setActiveTrack={setActiveTrack} openDetailModal={openDetailModal} />
       </FadeInOnScroll>
       <FadeInOnScroll>
         <WhyJoinSection />
@@ -36,6 +51,13 @@ export default function BootcampPage() {
         <BootcampKnowMoreSection />
       </FadeInOnScroll>
       <AppFooter />
+
+      {/* Render the modal component */}
+      <BootcampDetailModal
+        isOpen={isModalOpen}
+        onClose={closeDetailModal}
+        bootcamp={currentBootcamp}
+      />
     </div>
   );
 }
@@ -85,7 +107,7 @@ function WhatIsSection() {
   );
 }
 
-function ChooseTrackSection({ activeTrack, setActiveTrack }) {
+function ChooseTrackSection({ activeTrack, setActiveTrack, openDetailModal }) {
   const [allBootcamps, setAllBootcamps] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -202,7 +224,13 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
                 <div className={styles.trackInfo}>
                   <div className={styles.trackTitleRow}>
                     <h3>{bootcamp.nama_bootcamp}</h3>
-                    <span className={styles.trackBadge}>See Details</span>
+                    {/* Make "See Details" clickable and remove "Register Now" */}
+                    <button
+                      className={styles.trackBadge} // Keep existing styling
+                      onClick={() => openDetailModal(bootcamp)} // Open modal with full bootcamp object
+                    >
+                      See Details
+                    </button>
                   </div>
                   <ul className={styles.trackDetails}>
                     <li>
@@ -218,9 +246,10 @@ function ChooseTrackSection({ activeTrack, setActiveTrack }) {
                       <span>Fee: {bootcamp.biaya_daftar ? `Rp ${bootcamp.biaya_daftar.toLocaleString()}` : 'Free'}</span>
                     </li>
                   </ul>
-                  <button className={styles.btnApply} onClick={() => handleRegister(bootcamp.id)}>
+                  {/* Removed the original Register Now button */}
+                  {/* <button className={styles.btnApply} onClick={() => handleRegister(bootcamp.id)}>
                     Register Now
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))
