@@ -110,7 +110,7 @@ export default function ProfileButton() {
             className={styles.dropdownItem}
           >
             <i className="fas fa-envelope"></i> {/* Using an envelope icon for email */}
-            <span>Tambah dan Verifikasi Email</span>
+            <span>Verifikasi Email</span>
           </button>
           <button
             onClick={() => {
