@@ -10,6 +10,12 @@
   align-items: center;
   z-index: 10000; /* Ensure it's on top of everything */
   backdrop-filter: blur(5px); /* Optional: subtle blur effect */
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease-out; /* Fade in */
+}
+
+.modalOverlay.open {
+  opacity: 1;
 }
 
 .modalContent {
@@ -22,6 +28,14 @@
   overflow: hidden; /* Hide overflow if image is too large */
   display: flex; /* Use flexbox for two halves */
   color: #ffffff; /* Default text color for modal content */
+  opacity: 0; /* Start hidden */
+  transform: scale(0.8); /* Start smaller */
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Fade in and scale up */
+}
+
+.modalContent.open {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .leftHalf {
@@ -33,16 +47,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px; /* Padding around the image */
+  /* Removed padding to make image fill */
 }
 
 .posterImage {
   position: relative !important; /* Override next/image default positioning */
-  width: auto !important;
-  height: auto !important;
+  width: 100% !important; /* Make image fill the width */
+  height: 100% !important; /* Make image fill the height */
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover; /* Cover the area, cropping if necessary */
 }
 
 .noPoster {
@@ -108,6 +122,11 @@
   font-size: 0.95rem;
   color: #e0e0e0;
   margin-bottom: 10px;
+}
+
+.detailTextContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .detailItem i {

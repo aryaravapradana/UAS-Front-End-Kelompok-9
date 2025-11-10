@@ -25,8 +25,8 @@ const BootcampDetailModal = ({ isOpen, onClose, bootcamp }) => {
   ];
 
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
-      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+    <div className={`${styles.modalOverlay} ${isOpen ? styles.open : ''}`} onClick={onClose}>
+      <div className={`${styles.modalContent} ${isOpen ? styles.open : ''}`} onClick={(e) => e.stopPropagation()}>
         {/* Left Half: Poster and Back Button */}
         <div className={styles.leftHalf}>
           <button className={styles.backButton} onClick={onClose}>
@@ -52,13 +52,15 @@ const BootcampDetailModal = ({ isOpen, onClose, bootcamp }) => {
 
           <div className={styles.detailItem}>
             <i className="fas fa-calendar-alt"></i>
-            <span className={styles.detailLabel}>Application Period:</span>
-            <span className={styles.detailValue}>{formatDate(bootcamp.tanggal_deadline)}</span>
+            <div className={styles.detailTextContainer}>
+              <div className={styles.detailLabel}>Application Period</div>
+              <div className={styles.detailValue}>{formatDate(bootcamp.tanggal_deadline)}</div>
+            </div>
           </div>
 
           <div className={styles.detailItem}>
             <i className="fas fa-suitcase"></i>
-            <span className={styles.detailLabel}>Benefits:</span>
+            <span className={styles.detailLabel}>Benefits</span>
             <ul className={styles.benefitsList}>
               {benefits.map((benefit, index) => (
                 <li key={index}>{benefit}</li>
