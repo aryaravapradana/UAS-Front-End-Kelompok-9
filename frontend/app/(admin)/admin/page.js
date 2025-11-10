@@ -13,6 +13,7 @@ import BootcampTable from './components/BootcampTable';
 import BootcampFormModal from './components/BootcampFormModal';
 import TalkTable from './components/TalkTable';
 import TalkFormModal from './components/TalkFormModal';
+import NotificationTable from './components/NotificationTable'; // Import NotificationTable
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -37,6 +38,7 @@ export default function AdminDashboard() {
   const [isTalkModalOpen, setIsTalkModalOpen] = useState(false);
   const [editingTalk, setEditingTalk] = useState(null);
   const [notificationMessage, setNotificationMessage] = useState(''); // New state for notification message
+  const [adminNotifications, setAdminNotifications] = useState([]); // New state for admin notifications
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -62,6 +64,7 @@ export default function AdminDashboard() {
         fetchBeasiswas(token),
         fetchBootcamps(token),
         fetchTalks(token),
+        fetchAdminNotifications(token), // Fetch notifications for admin
       ]);
       setLoading(false);
     };
@@ -115,6 +118,18 @@ export default function AdminDashboard() {
     } catch (err) { setError(err.message); }
   };
 
+  const fetchAdminNotifications = async (token) => {
+    try {
+      // Fetch all notifications for admin view, without pagination for simplicity
+      const res = await fetch('http://localhost:3001/api/notifications?limit=1000', { // Fetch a large number to act as 'all'
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Failed to fetch admin notifications.');
+      const data = await res.json();
+      setAdminNotifications(data.notifications);
+    } catch (err) { setError(err.message); }
+  };
+
   // Notification Handler
   const handleSendNotification = async () => {
     if (!notificationMessage.trim()) {
@@ -137,8 +152,29 @@ export default function AdminDashboard() {
       }
       alert('Notification sent successfully!');
       setNotificationMessage(''); // Clear the message input
+      fetchAdminNotifications(token); // Refresh the list of notifications
     } catch (err) {
       alert(`Error sending notification: ${err.message}`);
+    }
+  };
+
+  const handleDeleteNotification = async (id) => {
+    if (window.confirm('Are you sure you want to delete this notification?')) {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`http://localhost:3001/api/notifications/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Failed to delete notification.');
+        }
+        alert('Notification deleted successfully.');
+        fetchAdminNotifications(token); // Refresh the list
+      } catch (err) {
+        alert(`Error deleting notification: ${err.message}`);
+      }
     }
   };
 
@@ -381,6 +417,7 @@ export default function AdminDashboard() {
               Send Notification
             </button>
           </div>
+          <NotificationTable notifications={adminNotifications} onDelete={handleDeleteNotification} />
         </div>
       </main>
 

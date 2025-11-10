@@ -93,3 +93,29 @@ exports.markNotificationAsRead = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Delete a notification (Admin only)
+// @route   DELETE /api/notifications/:id
+// @access  Private/Admin
+exports.deleteNotification = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const notification = await prisma.notification.findUnique({
+      where: { id },
+    });
+
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found.' });
+    }
+
+    await prisma.notification.delete({
+      where: { id },
+    });
+
+    res.status(200).json({ message: 'Notification deleted successfully.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
+
