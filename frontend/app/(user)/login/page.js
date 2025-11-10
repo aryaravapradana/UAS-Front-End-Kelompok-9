@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import styles from './login.module.css';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 import { useAuth } from '../context/AuthContext';
 
-export default function LoginPage() {
+function LoginContent() {
   const [nim, setNim] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -140,5 +140,13 @@ export default function LoginPage() {
         </form>
       </FadeInOnScroll>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

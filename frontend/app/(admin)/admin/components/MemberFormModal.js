@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import styles from './MemberFormModal.module.css';
 
-export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData }) {
+export default function MemberFormModal({ isOpen, onClose, onSubmit, onDeleteEmail, initialData }) {
   const [formData, setFormData] = useState({
     nim: '',
     nama_lengkap: '',
+    email: '',
     password: '',
     role: 'user',
   });
@@ -23,6 +24,7 @@ export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData
         setFormData({
           nim: initialData.nim || '',
           nama_lengkap: initialData.nama_lengkap || '',
+          email: initialData.email || '',
           password: '', // Password should not be pre-filled for security
           role: initialData.role || 'user',
         });
@@ -31,6 +33,7 @@ export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData
         setFormData({
           nim: '',
           nama_lengkap: '',
+          email: '',
           password: '',
           role: 'user',
         });
@@ -51,6 +54,16 @@ export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData
     setProfilePicture(e.target.files[0]);
   };
 
+  const handleDeleteEmail = () => {
+    // Immediately update the UI
+    setFormData((prev) => ({ ...prev, email: '' }));
+    
+    // Call the passed-in onDeleteEmail function
+    if (onDeleteEmail) {
+      onDeleteEmail(initialData.nim);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -67,6 +80,7 @@ export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData
     const submissionData = new FormData();
     submissionData.append('nim', formData.nim);
     submissionData.append('nama_lengkap', formData.nama_lengkap);
+    submissionData.append('email', formData.email);
     submissionData.append('role', formData.role);
     
     if (formData.password) {
@@ -112,6 +126,28 @@ export default function MemberFormModal({ isOpen, onClose, onSubmit, initialData
               required
               className={styles.input}
             />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="email">Email</label>
+            <div className={styles.emailContainer}>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={styles.input}
+              />
+              {isEditMode && (
+                <button
+                  type="button"
+                  onClick={handleDeleteEmail}
+                  className={`${styles.button} ${styles.deleteEmailButton}`}
+                >
+                  Delete Email
+                </button>
+              )}
+            </div>
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
