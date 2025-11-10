@@ -60,12 +60,14 @@ const BootcampDetailModal = ({ isOpen, onClose, bootcamp }) => {
 
           <div className={styles.detailItem}>
             <i className="fas fa-suitcase"></i>
-            <span className={styles.detailLabel}>Benefits</span>
-            <ul className={styles.benefitsList}>
-              {benefits.map((benefit, index) => (
-                <li key={index}>{benefit}</li>
-              ))}
-            </ul>
+            <div className={styles.detailTextContainer}>
+              <span className={styles.detailLabel}>Benefits</span>
+              <ul className={styles.benefitsList}>
+                {benefits.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <button className={styles.registerButton}>Register Now</button>
