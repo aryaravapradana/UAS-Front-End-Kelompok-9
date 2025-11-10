@@ -457,7 +457,7 @@
   border: 2px solid rgba(188, 185, 185, 0.4);
   border-radius: 20px;
   padding: 2.5rem 2rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   cursor: pointer;
   min-height: 300px;
   text-align: left;
@@ -470,8 +470,12 @@
 }
 
 .featureCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(150, 150, 150, 0.15);
+  transform: scale(1.1, 1.1);
+}
+
+.featureCardsContainer:hover .featureCard:not(:hover) {
+  filter: blur(6px);
+  transform: scale(0.9, 0.9);
 }
 
 /* ICON WRAPPER */
@@ -652,16 +656,16 @@
 
 /* CARD HOVER STYLES */
 .bootcampCard:hover {
-  border-color: #B040DD;
+  background: linear-gradient(160deg, #B040DD, #8316AE);
 }
 .infoCard:hover {
-  border-color: #EBE643;
+  background: linear-gradient(160deg, #EBE643, #D8B92C);
 }
 .talksCard:hover {
-  border-color: #44C3DC;
+  background: linear-gradient(160deg, #44C3DC, #0E9BDB);
 }
 .gloryCard:hover {
-  border-color: #E53935;
+  background: linear-gradient(160deg, #E53935, #C62828);
 }
 
 .bootcampCard:hover .featureImgWrapper {
