@@ -130,3 +130,25 @@
     text-align: center;
   }
   
+  .emailContainer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .deleteEmailButton {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  .deleteEmailButton:hover {
+    background-color: #c82333;
+  }
+  

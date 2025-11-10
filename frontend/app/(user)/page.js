@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from "./page.module.css";
 import Header from "./components/Header";
@@ -10,7 +10,7 @@ import { useTransition } from './context/TransitionContext';
 import FadeInOnScroll from './components/FadeInOnScroll';
 import { useAuth } from './context/AuthContext';
 
-export default function Home() {
+function HomeContent() {
   const [successMessage, setSuccessMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const searchParams = useSearchParams();
@@ -155,6 +155,14 @@ export default function Home() {
 
       <AppFooter />
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
 

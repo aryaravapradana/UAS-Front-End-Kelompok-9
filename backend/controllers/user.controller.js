@@ -163,27 +163,45 @@ exports.createUser = async (req, res) => {
 // @route   PUT /api/users/:nim
 // @access  Private/Admin
 exports.updateUser = async (req, res) => {
-  const { nama_lengkap, role, password } = req.body;
+  const { nama_lengkap, role, password, email } = req.body;
   const { nim } = req.params;
 
   try {
-    const dataToUpdate = {};
+    const member = await prisma.member.findUnique({ where: { nim } });
+    if (!member) {
+      return res.status(404).json({ message: `User with NIM ${nim} not found.` });
+    }
 
-    if (nama_lengkap) {
+    const dataToUpdate = {};
+    let emailChanged = false;
+
+    if (nama_lengkap && nama_lengkap !== member.nama_lengkap) {
       dataToUpdate.nama_lengkap = nama_lengkap;
     }
-    if (role) {
+    if (role && role !== member.role) {
       dataToUpdate.role = role;
     }
     if (password) {
       dataToUpdate.password = await bcrypt.hash(password, 12);
+    }
+    if (email !== undefined && email !== member.email) { // Check if email is provided and different
+      if (email === null || email === '') { // If email is explicitly set to null or empty
+        dataToUpdate.email = null;
+        dataToUpdate.isEmailVerified = false;
+        dataToUpdate.emailVerificationToken = null;
+      } else {
+        dataToUpdate.email = email;
+        dataToUpdate.isEmailVerified = false;
+        dataToUpdate.emailVerificationToken = crypto.randomBytes(32).toString('hex');
+        emailChanged = true;
+      }
     }
     if (req.file) {
       dataToUpdate.profilePictureUrl = `${process.env.CLOUDFLARE_WORKER_DOMAIN}${req.file.key}`;
     }
 
     if (Object.keys(dataToUpdate).length === 0) {
-      return res.status(400).json({ message: 'No update data provided.' });
+      return res.status(200).json({ message: 'No update data provided.' });
     }
 
     const updatedUser = await prisma.member.update({
@@ -191,13 +209,51 @@ exports.updateUser = async (req, res) => {
       data: dataToUpdate,
     });
 
+    if (emailChanged) {
+      await sendVerificationEmail(updatedUser.email, updatedUser.emailVerificationToken);
+    }
+
     const { password: _, ...userWithoutPassword } = updatedUser;
     res.status(200).json(userWithoutPassword);
   } catch (error) {
-    // Handle case where user to update is not found
+    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
+      return res.status(409).json({ message: 'Email address is already in use by another user.' });
+    }
     if (error.code === 'P2025') {
       return res.status(404).json({ message: `User with NIM ${nim} not found.` });
     }
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
+
+// @desc    Delete user email
+// @route   DELETE /api/users/:nim/email
+// @access  Private/Admin
+exports.deleteUserEmail = async (req, res) => {
+  const { nim } = req.params;
+
+  try {
+    const member = await prisma.member.findUnique({ where: { nim } });
+    if (!member) {
+      return res.status(404).json({ message: `User with NIM ${nim} not found.` });
+    }
+
+    if (!member.email) {
+      return res.status(200).json({ message: 'User does not have an email to delete.' });
+    }
+
+    const updatedUser = await prisma.member.update({
+      where: { nim },
+      data: {
+        email: null,
+        isEmailVerified: false,
+        emailVerificationToken: null,
+      },
+    });
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+    res.status(200).json({ message: 'User email deleted successfully', user: userWithoutPassword });
+  } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };

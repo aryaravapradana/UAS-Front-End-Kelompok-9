@@ -9,6 +9,7 @@ const {
   getUserByNim,
   updateUser,
   deleteUser,
+  deleteUserEmail, // Import deleteUserEmail
   getMemberLombasForAdmin,
   getMemberBeasiswasForAdmin,
   getMemberTalksForAdmin,
@@ -31,6 +32,9 @@ router.route('/users/:nim')
   .get(auth, admin, getUserByNim)
   .put(auth, admin, upload.single('profilePicture'), updateUser) // Add middleware
   .delete(auth, admin, deleteUser);
+
+router.route('/users/:nim/email')
+  .delete(auth, admin, deleteUserEmail); // New route to delete user email
 
 // Admin-only member event history routes
 router.route('/users/:nim/lombas').get(auth, admin, getMemberLombasForAdmin);

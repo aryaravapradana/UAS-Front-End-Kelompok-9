@@ -136,11 +136,38 @@ export default function AdminDashboard() {
     const method = isEditMode ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });
-      if (!res.ok) throw new Error(await res.json().then(d => d.message));
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to process member.');
+      }
       alert(`Member ${isEditMode ? 'updated' : 'created'}.`);
       handleCloseMemberModal();
       fetchMembers(token);
     } catch (err) { alert(`Error: ${err.message}`); }
+  };
+
+  const handleDeleteMemberEmail = async (nim) => {
+    if (window.confirm(`Are you sure you want to delete the email for NIM ${nim}?`)) {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`http://localhost:3001/api/users/${nim}/email`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Failed to delete email.');
+        }
+        alert('Member email deleted successfully.');
+        fetchMembers(token); // Refresh the member list
+        // Optionally, update the editingMember state if the modal is still open
+        if (editingMember && editingMember.nim === nim) {
+          setEditingMember(prev => ({ ...prev, email: null }));
+        }
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      }
+    }
   };
 
   // Lomba Handlers
@@ -311,7 +338,13 @@ export default function AdminDashboard() {
         </div>
       </main>
 
-      <MemberFormModal isOpen={isMemberModalOpen} onClose={handleCloseMemberModal} onSubmit={handleMemberFormSubmit} initialData={editingMember} />
+      <MemberFormModal
+        isOpen={isMemberModalOpen}
+        onClose={handleCloseMemberModal}
+        onSubmit={handleMemberFormSubmit}
+        onDeleteEmail={handleDeleteMemberEmail} // Pass the new handler
+        initialData={editingMember}
+      />
       <LombaFormModal isOpen={isLombaModalOpen} onClose={handleCloseLombaModal} onSubmit={handleLombaFormSubmit} initialData={editingLomba} />
       <BeasiswaFormModal isOpen={isBeasiswaModalOpen} onClose={handleCloseBeasiswaModal} onSubmit={handleBeasiswaFormSubmit} initialData={editingBeasiswa} />
       <BootcampFormModal isOpen={isBootcampModalOpen} onClose={handleCloseBootcampModal} onSubmit={handleBootcampFormSubmit} initialData={editingBootcamp} />
