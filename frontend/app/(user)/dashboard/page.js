@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import { useAuth } from '../context/AuthContext';
 
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
@@ -17,6 +18,7 @@ const DashboardPage = () => {
   const router = useRouter();
   const fileInputRef = useRef(null);
   const { endTransition } = useTransition();
+  const { logout } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +41,7 @@ const DashboardPage = () => {
         ]);
 
         if (profileRes.status === 401) {
-          localStorage.removeItem('token');
+          logout();
           router.push('/login');
           return;
         }
@@ -73,7 +75,7 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, [router, endTransition]);
+  }, [router, endTransition, logout]);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -106,7 +108,7 @@ const DashboardPage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    logout();
     router.push('/');
   };
 

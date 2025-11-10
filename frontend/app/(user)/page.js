@@ -8,13 +8,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useTransition } from './context/TransitionContext';
 import FadeInOnScroll from './components/FadeInOnScroll';
+import { useAuth } from './context/AuthContext';
 
 export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
   const [isMessageVisible, setIsMessageVisible] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const searchParams = useSearchParams();
   const { endTransition } = useTransition();
+  const { logout } = useAuth();
 
   useEffect(() => {
     endTransition();
@@ -24,15 +25,10 @@ export default function Home() {
       setIsMessageVisible(true);
       setTimeout(() => setIsMessageVisible(false), 3000);
     }
-
-    // Check for token to determine login status
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
   }, [searchParams, endTransition]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    logout();
   };
 
   return (

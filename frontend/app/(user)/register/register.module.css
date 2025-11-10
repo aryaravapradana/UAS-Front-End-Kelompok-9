@@ -8,7 +8,6 @@
   background: #000000;
   position: relative;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
 .container::before {
@@ -231,7 +230,6 @@
   font-size: 14px;
   transition: all 0.25s ease;
   outline: none;
-  font-family: inherit;
   font-weight: 400;
 }
 
@@ -272,7 +270,6 @@
   transition: all 0.22s ease;
   margin-top: 6px;
   letter-spacing: -0.15px;
-  font-family: inherit;
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
 }
 

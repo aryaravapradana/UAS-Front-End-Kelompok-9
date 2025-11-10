@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './login.module.css';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const [nim, setNim] = useState('');
@@ -15,6 +16,7 @@ export default function LoginPage() {
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { login } = useAuth();
 
   useEffect(() => {
     const status = searchParams.get('status');
@@ -55,6 +57,7 @@ export default function LoginPage() {
         const data = await res.json();
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.result)); // Save user data
+        login();
 
         // Redirect based on user role
         if (data.result.role === 'admin') {

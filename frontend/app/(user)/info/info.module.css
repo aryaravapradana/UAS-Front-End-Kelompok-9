@@ -4,7 +4,6 @@
   background: #000000;
   color: #ffffff;
   overflow-x: hidden;
-  font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 
 /* ==================== INFO HERO SECTION ==================== */
@@ -31,7 +30,6 @@
 }
 
 .infoHeroTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 128px;
   line-height: 100%;
@@ -46,7 +44,6 @@
 }
 
 .infoHeroDescription {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 115%;
@@ -71,7 +68,6 @@
   border: 2px solid transparent;
   background: linear-gradient(90deg, #EBE643 0%, #D8B92C 100%);
   position: relative;
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #000000;
@@ -122,7 +118,6 @@
 }
 
 .infoAboutTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 96.58px;
   line-height: 100%;
@@ -137,7 +132,6 @@
 }
 
 .infoAboutText {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 140%;
@@ -178,7 +172,6 @@
 }
 
 .infoWhyTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 98.52px;
   line-height: 100%;
@@ -204,7 +197,6 @@
 }
 
 .infoWhyNumber {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 700;
   font-size: 111.57px;
   line-height: 100%;
@@ -221,7 +213,6 @@
 }
 
 .infoWhyText p {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 140%;
@@ -313,7 +304,6 @@
 }
 
 .infoOpportunitiesTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 84.42px;
   line-height: 98%;
@@ -329,7 +319,6 @@
 }
 
 .infoOpportunitiesSubtitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 18px;
   color: #FFFFFF;
@@ -359,7 +348,6 @@
   border: 1.33px solid transparent;
   background: transparent;
   color: #FFFFFF;
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
@@ -438,7 +426,6 @@
 }
 
 .infoCardDate {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 12px;
   color: #EBE643;
@@ -448,7 +435,6 @@
 }
 
 .infoCardTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 700;
   font-size: 18px;
   color: #FFFFFF;
@@ -457,7 +443,6 @@
 }
 
 .infoCardDesc {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 13px;
   color: #B8C5D6;
@@ -473,7 +458,6 @@
   border: 0.83px solid transparent;
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 251, 139, 0.0792) 100%);
   color: #FFFFFF;
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 14.54px;
   line-height: 100%;
@@ -582,7 +566,6 @@
 }
 
 .infoFeaturesTitle {
-  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 84.42px;
   line-height: 98%;
@@ -599,7 +582,6 @@
 }
 
 .infoFeaturesSubtext {
-  font-family: 'Helvetica Neue', sans-serif;
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
   margin-top: 0.8rem;
@@ -644,7 +626,6 @@
 }
 
 .infoFeatureCard h3 {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: #fff;
@@ -655,7 +636,6 @@
 }
 
 .infoFeatureCard p {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #b0b0b0;
   line-height: 1.6;
@@ -743,7 +723,6 @@
 }
 
 .infoFooterLogoText {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: #000000;
@@ -752,7 +731,6 @@
 }
 
 .infoFooterLogoSubtext {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
   color: #000000;
   line-height: 1.3;
@@ -760,14 +738,12 @@
 }
 
 .infoFooterDescription {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #000000;
   line-height: 1.6;
 }
 
 .infoFooterTitle {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   color: #000000;
@@ -775,14 +751,12 @@
 }
 
 .infoFooterText {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #000000;
   line-height: 1.6;
 }
 
 .infoFooterLink {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #4a4a4a;
   text-decoration: none;
@@ -796,7 +770,6 @@
 }
 
 .infoFooterCopyright {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: rgb(0, 0, 0);
   margin: 0;

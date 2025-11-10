@@ -4,7 +4,6 @@
 .main {
   min-height: 100vh;
   background: #000;
-  font-family: 'Poppins', sans-serif;
 }
 
 /* ========================================
@@ -77,7 +76,6 @@
 }
 
 .logoText {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.3rem;
   font-weight: 800;
   background: white;
@@ -89,7 +87,6 @@
 }
 
 .navLink {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
@@ -118,7 +115,6 @@
 }
 
 .btnPrimary {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
@@ -133,7 +129,6 @@
 }
 
 .btnOutline {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   background: transparent;
@@ -167,7 +162,6 @@
 }
 
 .heroTitle {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 2.75rem;
   line-height: 1.15;
@@ -185,7 +179,6 @@
 }
 
 .heroSubtext {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.8);
@@ -199,7 +192,6 @@
 .btnExplore {
   position: relative;
   display: inline-block;
-  font-family: 'Poppins', sans-serif;
   font-size: 0.875rem; 
   font-weight: 600;
   color: #fff;
@@ -309,7 +301,6 @@
 }
 
 .sectionTitle {
-  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 2.5rem;
   line-height: 1.2;
@@ -319,7 +310,6 @@
 }
 
 .sectionText {
-  font-family: "Poppins", sans-serif;
   font-size: 0.95rem;
   line-height: 1.9;
   color: rgba(255, 255, 255, 0.9);
@@ -427,7 +417,6 @@
 }
 
 .featuresTitle {
-  font-family: 'Montserrat', sans-serif;
   font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -455,7 +444,6 @@
 }
 
 .featuresSubtext {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
   margin-top: 0.8rem;
@@ -515,7 +503,6 @@
 
 /* TEXT */
 .featureCard h3 {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.1rem;
   color: #fff;
@@ -526,7 +513,6 @@
 }
 
 .featureCard p {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #b0b0b0; 
   line-height: 1.6;
@@ -569,7 +555,6 @@
 }
 
 .footerLogoText {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: #000000;
@@ -577,7 +562,6 @@
 }
 
 .footerTitle {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   color: #000000;
@@ -585,14 +569,12 @@
 }
 
 .footerText {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #000000;
   line-height: 1;
 }
 
 .footerLink {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: #4a4a4a;
   text-decoration: none;
@@ -605,7 +587,6 @@
 }
 
 .footerCopyright {
-  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   color: rgb(0, 0, 0);
   margin: 0;
