@@ -109,6 +109,16 @@ export default function ProfileButton() {
             }}
             className={styles.dropdownItem}
           >
+            <i className="fas fa-envelope"></i> {/* Using an envelope icon for email */}
+            <span>Tambah dan Verifikasi Email</span>
+          </button>
+          <button
+            onClick={() => {
+              router.push('/profile/edit');
+              setIsDropdownOpen(false);
+            }}
+            className={styles.dropdownItem}
+          >
             <i className="fas fa-user-edit"></i>
             <span>Ubah Data</span>
           </button>
