@@ -109,7 +109,7 @@ export default function Home() {
             </FadeInOnScroll>
           </div>
 
-          <div className="row gy-4 justify-content-center">
+          <div className="row gy-4 gx-5 justify-content-center">
             <div className="col-lg-3 col-md-6">
               <FadeInOnScroll>
                 <Link href="/bootcamp" className={`${styles.featureCard} ${styles.bootcampCard} shadow-sm h-100`}>

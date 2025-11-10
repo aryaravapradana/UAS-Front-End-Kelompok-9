@@ -77,12 +77,7 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <FadeInOnScroll>
-        <div className={styles.logo}>
-          <Image src="/uccd-logo@2x.png" alt="UCCD" width={40} height={40} className={styles.logoIconImg} />
-          <span>UCCD</span>
-        </div>
-      </FadeInOnScroll>
+      
 
       <FadeInOnScroll>
         <form className={styles.form} onSubmit={handleSubmit}>
