@@ -1616,3 +1616,11 @@
 .gloryCard:hover .featureImg {
   filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
 }
+
+.decorativeEllipse {
+  position: absolute;
+  left: -600px;
+  top: -200;
+  z-index: 1;
+  transform: scaleX(-1) scaleY(-1);
+}
