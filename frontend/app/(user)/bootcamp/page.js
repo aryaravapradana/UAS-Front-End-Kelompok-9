@@ -65,6 +65,14 @@ export default function BootcampPage() {
 function HeroSection() {
   return (
     <section className={styles.heroSection}>
+      <Image
+        src="/decorative-ellipse.svg"
+        alt="Decorative Ellipse"
+        width={894}
+        height={824}
+        className={styles.decorativeEllipse}
+        unoptimized
+      />
       <div className={styles.heroContent}>
         <div className={styles.heroText}>
           <h1>
