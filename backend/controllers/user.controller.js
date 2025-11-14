@@ -358,3 +358,41 @@ exports.uploadProfilePicture = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong', error: error.message });
   }
 };
+
+// @desc    Get a user's full details and activities (Admin only)
+// @route   GET /api/users/:nim/details
+// @access  Private/Admin
+exports.getMemberDetails = async (req, res) => {
+  const { nim } = req.params;
+  try {
+    const memberDetails = await prisma.member.findUnique({
+      where: { nim },
+      include: {
+        lombas: {
+          orderBy: { createdAt: 'desc' },
+          include: { lomba: true },
+        },
+        beasiswas: {
+          orderBy: { createdAt: 'desc' },
+          include: { beasiswa: true },
+        },
+        talks: {
+          orderBy: { createdAt: 'desc' },
+          include: { talk: true },
+        },
+        bootcamps: {
+          orderBy: { createdAt: 'desc' },
+          include: { bootcamp: true },
+        },
+      },
+    });
+
+    if (!memberDetails) {
+      return res.status(404).json({ message: 'Member not found' });
+    }
+
+    res.status(200).json(memberDetails);
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong', error: error.message });
+  }
+};
