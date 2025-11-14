@@ -44,6 +44,14 @@
   color: white;
 }
 
+.viewButton {
+  background-color: #6c757d; /* Secondary gray color */
+}
+
+.viewButton:hover {
+  background-color: #5a6268;
+}
+
 .editButton {
   background-color: #ffc107; /* Warning color */
 }

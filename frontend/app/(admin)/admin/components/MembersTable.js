@@ -3,7 +3,7 @@
 import React from 'react';
 import styles from './MembersTable.module.css';
 
-const MembersTable = ({ members, onEdit, onDelete }) => {
+const MembersTable = ({ members, onView, onEdit, onDelete }) => {
   if (!members || members.length === 0) {
     return <p>No members found.</p>;
   }
@@ -32,6 +32,9 @@ const MembersTable = ({ members, onEdit, onDelete }) => {
               <td>{member.email || 'N/A'}</td>
               <td>{member.role}</td>
               <td className={styles.actions}>
+                <button onClick={() => onView(member.nim)} className={`${styles.button} ${styles.viewButton}`}>
+                  View
+                </button>
                 <button onClick={() => onEdit(member)} className={`${styles.button} ${styles.editButton}`}>
                   Edit
                 </button>

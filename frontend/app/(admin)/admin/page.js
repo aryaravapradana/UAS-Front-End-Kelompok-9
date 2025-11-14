@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './AdminDashboard.module.css';
 import MembersTable from './components/MembersTable';
 import MemberFormModal from './components/MemberFormModal';
+import MemberDetailModal from './components/MemberDetailModal';
 import LombaTable from './components/LombaTable';
 import LombaFormModal from './components/LombaFormModal';
 import BeasiswaTable from './components/BeasiswaTable';
@@ -30,6 +31,7 @@ export default function AdminDashboard() {
   // Modal states
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
+  const [viewingMemberNIM, setViewingMemberNIM] = useState(null);
   const [isLombaModalOpen, setIsLombaModalOpen] = useState(false);
   const [editingLomba, setEditingLomba] = useState(null);
   const [isBeasiswaModalOpen, setIsBeasiswaModalOpen] = useState(false);
@@ -199,6 +201,8 @@ export default function AdminDashboard() {
   };
 
   // Member Handlers
+  const handleViewMemberDetails = (nim) => setViewingMemberNIM(nim);
+  const handleCloseMemberDetailModal = () => setViewingMemberNIM(null);
   const handleMemberEdit = (member) => { setEditingMember(member); setIsMemberModalOpen(true); };
   const handleAddNewMember = () => { setEditingMember(null); setIsMemberModalOpen(true); };
   const handleCloseMemberModal = () => { setIsMemberModalOpen(false); setEditingMember(null); };
@@ -457,7 +461,12 @@ export default function AdminDashboard() {
               <button onClick={handleAddNewMember} className={styles.addButton}>Add New Member</button>
             </div>
           </div>
-          <MembersTable members={paginatedMembers} onEdit={handleMemberEdit} onDelete={handleMemberDelete} />
+          <MembersTable
+            members={paginatedMembers}
+            onView={handleViewMemberDetails}
+            onEdit={handleMemberEdit}
+            onDelete={handleMemberDelete}
+          />
           <PaginationControls
             currentPage={membersPage}
             totalPages={totalMemberPages}
@@ -594,6 +603,9 @@ export default function AdminDashboard() {
         </div>
       </main>
 
+      {viewingMemberNIM && (
+        <MemberDetailModal nim={viewingMemberNIM} onClose={handleCloseMemberDetailModal} />
+      )}
       <MemberFormModal
         isOpen={isMemberModalOpen}
         onClose={handleCloseMemberModal}

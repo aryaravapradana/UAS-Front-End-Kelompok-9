@@ -15,6 +15,7 @@ const {
   getMemberTalksForAdmin,
   getMemberBootcampsForAdmin,
   uploadProfilePicture,
+  getMemberDetails,
 } = require('../controllers/user.controller.js');
 const auth = require('../middleware/auth.middleware.js');
 const admin = require('../middleware/admin.middleware.js');
@@ -41,5 +42,8 @@ router.route('/users/:nim/lombas').get(auth, admin, getMemberLombasForAdmin);
 router.route('/users/:nim/beasiswas').get(auth, admin, getMemberBeasiswasForAdmin);
 router.route('/users/:nim/talks').get(auth, admin, getMemberTalksForAdmin);
 router.route('/users/:nim/bootcamps').get(auth, admin, getMemberBootcampsForAdmin);
+
+// The new all-in-one details route
+router.route('/users/:nim/details').get(auth, admin, getMemberDetails);
 
 module.exports = router;
