@@ -104,7 +104,8 @@ const NotificationDropdown = () => {
             className={`${styles.notificationItem} ${notification.isRead ? styles.read : styles.unread}`}
             onClick={() => !notification.isRead && handleMarkAsRead(notification.id)}
           >
-            <p className={styles.notificationMessage}>{notification.message}</p>
+            <p className={styles.notificationTitle}>{notification.title}</p>
+            <p className={styles.notificationIsi}>{notification.isi}</p>
             <span className={styles.notificationTime}>
               {new Date(notification.createdAt).toLocaleString()}
             </span>

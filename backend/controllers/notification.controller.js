@@ -5,16 +5,17 @@ const prisma = new PrismaClient();
 // @route   POST /api/notifications
 // @access  Private/Admin
 exports.createNotification = async (req, res) => {
-  const { message } = req.body;
+  const { title, isi } = req.body;
 
-  if (!message) {
-    return res.status(400).json({ message: 'Notification message is required.' });
+  if (!title || !isi) {
+    return res.status(400).json({ message: 'Notification title and content are required.' });
   }
 
   try {
     const notification = await prisma.notification.create({
       data: {
-        message,
+        title,
+        isi,
       },
     });
     res.status(201).json(notification);

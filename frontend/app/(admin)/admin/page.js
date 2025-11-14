@@ -37,7 +37,8 @@ export default function AdminDashboard() {
   const [editingBootcamp, setEditingBootcamp] = useState(null);
   const [isTalkModalOpen, setIsTalkModalOpen] = useState(false);
   const [editingTalk, setEditingTalk] = useState(null);
-  const [notificationMessage, setNotificationMessage] = useState(''); // New state for notification message
+  const [notificationTitle, setNotificationTitle] = useState('');
+  const [notificationIsi, setNotificationIsi] = useState('');
   const [adminNotifications, setAdminNotifications] = useState([]); // New state for admin notifications
 
   useEffect(() => {
@@ -132,8 +133,8 @@ export default function AdminDashboard() {
 
   // Notification Handler
   const handleSendNotification = async () => {
-    if (!notificationMessage.trim()) {
-      alert('Notification message cannot be empty.');
+    if (!notificationTitle.trim() || !notificationIsi.trim()) {
+      alert('Notification title and content cannot be empty.');
       return;
     }
     const token = localStorage.getItem('token');
@@ -144,14 +145,15 @@ export default function AdminDashboard() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: notificationMessage }),
+        body: JSON.stringify({ title: notificationTitle, isi: notificationIsi }),
       });
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to send notification.');
       }
       alert('Notification sent successfully!');
-      setNotificationMessage(''); // Clear the message input
+      setNotificationTitle(''); // Clear the title input
+      setNotificationIsi(''); // Clear the content input
       fetchAdminNotifications(token); // Refresh the list of notifications
     } catch (err) {
       alert(`Error sending notification: ${err.message}`);
@@ -406,11 +408,18 @@ export default function AdminDashboard() {
             <h2>Notification Management</h2>
           </div>
           <div className={styles.notificationForm}>
+            <input
+              type="text"
+              className={styles.notificationInput}
+              placeholder="Notification Title"
+              value={notificationTitle}
+              onChange={(e) => setNotificationTitle(e.target.value)}
+            />
             <textarea
               className={styles.notificationTextarea}
-              placeholder="Type your notification message here..."
-              value={notificationMessage}
-              onChange={(e) => setNotificationMessage(e.target.value)}
+              placeholder="Type your notification content here..."
+              value={notificationIsi}
+              onChange={(e) => setNotificationIsi(e.target.value)}
               rows="4"
             ></textarea>
             <button onClick={handleSendNotification} className={styles.sendNotificationButton}>
