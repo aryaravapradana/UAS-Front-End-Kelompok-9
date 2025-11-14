@@ -43,10 +43,22 @@ exports.createBeasiswa = async (req, res) => {
 };
 
 exports.updateBeasiswa = async (req, res) => {
+  const { tanggal_deadline, ...restOfData } = req.body;
+  const dataToUpdate = { ...restOfData };
+
+  if (tanggal_deadline) {
+    dataToUpdate.tanggal_deadline = new Date(tanggal_deadline);
+  }
+
+  // Pastikan biaya_daftar adalah angka
+  if (dataToUpdate.biaya_daftar) {
+    dataToUpdate.biaya_daftar = parseFloat(dataToUpdate.biaya_daftar);
+  }
+
   try {
     const updatedBeasiswa = await prisma.beasiswa.update({
       where: { id: req.params.id },
-      data: req.body,
+      data: dataToUpdate,
     });
     res.status(200).json(updatedBeasiswa);
   } catch (error) {

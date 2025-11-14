@@ -88,7 +88,7 @@ const MemberDetailModal = ({ nim, onClose }) => {
                 { key: 'tgl', header: 'Tgl. Daftar', render: item => new Date(item.createdAt).toLocaleDateString() },
               ])}
               {renderActivityTable('Beasiswa', details.beasiswas, [
-                { key: 'nama', header: 'Nama Beasiswa', render: item => item.beasiswa.nama_beasiswa },
+                { key: 'nama', header: 'Nama Beasiswa', render: item => item.nama_beasiswa },
                 { key: 'status', header: 'Status', render: item => <span className={`${styles.status} ${styles[item.status_hasil]}`}>{item.status_hasil}</span> },
                 { key: 'tgl', header: 'Tgl. Daftar', render: item => new Date(item.createdAt).toLocaleDateString() },
               ])}

@@ -65,16 +65,8 @@ export default function BeasiswaFormModal({ isOpen, onClose, onSubmit, initialDa
         return;
     }
 
-    const submissionData = new FormData();
-    Object.keys(formData).forEach(key => {
-      submissionData.append(key, formData[key]);
-    });
-    
-    if (poster) {
-      submissionData.append('poster', poster);
-    }
-
-    onSubmit(submissionData);
+    // Pass both formData and the poster file separately
+    onSubmit({ formData, poster });
   };
 
   return (
