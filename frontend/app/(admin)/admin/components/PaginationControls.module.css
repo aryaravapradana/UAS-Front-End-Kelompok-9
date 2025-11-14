@@ -34,4 +34,30 @@
   font-size: 0.95rem;
   color: #ccc;
   margin: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.pageInput {
+  width: 50px;
+  margin: 0 0.5rem;
+  text-align: center;
+  background-color: #1e1e1e;
+  border: 1px solid #555;
+  color: #e0e0e0;
+  border-radius: 4px;
+  padding: 0.4rem;
+  font-size: 0.95rem;
+}
+
+/* Hide number input arrows on Chrome, Safari, Edge, Opera */
+.pageInput::-webkit-outer-spin-button,
+.pageInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input arrows on Firefox */
+.pageInput[type=number] {
+  -moz-appearance: textfield;
 }
