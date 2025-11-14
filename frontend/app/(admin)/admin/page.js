@@ -14,6 +14,7 @@ import BootcampFormModal from './components/BootcampFormModal';
 import TalkTable from './components/TalkTable';
 import TalkFormModal from './components/TalkFormModal';
 import NotificationTable from './components/NotificationTable'; // Import NotificationTable
+import PaginationControls from './components/PaginationControls';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -37,6 +38,14 @@ export default function AdminDashboard() {
   const [editingBootcamp, setEditingBootcamp] = useState(null);
   const [isTalkModalOpen, setIsTalkModalOpen] = useState(false);
   const [editingTalk, setEditingTalk] = useState(null);
+
+  // Pagination states
+  const [membersPage, setMembersPage] = useState(1);
+  const [lombasPage, setLombasPage] = useState(1);
+  const [beasiswasPage, setBeasiswasPage] = useState(1);
+  const [bootcampsPage, setBootcampsPage] = useState(1);
+  const [talksPage, setTalksPage] = useState(1);
+
   const [notificationTitle, setNotificationTitle] = useState('');
   const [notificationIsi, setNotificationIsi] = useState('');
   const [adminNotifications, setAdminNotifications] = useState([]); // New state for admin notifications
@@ -356,6 +365,45 @@ export default function AdminDashboard() {
   if (error) return <p className={styles.error}>Error: {error}</p>;
   if (!user) return <p>Redirecting to login...</p>;
 
+  // --- Pagination Logic ---
+  const ITEMS_PER_PAGE = 7;
+
+  // Members Pagination
+  const totalMemberPages = Math.ceil(members.length / ITEMS_PER_PAGE);
+  const paginatedMembers = members.slice(
+    (membersPage - 1) * ITEMS_PER_PAGE,
+    membersPage * ITEMS_PER_PAGE
+  );
+
+  // Lombas Pagination
+  const totalLombaPages = Math.ceil(lombas.length / ITEMS_PER_PAGE);
+  const paginatedLombas = lombas.slice(
+    (lombasPage - 1) * ITEMS_PER_PAGE,
+    lombasPage * ITEMS_PER_PAGE
+  );
+
+  // Beasiswas Pagination
+  const totalBeasiswaPages = Math.ceil(beasiswas.length / ITEMS_PER_PAGE);
+  const paginatedBeasiswas = beasiswas.slice(
+    (beasiswasPage - 1) * ITEMS_PER_PAGE,
+    beasiswasPage * ITEMS_PER_PAGE
+  );
+
+  // Bootcamps Pagination
+  const totalBootcampPages = Math.ceil(bootcamps.length / ITEMS_PER_PAGE);
+  const paginatedBootcamps = bootcamps.slice(
+    (bootcampsPage - 1) * ITEMS_PER_PAGE,
+    bootcampsPage * ITEMS_PER_PAGE
+  );
+
+  // Talks Pagination
+  const totalTalkPages = Math.ceil(talks.length / ITEMS_PER_PAGE);
+  const paginatedTalks = talks.slice(
+    (talksPage - 1) * ITEMS_PER_PAGE,
+    talksPage * ITEMS_PER_PAGE
+  );
+  // --- End Pagination Logic ---
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -368,7 +416,12 @@ export default function AdminDashboard() {
             <h2>Members Management</h2>
             <button onClick={handleAddNewMember} className={styles.addButton}>Add New Member</button>
           </div>
-          <MembersTable members={members} onEdit={handleMemberEdit} onDelete={handleMemberDelete} />
+          <MembersTable members={paginatedMembers} onEdit={handleMemberEdit} onDelete={handleMemberDelete} />
+          <PaginationControls
+            currentPage={membersPage}
+            totalPages={totalMemberPages}
+            onPageChange={setMembersPage}
+          />
         </div>
 
         <div className={styles.section}>
@@ -376,7 +429,12 @@ export default function AdminDashboard() {
             <h2>Lomba Management</h2>
             <button onClick={handleAddNewLomba} className={styles.addButton}>Add New Lomba</button>
           </div>
-          <LombaTable lombas={lombas} onEdit={handleLombaEdit} onDelete={handleLombaDelete} />
+          <LombaTable lombas={paginatedLombas} onEdit={handleLombaEdit} onDelete={handleLombaDelete} />
+          <PaginationControls
+            currentPage={lombasPage}
+            totalPages={totalLombaPages}
+            onPageChange={setLombasPage}
+          />
         </div>
 
         <div className={styles.section}>
@@ -384,7 +442,12 @@ export default function AdminDashboard() {
             <h2>Beasiswa Management</h2>
             <button onClick={handleAddNewBeasiswa} className={styles.addButton}>Add New Beasiswa</button>
           </div>
-          <BeasiswaTable beasiswas={beasiswas} onEdit={handleBeasiswaEdit} onDelete={handleBeasiswaDelete} />
+          <BeasiswaTable beasiswas={paginatedBeasiswas} onEdit={handleBeasiswaEdit} onDelete={handleBeasiswaDelete} />
+          <PaginationControls
+            currentPage={beasiswasPage}
+            totalPages={totalBeasiswaPages}
+            onPageChange={setBeasiswasPage}
+          />
         </div>
 
         <div className={styles.section}>
@@ -392,7 +455,12 @@ export default function AdminDashboard() {
             <h2>Bootcamp Management</h2>
             <button onClick={handleAddNewBootcamp} className={styles.addButton}>Add New Bootcamp</button>
           </div>
-          <BootcampTable bootcamps={bootcamps} onEdit={handleBootcampEdit} onDelete={handleBootcampDelete} />
+          <BootcampTable bootcamps={paginatedBootcamps} onEdit={handleBootcampEdit} onDelete={handleBootcampDelete} />
+          <PaginationControls
+            currentPage={bootcampsPage}
+            totalPages={totalBootcampPages}
+            onPageChange={setBootcampsPage}
+          />
         </div>
 
         <div className={styles.section}>
@@ -400,7 +468,12 @@ export default function AdminDashboard() {
             <h2>Talk Management</h2>
             <button onClick={handleAddNewTalk} className={styles.addButton}>Add New Talk</button>
           </div>
-          <TalkTable talks={talks} onEdit={handleTalkEdit} onDelete={handleTalkDelete} />
+          <TalkTable talks={paginatedTalks} onEdit={handleTalkEdit} onDelete={handleTalkDelete} />
+          <PaginationControls
+            currentPage={talksPage}
+            totalPages={totalTalkPages}
+            onPageChange={setTalksPage}
+          />
         </div>
 
         <div className={styles.section}>
