@@ -123,6 +123,7 @@ const NotificationDropdown = () => {
               key={notification.id}
               className={`${styles.notificationItem} ${notification.isRead ? styles.read : styles.unread}`}
               onClick={() => handleNotificationClick(notification)} // Updated onClick
+              title="Klik untuk mengetahui detail"
             >
               <p className={styles.notificationTitle}>{notification.title}</p>
               {/* The 'isi' is now removed from the list view */}
