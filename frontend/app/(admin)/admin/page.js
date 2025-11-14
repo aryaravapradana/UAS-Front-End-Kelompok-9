@@ -45,6 +45,7 @@ export default function AdminDashboard() {
   const [beasiswasPage, setBeasiswasPage] = useState(1);
   const [bootcampsPage, setBootcampsPage] = useState(1);
   const [talksPage, setTalksPage] = useState(1);
+  const [notificationsPage, setNotificationsPage] = useState(1);
 
   const [notificationTitle, setNotificationTitle] = useState('');
   const [notificationIsi, setNotificationIsi] = useState('');
@@ -402,6 +403,13 @@ export default function AdminDashboard() {
     (talksPage - 1) * ITEMS_PER_PAGE,
     talksPage * ITEMS_PER_PAGE
   );
+
+  // Notifications Pagination
+  const totalNotificationPages = Math.ceil(adminNotifications.length / ITEMS_PER_PAGE);
+  const paginatedNotifications = adminNotifications.slice(
+    (notificationsPage - 1) * ITEMS_PER_PAGE,
+    notificationsPage * ITEMS_PER_PAGE
+  );
   // --- End Pagination Logic ---
 
   return (
@@ -499,7 +507,12 @@ export default function AdminDashboard() {
               Send Notification
             </button>
           </div>
-          <NotificationTable notifications={adminNotifications} onDelete={handleDeleteNotification} />
+          <NotificationTable notifications={paginatedNotifications} onDelete={handleDeleteNotification} />
+          <PaginationControls
+            currentPage={notificationsPage}
+            totalPages={totalNotificationPages}
+            onPageChange={setNotificationsPage}
+          />
         </div>
       </main>
 
