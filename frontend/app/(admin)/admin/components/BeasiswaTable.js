@@ -33,7 +33,7 @@ const BeasiswaTable = ({ beasiswas, onEdit, onDelete }) => {
         <tbody>
           {beasiswas.map((beasiswa) => (
             <tr key={beasiswa.id}>
-              <td>{beasiswa.nama}</td>
+              <td>{beasiswa.nama_beasiswa}</td>
               <td>{beasiswa.penyelenggara}</td>
               <td>{formatDate(beasiswa.tanggal_deadline)}</td>
               <td>

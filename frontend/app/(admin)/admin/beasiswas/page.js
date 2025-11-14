@@ -58,18 +58,71 @@ export default function BeasiswasPage() {
     }
   };
 
-  const handleBeasiswaFormSubmit = async (formData) => {
+  const handleBeasiswaFormSubmit = async (submission) => {
+    const { formData, poster } = submission;
     const token = localStorage.getItem('token');
     const isEditMode = !!editingBeasiswa;
-    const url = isEditMode ? `http://localhost:3001/api/beasiswas/${editingBeasiswa.id}` : 'http://localhost:3001/api/beasiswas';
-    const method = isEditMode ? 'PUT' : 'POST';
+
+    // Step 1: Create/Update Text Data
+    let beasiswaResponse;
     try {
-      const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });
-      if (!res.ok) throw new Error(await res.json().then(d => d.message));
-      toast.success(`Beasiswa ${isEditMode ? 'updated' : 'created'}.`);
-      handleCloseBeasiswaModal();
-      fetchBeasiswas();
-    } catch (err) { toast.error(`Error: ${err.message}`); }
+      const url = isEditMode ? `http://localhost:3001/api/beasiswas/${editingBeasiswa.id}` : 'http://localhost:3001/api/beasiswas';
+      const method = isEditMode ? 'PUT' : 'POST';
+
+      // Make sure to parse biaya_daftar to float
+      const dataToSend = {
+        ...formData,
+        biaya_daftar: parseFloat(formData.biaya_daftar) || 0,
+      };
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dataToSend)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to process beasiswa data.');
+      }
+      beasiswaResponse = await res.json();
+      toast.success(`Beasiswa data ${isEditMode ? 'updated' : 'created'}.`);
+
+    } catch (err) {
+      toast.error(`Error: ${err.message}`);
+      return; // Stop if step 1 fails
+    }
+
+    // Step 2: Upload Poster if it exists
+    if (poster) {
+      try {
+        const beasiswaId = beasiswaResponse.id;
+        const posterFormData = new FormData();
+        posterFormData.append('poster', poster);
+
+        const posterRes = await fetch(`http://localhost:3001/api/beasiswas/${beasiswaId}/poster`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: posterFormData
+        });
+
+        if (!posterRes.ok) {
+          const errorData = await posterRes.json();
+          throw new Error(errorData.message || 'Failed to upload poster.');
+        }
+        toast.success('Poster uploaded successfully.');
+
+      } catch (err) {
+        toast.error(`Poster Upload Error: ${err.message}`);
+      }
+    }
+
+    // Final Step: Close modal and refresh list
+    handleCloseBeasiswaModal();
+    fetchBeasiswas();
   };
 
   // Search and Pagination Logic
