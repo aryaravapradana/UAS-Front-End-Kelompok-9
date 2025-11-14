@@ -13,8 +13,8 @@ const NotificationTable = ({ notifications, onDelete }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Message</th>
+            <th>Title</th>
+            <th>Content</th>
             <th>Created At</th>
             <th>Actions</th>
           </tr>
@@ -22,8 +22,8 @@ const NotificationTable = ({ notifications, onDelete }) => {
         <tbody>
           {notifications.map((notification) => (
             <tr key={notification.id}>
-              <td>{notification.id}</td>
-              <td>{notification.message}</td>
+              <td>{notification.title}</td>
+              <td>{notification.isi}</td>
               <td>{new Date(notification.createdAt).toLocaleString()}</td>
               <td className={styles.actions}>
                 <button onClick={() => onDelete(notification.id)} className={`${styles.button} ${styles.deleteButton}`}>

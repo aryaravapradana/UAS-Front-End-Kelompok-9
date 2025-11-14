@@ -14,6 +14,7 @@ import BootcampFormModal from './components/BootcampFormModal';
 import TalkTable from './components/TalkTable';
 import TalkFormModal from './components/TalkFormModal';
 import NotificationTable from './components/NotificationTable'; // Import NotificationTable
+import PaginationControls from './components/PaginationControls';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -37,7 +38,25 @@ export default function AdminDashboard() {
   const [editingBootcamp, setEditingBootcamp] = useState(null);
   const [isTalkModalOpen, setIsTalkModalOpen] = useState(false);
   const [editingTalk, setEditingTalk] = useState(null);
-  const [notificationMessage, setNotificationMessage] = useState(''); // New state for notification message
+
+  // Pagination states
+  const [membersPage, setMembersPage] = useState(1);
+  const [lombasPage, setLombasPage] = useState(1);
+  const [beasiswasPage, setBeasiswasPage] = useState(1);
+  const [bootcampsPage, setBootcampsPage] = useState(1);
+  const [talksPage, setTalksPage] = useState(1);
+  const [notificationsPage, setNotificationsPage] = useState(1);
+
+  // Search states
+  const [memberSearch, setMemberSearch] = useState('');
+  const [lombaSearch, setLombaSearch] = useState('');
+  const [beasiswaSearch, setBeasiswaSearch] = useState('');
+  const [bootcampSearch, setBootcampSearch] = useState('');
+  const [talkSearch, setTalkSearch] = useState('');
+  const [notificationSearch, setNotificationSearch] = useState('');
+
+  const [notificationTitle, setNotificationTitle] = useState('');
+  const [notificationIsi, setNotificationIsi] = useState('');
   const [adminNotifications, setAdminNotifications] = useState([]); // New state for admin notifications
 
   useEffect(() => {
@@ -132,8 +151,8 @@ export default function AdminDashboard() {
 
   // Notification Handler
   const handleSendNotification = async () => {
-    if (!notificationMessage.trim()) {
-      alert('Notification message cannot be empty.');
+    if (!notificationTitle.trim() || !notificationIsi.trim()) {
+      alert('Notification title and content cannot be empty.');
       return;
     }
     const token = localStorage.getItem('token');
@@ -144,14 +163,15 @@ export default function AdminDashboard() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: notificationMessage }),
+        body: JSON.stringify({ title: notificationTitle, isi: notificationIsi }),
       });
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to send notification.');
       }
       alert('Notification sent successfully!');
-      setNotificationMessage(''); // Clear the message input
+      setNotificationTitle(''); // Clear the title input
+      setNotificationIsi(''); // Clear the content input
       fetchAdminNotifications(token); // Refresh the list of notifications
     } catch (err) {
       alert(`Error sending notification: ${err.message}`);
@@ -354,6 +374,68 @@ export default function AdminDashboard() {
   if (error) return <p className={styles.error}>Error: {error}</p>;
   if (!user) return <p>Redirecting to login...</p>;
 
+  // --- Search and Pagination Logic ---
+  const ITEMS_PER_PAGE = 7;
+
+  const searchFilter = (data, query) => {
+    if (!query) return data;
+    const lowerCaseQuery = query.toLowerCase();
+    return data.filter(item =>
+      Object.values(item).some(val =>
+        String(val).toLowerCase().includes(lowerCaseQuery)
+      )
+    );
+  };
+
+  // Members
+  const filteredMembers = searchFilter(members, memberSearch);
+  const totalMemberPages = Math.ceil(filteredMembers.length / ITEMS_PER_PAGE);
+  const paginatedMembers = filteredMembers.slice(
+    (membersPage - 1) * ITEMS_PER_PAGE,
+    membersPage * ITEMS_PER_PAGE
+  );
+
+  // Lombas
+  const filteredLombas = searchFilter(lombas, lombaSearch);
+  const totalLombaPages = Math.ceil(filteredLombas.length / ITEMS_PER_PAGE);
+  const paginatedLombas = filteredLombas.slice(
+    (lombasPage - 1) * ITEMS_PER_PAGE,
+    lombasPage * ITEMS_PER_PAGE
+  );
+
+  // Beasiswas
+  const filteredBeasiswas = searchFilter(beasiswas, beasiswaSearch);
+  const totalBeasiswaPages = Math.ceil(filteredBeasiswas.length / ITEMS_PER_PAGE);
+  const paginatedBeasiswas = filteredBeasiswas.slice(
+    (beasiswasPage - 1) * ITEMS_PER_PAGE,
+    beasiswasPage * ITEMS_PER_PAGE
+  );
+
+  // Bootcamps
+  const filteredBootcamps = searchFilter(bootcamps, bootcampSearch);
+  const totalBootcampPages = Math.ceil(filteredBootcamps.length / ITEMS_PER_PAGE);
+  const paginatedBootcamps = filteredBootcamps.slice(
+    (bootcampsPage - 1) * ITEMS_PER_PAGE,
+    bootcampsPage * ITEMS_PER_PAGE
+  );
+
+  // Talks
+  const filteredTalks = searchFilter(talks, talkSearch);
+  const totalTalkPages = Math.ceil(filteredTalks.length / ITEMS_PER_PAGE);
+  const paginatedTalks = filteredTalks.slice(
+    (talksPage - 1) * ITEMS_PER_PAGE,
+    talksPage * ITEMS_PER_PAGE
+  );
+
+  // Notifications
+  const filteredNotifications = searchFilter(adminNotifications, notificationSearch);
+  const totalNotificationPages = Math.ceil(filteredNotifications.length / ITEMS_PER_PAGE);
+  const paginatedNotifications = filteredNotifications.slice(
+    (notificationsPage - 1) * ITEMS_PER_PAGE,
+    notificationsPage * ITEMS_PER_PAGE
+  );
+  // --- End Logic ---
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -364,60 +446,151 @@ export default function AdminDashboard() {
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Members Management</h2>
-            <button onClick={handleAddNewMember} className={styles.addButton}>Add New Member</button>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Members..."
+                className={styles.searchInput}
+                value={memberSearch}
+                onChange={(e) => { setMemberSearch(e.target.value); setMembersPage(1); }}
+              />
+              <button onClick={handleAddNewMember} className={styles.addButton}>Add New Member</button>
+            </div>
           </div>
-          <MembersTable members={members} onEdit={handleMemberEdit} onDelete={handleMemberDelete} />
+          <MembersTable members={paginatedMembers} onEdit={handleMemberEdit} onDelete={handleMemberDelete} />
+          <PaginationControls
+            currentPage={membersPage}
+            totalPages={totalMemberPages}
+            onPageChange={setMembersPage}
+          />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Lomba Management</h2>
-            <button onClick={handleAddNewLomba} className={styles.addButton}>Add New Lomba</button>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Lombas..."
+                className={styles.searchInput}
+                value={lombaSearch}
+                onChange={(e) => { setLombaSearch(e.target.value); setLombasPage(1); }}
+              />
+              <button onClick={handleAddNewLomba} className={styles.addButton}>Add New Lomba</button>
+            </div>
           </div>
-          <LombaTable lombas={lombas} onEdit={handleLombaEdit} onDelete={handleLombaDelete} />
+          <LombaTable lombas={paginatedLombas} onEdit={handleLombaEdit} onDelete={handleLombaDelete} />
+          <PaginationControls
+            currentPage={lombasPage}
+            totalPages={totalLombaPages}
+            onPageChange={setLombasPage}
+          />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Beasiswa Management</h2>
-            <button onClick={handleAddNewBeasiswa} className={styles.addButton}>Add New Beasiswa</button>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Beasiswas..."
+                className={styles.searchInput}
+                value={beasiswaSearch}
+                onChange={(e) => { setBeasiswaSearch(e.target.value); setBeasiswasPage(1); }}
+              />
+              <button onClick={handleAddNewBeasiswa} className={styles.addButton}>Add New Beasiswa</button>
+            </div>
           </div>
-          <BeasiswaTable beasiswas={beasiswas} onEdit={handleBeasiswaEdit} onDelete={handleBeasiswaDelete} />
+          <BeasiswaTable beasiswas={paginatedBeasiswas} onEdit={handleBeasiswaEdit} onDelete={handleBeasiswaDelete} />
+          <PaginationControls
+            currentPage={beasiswasPage}
+            totalPages={totalBeasiswaPages}
+            onPageChange={setBeasiswasPage}
+          />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Bootcamp Management</h2>
-            <button onClick={handleAddNewBootcamp} className={styles.addButton}>Add New Bootcamp</button>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Bootcamps..."
+                className={styles.searchInput}
+                value={bootcampSearch}
+                onChange={(e) => { setBootcampSearch(e.target.value); setBootcampsPage(1); }}
+              />
+              <button onClick={handleAddNewBootcamp} className={styles.addButton}>Add New Bootcamp</button>
+            </div>
           </div>
-          <BootcampTable bootcamps={bootcamps} onEdit={handleBootcampEdit} onDelete={handleBootcampDelete} />
+          <BootcampTable bootcamps={paginatedBootcamps} onEdit={handleBootcampEdit} onDelete={handleBootcampDelete} />
+          <PaginationControls
+            currentPage={bootcampsPage}
+            totalPages={totalBootcampPages}
+            onPageChange={setBootcampsPage}
+          />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Talk Management</h2>
-            <button onClick={handleAddNewTalk} className={styles.addButton}>Add New Talk</button>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Talks..."
+                className={styles.searchInput}
+                value={talkSearch}
+                onChange={(e) => { setTalkSearch(e.target.value); setTalksPage(1); }}
+              />
+              <button onClick={handleAddNewTalk} className={styles.addButton}>Add New Talk</button>
+            </div>
           </div>
-          <TalkTable talks={talks} onEdit={handleTalkEdit} onDelete={handleTalkDelete} />
+          <TalkTable talks={paginatedTalks} onEdit={handleTalkEdit} onDelete={handleTalkDelete} />
+          <PaginationControls
+            currentPage={talksPage}
+            totalPages={totalTalkPages}
+            onPageChange={setTalksPage}
+          />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2>Notification Management</h2>
+            <div className={styles.headerActions}>
+              <input
+                type="text"
+                placeholder="Search Notifications..."
+                className={styles.searchInput}
+                value={notificationSearch}
+                onChange={(e) => { setNotificationSearch(e.target.value); setNotificationsPage(1); }}
+              />
+            </div>
           </div>
           <div className={styles.notificationForm}>
+            <input
+              type="text"
+              className={styles.notificationInput}
+              placeholder="Notification Title"
+              value={notificationTitle}
+              onChange={(e) => setNotificationTitle(e.target.value)}
+            />
             <textarea
               className={styles.notificationTextarea}
-              placeholder="Type your notification message here..."
-              value={notificationMessage}
-              onChange={(e) => setNotificationMessage(e.target.value)}
+              placeholder="Type your notification content here..."
+              value={notificationIsi}
+              onChange={(e) => setNotificationIsi(e.target.value)}
               rows="4"
             ></textarea>
             <button onClick={handleSendNotification} className={styles.sendNotificationButton}>
               Send Notification
             </button>
           </div>
-          <NotificationTable notifications={adminNotifications} onDelete={handleDeleteNotification} />
+          <NotificationTable notifications={paginatedNotifications} onDelete={handleDeleteNotification} />
+          <PaginationControls
+            currentPage={notificationsPage}
+            totalPages={totalNotificationPages}
+            onPageChange={setNotificationsPage}
+          />
         </div>
       </main>
 
@@ -425,7 +598,7 @@ export default function AdminDashboard() {
         isOpen={isMemberModalOpen}
         onClose={handleCloseMemberModal}
         onSubmit={handleMemberFormSubmit}
-        onDeleteEmail={handleDeleteMemberEmail} // Pass the new handler
+        onDeleteEmail={handleDeleteMemberEmail}
         initialData={editingMember}
       />
       <LombaFormModal isOpen={isLombaModalOpen} onClose={handleCloseLombaModal} onSubmit={handleLombaFormSubmit} initialData={editingLomba} />

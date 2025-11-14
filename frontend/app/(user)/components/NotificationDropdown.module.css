@@ -67,10 +67,18 @@
   background-color: rgba(0, 123, 255, 0.2);
 }
 
-.notificationMessage {
+.notificationTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.notificationIsi {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.4;
+  color: #c0c0c0;
 }
 
 .notificationTime {
