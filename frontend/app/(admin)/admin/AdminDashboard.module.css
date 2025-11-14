@@ -101,3 +101,25 @@
 .sendNotificationButton:hover {
   background-color: #218838;
 }
+
+.headerActions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 0.6rem 0.8rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  min-width: 250px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
