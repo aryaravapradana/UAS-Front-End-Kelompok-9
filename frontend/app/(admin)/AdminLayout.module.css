@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.content {
+  flex-grow: 1;
+  margin-left: 250px; /* Same as sidebar width */
+  padding: 2rem;
+  background-color: #f1f5f9; /* A light gray background */
+  min-height: 100vh;
+}
