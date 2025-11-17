@@ -17,7 +17,7 @@ model Member {
   nama_lengkap           String
   prodi                  String
   angkatan               String
-  email                  String?
+  email                  String?           @unique
   isEmailVerified        Boolean           @default(false) @map("is_email_verified")
   emailVerificationToken String?           @map("email_verification_token")
   passwordResetToken     String?           @map("password_reset_token")
