@@ -47,6 +47,7 @@ model Lomba {
   documentationUrl String?          @map("documentation_url")
   pemenang_uccd    String?
   pemenang         Member?          @relation(fields: [pemenang_uccd], references: [nim])
+  max_anggota      Int              @default(1)
   createdAt        DateTime         @default(now()) @map("created_at")
   updatedAt        DateTime         @updatedAt @map("updated_at")
   pesertas         PesertaLomba[]
@@ -105,6 +106,10 @@ model PesertaLomba {
   tanggal_daftar DateTime
   status_pembayaran String   @default("unpaid")
   status_hasil      String   @default("pending")
+  is_team           Boolean  @default(false)
+  nama_tim          String?
+  kode_tim          String?
+  is_leader         Boolean  @default(false)
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @updatedAt @map("updated_at")
 
