@@ -17,9 +17,13 @@ const bootcampRoutes = require('./routes/bootcamp.routes.js');
 const memberRoutes = require('./routes/member.routes.js');
 const userRoutes = require('./routes/user.routes.js');
 const notificationRoutes = require('./routes/notification.routes.js'); // Import notification routes
+const lombaRegistrationRoutes = require('./routes/lomba_registration.js'); // Import lomba registration routes
+const eventDetailsRoutes = require('./routes/event_details.js'); // Import event details routes
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lombas', lombaRoutes);
+app.use('/api/lombas', lombaRegistrationRoutes); // Use lomba registration routes
+app.use('/api/events', eventDetailsRoutes); // Use event details routes
 app.use('/api/beasiswas', beasiswaRoutes);
 app.use('/api/talks', talkRoutes);
 app.use('/api/bootcamps', bootcampRoutes);
