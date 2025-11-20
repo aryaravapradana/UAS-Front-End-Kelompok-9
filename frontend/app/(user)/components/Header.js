@@ -10,7 +10,7 @@ import NotificationDropdown from './NotificationDropdown'; // Import the new com
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -54,16 +54,20 @@ const Header = () => {
           <TransitionLink href="/dashboard" className={styles.navLink}>Dashboard</TransitionLink>
         </nav>
         <div className="d-flex align-items-center gap-3">
-          {isLoggedIn && (
-            <div className={styles.notificationWrapper} ref={dropdownRef}>
-              <button onClick={toggleDropdown} className={styles.notificationBell}>
-                <i className="fas fa-bell"></i>
-              </button>
-              {isDropdownOpen && <NotificationDropdown />}
-            </div>
+          {!loading && (
+            <>
+              {isLoggedIn && (
+                <div className={styles.notificationWrapper} ref={dropdownRef}>
+                  <button onClick={toggleDropdown} className={styles.notificationBell}>
+                    <i className="fas fa-bell"></i>
+                  </button>
+                  {isDropdownOpen && <NotificationDropdown />}
+                </div>
+              )}
+              {!isLoggedIn && <LoginButton />}
+              {isLoggedIn && <ProfileButton />}
+            </>
           )}
-          {!isLoggedIn && <LoginButton />}
-          {isLoggedIn && <ProfileButton />}
         </div>
       </div>
     </header>
