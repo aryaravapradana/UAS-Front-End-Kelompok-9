@@ -9,12 +9,15 @@ import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 import { useAuth } from '../context/AuthContext';
+import EventDetailModal from '../components/EventDetailModal';
 
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const router = useRouter();
   const fileInputRef = useRef(null);
   const { endTransition } = useTransition();
@@ -112,6 +115,16 @@ const DashboardPage = () => {
     router.push('/');
   };
 
+  const openEventModal = (event) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const closeEventModal = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
+
   if (loading) {
     return (
         <div className={styles.main}>
@@ -179,7 +192,12 @@ const DashboardPage = () => {
               <div className={styles.eventList}>
                 {events.length > 0 ? (
                   events.map(event => (
-                    <div key={`${event.type}-${event.id}`} className={styles.eventItem}>
+                    <div 
+                      key={`${event.type}-${event.id}`} 
+                      className={styles.eventItem}
+                      onClick={() => openEventModal(event)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className={styles.eventDetails}>
                         <span className={`${styles.eventType} ${styles[event.type.toLowerCase()]}`}>{event.type}</span>
                         <h3 className={styles.eventTitle}>{event.nama_lomba || event.nama_beasiswa || event.nama_seminar || event.nama_bootcamp}</h3>
@@ -203,6 +221,12 @@ const DashboardPage = () => {
           </section>
         </FadeInOnScroll>
       </main>
+      
+      <EventDetailModal
+        isOpen={isModalOpen}
+        onClose={closeEventModal}
+        event={selectedEvent}
+      />
     </div>
   );
 };

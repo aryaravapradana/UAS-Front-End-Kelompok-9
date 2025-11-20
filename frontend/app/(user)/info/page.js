@@ -7,6 +7,7 @@ import styles from './info.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import LombaDetailModal from '../components/LombaDetailModal';
 
 async function getBeasiswa() {
   const res = await fetch('http://127.0.0.1:3001/api/beasiswas', { cache: 'no-store' });
@@ -28,6 +29,8 @@ export default function InfoPage() {
   const [beasiswaData, setBeasiswaData] = useState([]);
   const [lombaData, setLombaData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentLomba, setCurrentLomba] = useState(null);
   const { endTransition } = useTransition();
 
   useEffect(() => {
@@ -47,6 +50,16 @@ export default function InfoPage() {
     fetchData();
   }, [endTransition]);
 
+  const openLombaModal = (lomba) => {
+    setCurrentLomba(lomba);
+    setIsModalOpen(true);
+  };
+
+  const closeLombaModal = () => {
+    setIsModalOpen(false);
+    setCurrentLomba(null);
+  };
+
   return (
     <div className={styles.infoPage}>
       <Header />
@@ -60,12 +73,23 @@ export default function InfoPage() {
         <InfoWhyJoinSection />
       </FadeInOnScroll>
       <FadeInOnScroll>
-        <InfoOpportunitiesSection beasiswaData={beasiswaData} lombaData={lombaData} loading={loading} />
+        <InfoOpportunitiesSection 
+          beasiswaData={beasiswaData} 
+          lombaData={lombaData} 
+          loading={loading} 
+          openLombaModal={openLombaModal}
+        />
       </FadeInOnScroll>
       <FadeInOnScroll>
         <InfoKnowMoreSection />
       </FadeInOnScroll>
       <AppFooter />
+      
+      <LombaDetailModal
+        isOpen={isModalOpen}
+        onClose={closeLombaModal}
+        lomba={currentLomba}
+      />
     </div>
   );
 }
@@ -185,7 +209,7 @@ function InfoWhyJoinSection() {
   );
 }
 
-function InfoOpportunitiesSection({ beasiswaData, lombaData, loading }) {
+function InfoOpportunitiesSection({ beasiswaData, lombaData, loading, openLombaModal }) {
   const [activeTab, setActiveTab] = useState('scholarships');
 
   if (loading) {
@@ -235,7 +259,7 @@ function InfoOpportunitiesSection({ beasiswaData, lombaData, loading }) {
         <div className={`row g-4 justify-content-center ${styles.featureCardsContainer}`}>
           {activeTab === 'scholarships' && (
             beasiswaData.length > 0 ? (
-              beasiswaData.slice(0, 3).map((beasiswa) => (
+              beasiswaData.map((beasiswa) => (
                 <div key={beasiswa.id} className="col-lg-4 col-md-6">
                   <div className={styles.infoCard}>
                     <div className={styles.infoCardImage}>
@@ -321,7 +345,7 @@ function InfoOpportunitiesSection({ beasiswaData, lombaData, loading }) {
 
           {activeTab === 'competition' && (
             lombaData.length > 0 ? (
-              lombaData.slice(0, 3).map((lomba) => (
+              lombaData.map((lomba) => (
                 <div key={lomba.id} className="col-lg-4 col-md-6">
                   <div className={styles.infoCard}>
                     <div className={styles.infoCardImage}>
@@ -337,7 +361,12 @@ function InfoOpportunitiesSection({ beasiswaData, lombaData, loading }) {
                       <div className={styles.infoCardDate}>JUNE 24, 2025</div>
                       <h3 className={styles.infoCardTitle}>{lomba.nama_lomba}</h3>
                       <p className={styles.infoCardDesc}>{lomba.penyelenggara}</p>
-                      <button className={styles.infoCardBtn}>See Details</button>
+                      <button 
+                        className={styles.infoCardBtn}
+                        onClick={() => openLombaModal(lomba)}
+                      >
+                        See Details
+                      </button>
                     </div>
                   </div>
                 </div>
