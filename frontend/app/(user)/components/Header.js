@@ -32,20 +32,25 @@ const Header = () => {
 
   return (
     <header className={styles.navbar}>
-      <div className="container d-flex justify-content-between align-items-center">
-        <TransitionLink href="/" className="d-flex align-items-center text-decoration-none">
-          <div className={styles.logoContainer}>
-            <Image
-              src="/uccd-logo@2x.png"
-              alt="UCCD Logo"
-              width={70}
-              height={70}
-              className={styles.logo3D}
-            />
-          </div>
-          <span className={styles.logoText}>UCCD</span>
-        </TransitionLink>
-        <nav className="d-none d-lg-flex align-items-center gap-4">
+      <div className="container d-flex align-items-center justify-content-between">
+        {/* Left Side: Logo */}
+        <div className="d-flex align-items-center" style={{ width: '200px' }}>
+          <TransitionLink href="/" className="d-flex align-items-center text-decoration-none">
+            <div className={styles.logoContainer}>
+              <Image
+                src="/uccd-logo@2x.png"
+                alt="UCCD Logo"
+                width={70}
+                height={70}
+                className={styles.logo3D}
+              />
+            </div>
+            <span className={styles.logoText}>UCCD</span>
+          </TransitionLink>
+        </div>
+
+        {/* Center: Navigation Links */}
+        <nav className="d-none d-lg-flex align-items-center gap-4 justify-content-center flex-grow-1">
           <TransitionLink href="/" className={styles.navLink}>Home</TransitionLink>
           <TransitionLink href="/bootcamp" className={styles.navLink}>Bootcamp</TransitionLink>
           <TransitionLink href="/info" className={styles.navLink}>Info</TransitionLink>
@@ -53,7 +58,9 @@ const Header = () => {
           <TransitionLink href="/glory" className={styles.navLink}>Glory</TransitionLink>
           <TransitionLink href="/dashboard" className={styles.navLink}>Dashboard</TransitionLink>
         </nav>
-        <div className="d-flex align-items-center gap-3">
+
+        {/* Right Side: Action Buttons */}
+        <div className="d-flex align-items-center gap-3 justify-content-end" style={{ width: '200px' }}>
           {!loading && (
             <>
               {isLoggedIn && (
