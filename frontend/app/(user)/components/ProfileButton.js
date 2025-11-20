@@ -86,7 +86,15 @@ export default function ProfileButton() {
           height={30}
           className={styles.profileImage}
         />
-        <span>{user.nama_lengkap}</span>
+        <span>
+          {user.nama_lengkap
+            ? user.nama_lengkap
+                .split(' ')
+                .map((n) => n[0])
+                .join('')
+                .toUpperCase()
+            : ''}
+        </span>
         <i className={`fas fa-chevron-down ${styles.chevron} ${isDropdownOpen ? styles.chevronOpen : ''}`}></i>
       </button>
 

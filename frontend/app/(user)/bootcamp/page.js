@@ -73,6 +73,14 @@ function HeroSection() {
         className={styles.decorativeEllipse}
         unoptimized
       />
+      <Image
+        src="/decorative-ellipse.svg"
+        alt="Decorative Ellipse Right"
+        width={894}
+        height={824}
+        className={styles.decorativeEllipseRight}
+        unoptimized
+      />
       <div className={styles.heroContent}>
         <div className={styles.heroText}>
           <h1>
