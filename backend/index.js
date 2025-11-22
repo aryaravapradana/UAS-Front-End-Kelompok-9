@@ -6,7 +6,8 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const app = express();
 
-// CORS configuration - PERMISSIVE MODE for troubleshooting
+const PORT = process.env.PORT || 3001;
+
 // Manual CORS Middleware - The "Nuclear Option" with Logging
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -60,11 +61,21 @@ app.use('/api', memberRoutes);
 app.use('/api', userRoutes);
 app.use('/api/notifications', notificationRoutes); // Use notification routes
 
-const PORT = process.env.PORT || 3001;
-
 // Add health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// 404 Handler - Always return JSON
+app.use((req, res) => {
+  console.log(`⚠️ [404] Route not found: ${req.method} ${req.url}`);
+  res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
+});
+
+// Global Error Handler - Always return JSON
+app.use((err, req, res, next) => {
+  console.error(`❌ [500] Global error:`, err);
+  res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
 // Error handling for server startup
