@@ -215,9 +215,45 @@ function InfoOpportunitiesSection({ beasiswaData, lombaData, loading, openLombaM
   if (loading) {
     return (
       <section className={styles.infoOpportunitiesSection}>
-        <div className="container text-center">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
+        <div className="container">
+          <div className="text-center mb-5">
+            <div className={styles.infoOpportunitiesTitleWrapper}>
+              <span className={`${styles.infoOppDot} ${styles.infoOppDotLeft}`}></span>
+              <h2 className={styles.infoOpportunitiesTitle}>
+                Opportunity List<br />
+                Section
+              </h2>
+              <span className={`${styles.infoOppDot} ${styles.infoOppDotRight}`}></span>
+            </div>
+            <p className={styles.infoOpportunitiesSubtitle}>
+              Discover curated scholarships, competitions, and tech programs designed to help FTI students grow academically and professionally.
+            </p>
+            
+            <div className={styles.infoOpportunitiesTabs}>
+              <button className={`${styles.infoTabBtn} ${styles.infoTabActive}`}>
+                Scholarships
+              </button>
+              <button className={styles.infoTabBtn}>
+                Competition
+              </button>
+            </div>
+          </div>
+
+          <div className={`row g-4 justify-content-center ${styles.featureCardsContainer}`}>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="col-lg-4 col-md-6">
+                <div className={`${styles.infoCard} ${styles.skeletonCard}`}>
+                  <div className={`${styles.infoCardImage} ${styles.skeleton}`}></div>
+                  <div className={styles.infoCardContent}>
+                    <div className={`${styles.skeletonText} ${styles.skeletonDate}`}></div>
+                    <div className={`${styles.skeletonText} ${styles.skeletonTitle}`}></div>
+                    <div className={`${styles.skeletonText} ${styles.skeletonDesc}`}></div>
+                    <div className={`${styles.skeletonText} ${styles.skeletonDesc}`}></div>
+                    <div className={`${styles.skeletonButton}`}></div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

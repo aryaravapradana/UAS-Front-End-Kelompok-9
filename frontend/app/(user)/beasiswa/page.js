@@ -15,30 +15,24 @@ async function getBeasiswa() {
 
 export default function BeasiswaPage() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { endTransition } = useTransition();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const beasiswaData = await getBeasiswa();
         setData(beasiswaData);
       } catch (error) {
         console.error(error);
       } finally {
+        setLoading(false);
         endTransition();
       }
     };
     fetchData();
   }, [endTransition]);
-
-  if (!data) {
-    return (
-      <div>
-        <Header />
-        {/* Render nothing or a minimal loader, the curtain is covering the screen */}
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -62,17 +56,37 @@ export default function BeasiswaPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((beasiswa) => (
-                  <tr key={beasiswa.id}>
-                    <td>{beasiswa.nama_beasiswa}</td>
-                    <td>{beasiswa.penyelenggara}</td>
-                    <td>{beasiswa.batasan_tahun}</td>
-                    <td>{beasiswa.batasan_prodi}</td>
-                    <td>{new Date(beasiswa.tanggal_deadline).toLocaleDateString()}</td>
-                    <td>Rp {beasiswa.biaya_daftar ? parseInt(beasiswa.biaya_daftar).toLocaleString('id-ID') : '-'}</td>
-                    <td>{beasiswa.penerima_uccd}</td>
+                {loading ? (
+                  <>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <tr key={i}>
+                        <td><div className="skeleton-text" style={{ width: '80%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '70%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '60%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '60%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '70%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '50%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '60%', height: '16px' }}></div></td>
+                      </tr>
+                    ))}
+                  </>
+                ) : data && data.length > 0 ? (
+                  data.map((beasiswa) => (
+                    <tr key={beasiswa.id}>
+                      <td>{beasiswa.nama_beasiswa}</td>
+                      <td>{beasiswa.penyelenggara}</td>
+                      <td>{beasiswa.batasan_tahun}</td>
+                      <td>{beasiswa.batasan_prodi}</td>
+                      <td>{new Date(beasiswa.tanggal_deadline).toLocaleDateString()}</td>
+                      <td>Rp {beasiswa.biaya_daftar ? parseInt(beasiswa.biaya_daftar).toLocaleString('id-ID') : '-'}</td>
+                      <td>{beasiswa.penerima_uccd}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="text-center">Tidak ada data beasiswa</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
