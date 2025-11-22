@@ -6,38 +6,17 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const app = express();
 
-// CORS configuration for production
-const corsOptions = {
-  origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
-    
-    // Allow localhost
-    if (origin === 'http://localhost:3000') {
-      return callback(null, true);
-    }
-    
-    // Allow all Vercel deployments
-    if (origin.endsWith('.vercel.app')) {
-      return callback(null, true);
-    }
-    
-    // Allow specific frontend URL from env
-    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
-      return callback(null, true);
-    }
-    
-    // Reject others
-    callback(new Error('Not allowed by CORS'));
-  },
+// CORS configuration - PERMISSIVE MODE for troubleshooting
+app.use(cors({
+  origin: true, // Reflects the request origin, allowing all
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Content-Range', 'X-Content-Range'],
-  maxAge: 600 // Cache preflight for 10 minutes
-};
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
+  maxAge: 86400 // 24 hours
+}));
 
-app.use(cors(corsOptions));
+app.options('*', cors()); // Enable pre-flight for all routes
+
 app.use(express.json());
 
 const authRoutes = require('./routes/auth.routes.js');
