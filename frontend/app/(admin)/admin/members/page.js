@@ -7,6 +7,7 @@ import MembersTable from '../components/MembersTable';
 import MemberFormModal from '../components/MemberFormModal';
 import MemberDetailModal from '../components/MemberDetailModal';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function MembersPage() {
   // States
@@ -28,7 +29,7 @@ export default function MembersPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/users', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.users.list(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch members.');
       const data = await res.json();
       setMembers(data);
@@ -54,7 +55,7 @@ export default function MembersPage() {
     if (window.confirm(`Delete member NIM ${nim}?`)) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/users/${nim}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(API.users.detail(nim), { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) throw new Error(await res.json().then(d => d.message));
         setMembers(members.filter((m) => m.nim !== nim));
         toast.success('Member deleted.');
@@ -65,7 +66,7 @@ export default function MembersPage() {
   const handleMemberFormSubmit = async (formData) => {
     const token = localStorage.getItem('token');
     const isEditMode = !!editingMember;
-    const url = isEditMode ? `http://localhost:3001/api/users/${editingMember.nim}` : 'http://localhost:3001/api/auth/register';
+    const url = isEditMode ? API.users.update(editingMember.nim) : API.auth.register();
     const method = isEditMode ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });
@@ -83,7 +84,7 @@ export default function MembersPage() {
     if (window.confirm(`Are you sure you want to delete the email for NIM ${nim}?`)) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/users/${nim}/email`, {
+        const res = await fetch(API.users.email(nim), {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` },
         });

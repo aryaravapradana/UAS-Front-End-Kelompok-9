@@ -7,6 +7,7 @@ import Link from 'next/link';
 import styles from './login.module.css';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 import { useAuth } from '../context/AuthContext';
+import API from '@/lib/api';
 
 function LoginContent() {
   const [nim, setNim] = useState('');
@@ -45,7 +46,7 @@ function LoginContent() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/api/auth/login', {
+      const res = await fetch(API.auth.login(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

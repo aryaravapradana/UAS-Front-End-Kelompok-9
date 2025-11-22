@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import styles from '../AdminDashboard.module.css';
 import NotificationTable from '../components/NotificationTable';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function NotificationsPage() {
   // States
@@ -25,7 +26,7 @@ export default function NotificationsPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/notifications?limit=1000', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.notifications.list(1, 1000), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch notifications.');
       const data = await res.json();
       setAdminNotifications(data.notifications);
@@ -48,7 +49,7 @@ export default function NotificationsPage() {
     }
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/notifications', {
+      const res = await fetch(API.notifications.create(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ export default function NotificationsPage() {
     if (window.confirm('Are you sure you want to delete this notification?')) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/notifications/${id}`, {
+        const res = await fetch(API.notifications.delete(id), {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` },
         });

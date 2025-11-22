@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './EventDetailModal.module.css';
+import API from '@/lib/api';
 
 const EventDetailModal = ({ isOpen, onClose, event }) => {
   const [teamData, setTeamData] = useState(null);
@@ -22,7 +23,7 @@ const EventDetailModal = ({ isOpen, onClose, event }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/events/${event.type}/${event.id}/team`, {
+      const res = await fetch(API.events.team(event.type, event.id), {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

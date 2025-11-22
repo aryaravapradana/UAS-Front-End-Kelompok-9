@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './NotificationDropdown.module.css';
 import NotificationDetailModal from './NotificationDetailModal'; // Import the new modal
+import API from '@/lib/api';
 
 const NotificationDropdown = () => {
   const [notifications, setNotifications] = useState([]);
@@ -23,7 +24,7 @@ const NotificationDropdown = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/api/notifications?page=${page}&limit=5`, {
+      const res = await fetch(API.notifications.list(page, 5), {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -58,7 +59,7 @@ const NotificationDropdown = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/api/notifications/${id}/read`, {
+      const res = await fetch(API.notifications.markRead(id), {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -6,6 +6,7 @@ import styles from '../AdminDashboard.module.css';
 import TalkTable from '../components/TalkTable';
 import TalkFormModal from '../components/TalkFormModal';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function TalksPage() {
   // States
@@ -26,7 +27,7 @@ export default function TalksPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/talks', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.talks.list(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch talks.');
       const data = await res.json();
       setTalks(data);
@@ -50,7 +51,7 @@ export default function TalksPage() {
     if (window.confirm('Delete this talk?')) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/talks/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(API.talks.detail(id), { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) throw new Error(await res.json().then(d => d.message));
         setTalks(talks.filter((t) => t.id !== id));
         toast.success('Talk deleted.');
@@ -61,7 +62,7 @@ export default function TalksPage() {
   const handleTalkFormSubmit = async (formData) => {
     const token = localStorage.getItem('token');
     const isEditMode = !!editingTalk;
-    const url = isEditMode ? `http://localhost:3001/api/talks/${editingTalk.id}` : 'http://localhost:3001/api/talks';
+    const url = isEditMode ? API.talks.detail(editingTalk.id) : API.talks.list();
     const method = isEditMode ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './MemberDetailModal.module.css';
+import API from '@/lib/api';
 
 const MemberDetailModal = ({ nim, onClose }) => {
   const [details, setDetails] = useState(null);
@@ -17,7 +18,7 @@ const MemberDetailModal = ({ nim, onClose }) => {
       const token = localStorage.getItem('token');
 
       try {
-        const res = await fetch(`http://localhost:3001/api/users/${nim}/details`, {
+        const res = await fetch(API.users.details(nim), {
           headers: { 'Authorization': `Bearer ${token}` },
         });
         if (!res.ok) {

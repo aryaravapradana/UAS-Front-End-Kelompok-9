@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import styles from './glory.module.css';
 import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import API from '@/lib/api';
 
 export default function GloryPage() {
   const { endTransition } = useTransition();
@@ -91,7 +92,7 @@ function HallOfAchievementSection() {
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/lombas');
+        const res = await fetch(API.lombas.list());
         if (!res.ok) {
           throw new Error('Failed to fetch achievements');
         }

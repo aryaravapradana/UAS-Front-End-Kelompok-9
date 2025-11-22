@@ -6,6 +6,7 @@ import styles from '../AdminDashboard.module.css';
 import LombaTable from '../components/LombaTable';
 import LombaFormModal from '../components/LombaFormModal';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function LombasPage() {
   // States
@@ -26,7 +27,7 @@ export default function LombasPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/lombas', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.lombas.list(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch lombas.');
       const data = await res.json();
       setLombas(data);
@@ -50,7 +51,7 @@ export default function LombasPage() {
     if (window.confirm('Delete this lomba?')) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/lombas/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(API.lombas.detail(id), { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) throw new Error(await res.json().then(d => d.message));
         setLombas(lombas.filter((l) => l.id !== id));
         toast.success('Lomba deleted.');
@@ -61,7 +62,7 @@ export default function LombasPage() {
   const handleLombaFormSubmit = async (formData) => {
     const token = localStorage.getItem('token');
     const isEditMode = !!editingLomba;
-    const url = isEditMode ? `http://localhost:3001/api/lombas/${editingLomba.id}` : 'http://localhost:3001/api/lombas';
+    const url = isEditMode ? API.lombas.detail(editingLomba.id) : API.lombas.list();
     const method = isEditMode ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });

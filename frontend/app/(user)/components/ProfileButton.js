@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './ProfileButton.module.css'; // Using a CSS module for styling
+import API from '@/lib/api';
 
 export default function ProfileButton() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function ProfileButton() {
       }
 
       try {
-        const res = await fetch('http://localhost:3001/api/profile', {
+        const res = await fetch(API.profile.get(), {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

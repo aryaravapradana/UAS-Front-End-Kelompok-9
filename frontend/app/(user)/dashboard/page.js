@@ -10,6 +10,7 @@ import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 import { useAuth } from '../context/AuthContext';
 import EventDetailModal from '../components/EventDetailModal';
+import API from '@/lib/api';
 
 const DashboardPage = () => {
   const [user, setUser] = useState(null);
@@ -36,11 +37,11 @@ const DashboardPage = () => {
       try {
         setLoading(true);
         const [profileRes, lombasRes, beasiswasRes, talksRes, bootcampsRes] = await Promise.all([
-          fetch('http://localhost:3001/api/profile', { headers }),
-          fetch('http://localhost:3001/api/profile/lombas', { headers }),
-          fetch('http://localhost:3001/api/profile/beasiswas', { headers }),
-          fetch('http://localhost:3001/api/profile/talks', { headers }),
-          fetch('http://localhost:3001/api/profile/bootcamps', { headers })
+          fetch(API.profile.get(), { headers }),
+          fetch(API.profile.lombas(), { headers }),
+          fetch(API.profile.beasiswas(), { headers }),
+          fetch(API.profile.talks(), { headers }),
+          fetch(API.profile.bootcamps(), { headers })
         ]);
 
         if (profileRes.status === 401) {
@@ -89,7 +90,7 @@ const DashboardPage = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/profile/picture', {
+      const res = await fetch(API.profile.picture(), {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
@@ -99,7 +100,7 @@ const DashboardPage = () => {
 
       // Refresh data to show the new picture
       // Re-fetch data without reloading the page
-      const profileRes = await fetch('http://localhost:3001/api/profile', { headers: { 'Authorization': `Bearer ${token}` } });
+      const profileRes = await fetch(API.profile.get(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (profileRes.ok) {
         const profileData = await profileRes.json();
         setUser(profileData);
