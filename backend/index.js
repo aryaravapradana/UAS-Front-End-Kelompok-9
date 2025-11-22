@@ -73,33 +73,6 @@ app.use((err, req, res, next) => {
   console.error(`❌ [500] Global error:`, err);
   res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
-
-// Start Server
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server is running on port ${PORT} (0.0.0.0)`);
-  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
-  
-  // Test Database Connection (Non-blocking)
-  prisma.$connect()
-    .then(() => {
-      console.log('✅ Database: CONNECTED SUCCESSFULLY');
-      return prisma.member.count();
-    })
-    .then((count) => {
-      console.log(`✅ Database Check: Found ${count} members`);
-    })
-    .catch((error) => {
-      console.error('❌ FATAL: Database Connection Failed!');
-      console.error(error);
-    });
-
-}).on('error', (err) => {
-  console.error('❌ Server startup error:', err);
-  process.exit(1);
-});
-
-// FIX: Increase Keep-Alive timeout to prevent 502s from Load Balancer
 // Node.js defaults to 5s, which is often shorter than LB timeouts (60s)
 server.keepAliveTimeout = 61000; // 61 seconds
 server.headersTimeout = 65000;   // 65 seconds
