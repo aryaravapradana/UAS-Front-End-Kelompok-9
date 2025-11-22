@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors'); // Removed unused dependency
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
