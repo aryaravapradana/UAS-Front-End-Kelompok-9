@@ -61,6 +61,15 @@ app.use('/api', memberRoutes);
 app.use('/api', userRoutes);
 app.use('/api/notifications', notificationRoutes); // Use notification routes
 
+// Root route handler
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Backend is running!',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Add health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
