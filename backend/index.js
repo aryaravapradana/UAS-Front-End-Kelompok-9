@@ -75,25 +75,26 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const server = app.listen(PORT, '0.0.0.0', async () => {
-  console.log(`✅ Server is running on port ${PORT} (0.0.0.0)`);
+const server = app.listen(PORT, () => {
+  const address = server.address();
+  console.log('✅ Server started');
+  console.log(`✅ Listening on: ${JSON.stringify(address)}`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
   
-  // Test Database Connection Immediately
-  try {
-    console.log('🔄 Testing Database Connection...');
-    await prisma.$connect();
-    console.log('✅ Database: CONNECTED SUCCESSFULLY');
-    
-    // Optional: Run a simple query to be 100% sure
-    const count = await prisma.member.count();
-    console.log(`✅ Database Check: Found ${count} members`);
-  } catch (error) {
-    console.error('❌ FATAL: Database Connection Failed!');
-    console.error(error);
-    // We don't exit here so the logs can be read, but the app is effectively broken
-  }
+  // Test Database Connection (Non-blocking)
+  prisma.$connect()
+    .then(() => {
+      console.log('✅ Database: CONNECTED SUCCESSFULLY');
+      return prisma.member.count();
+    })
+    .then((count) => {
+      console.log(`✅ Database Check: Found ${count} members`);
+    })
+    .catch((error) => {
+      console.error('❌ FATAL: Database Connection Failed!');
+      console.error(error);
+    });
 
 }).on('error', (err) => {
   console.error('❌ Server startup error:', err);
