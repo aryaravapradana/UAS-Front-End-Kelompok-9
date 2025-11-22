@@ -88,8 +88,10 @@ app.use((err, req, res, next) => {
 });
 
 // Error handling for server startup
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server is running on port ${PORT}`);
+const server = app.listen(PORT, () => {
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
+  console.log(`✅ Server is running on ${bind}`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
   console.log(`✅ Database: ${process.env.DATABASE_URL ? 'connected' : 'not set'}`);
