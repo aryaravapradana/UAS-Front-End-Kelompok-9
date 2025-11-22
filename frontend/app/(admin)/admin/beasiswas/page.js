@@ -6,6 +6,7 @@ import styles from '../AdminDashboard.module.css';
 import BeasiswaTable from '../components/BeasiswaTable';
 import BeasiswaFormModal from '../components/BeasiswaFormModal';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function BeasiswasPage() {
   // States
@@ -26,7 +27,7 @@ export default function BeasiswasPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/beasiswas', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.beasiswas.list(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch beasiswas.');
       const data = await res.json();
       setBeasiswas(data);
@@ -50,7 +51,7 @@ export default function BeasiswasPage() {
     if (window.confirm('Delete this beasiswa?')) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/beasiswas/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(API.beasiswas.detail(id), { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) throw new Error(await res.json().then(d => d.message));
         setBeasiswas(beasiswas.filter((b) => b.id !== id));
         toast.success('Beasiswa deleted.');
@@ -66,7 +67,7 @@ export default function BeasiswasPage() {
     // Step 1: Create/Update Text Data
     let beasiswaResponse;
     try {
-      const url = isEditMode ? `http://localhost:3001/api/beasiswas/${editingBeasiswa.id}` : 'http://localhost:3001/api/beasiswas';
+      const url = isEditMode ? API.beasiswas.detail(editingBeasiswa.id) : API.beasiswas.list();
       const method = isEditMode ? 'PUT' : 'POST';
 
       // Make sure to parse biaya_daftar to float
@@ -103,7 +104,7 @@ export default function BeasiswasPage() {
         const posterFormData = new FormData();
         posterFormData.append('poster', poster);
 
-        const posterRes = await fetch(`http://localhost:3001/api/beasiswas/${beasiswaId}/poster`, {
+        const posterRes = await fetch(API.beasiswas.poster(beasiswaId), {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
           body: posterFormData

@@ -6,6 +6,7 @@ import styles from '../AdminDashboard.module.css';
 import BootcampTable from '../components/BootcampTable';
 import BootcampFormModal from '../components/BootcampFormModal';
 import PaginationControls from '../components/PaginationControls';
+import API from '@/lib/api';
 
 export default function BootcampsPage() {
   // States
@@ -26,7 +27,7 @@ export default function BootcampsPage() {
     setLoading(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3001/api/bootcamps', { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(API.bootcamps.list(), { headers: { 'Authorization': `Bearer ${token}` } });
       if (!res.ok) throw new Error('Failed to fetch bootcamps.');
       const data = await res.json();
       setBootcamps(data);
@@ -50,7 +51,7 @@ export default function BootcampsPage() {
     if (window.confirm('Delete this bootcamp?')) {
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:3001/api/bootcamps/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(API.bootcamps.detail(id), { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) throw new Error(await res.json().then(d => d.message));
         setBootcamps(bootcamps.filter((b) => b.id !== id));
         toast.success('Bootcamp deleted.');
@@ -61,7 +62,7 @@ export default function BootcampsPage() {
   const handleBootcampFormSubmit = async (formData) => {
     const token = localStorage.getItem('token');
     const isEditMode = !!editingBootcamp;
-    const url = isEditMode ? `http://localhost:3001/api/bootcamps/${editingBootcamp.id}` : 'http://localhost:3001/api/bootcamps';
+    const url = isEditMode ? API.bootcamps.detail(editingBootcamp.id) : API.bootcamps.list();
     const method = isEditMode ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, { method, headers: { 'Authorization': `Bearer ${token}` }, body: formData });

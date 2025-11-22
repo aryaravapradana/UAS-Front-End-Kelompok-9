@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './register.module.css';
 import FadeInOnScroll from '../components/FadeInOnScroll';
+import API from '@/lib/api';
 
 const getProdi = (nim) => {
   if (nim.length < 3) return '';
@@ -49,7 +50,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/api/auth/register', {
+      const res = await fetch(API.auth.register(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

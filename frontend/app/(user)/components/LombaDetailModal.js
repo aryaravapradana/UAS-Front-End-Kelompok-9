@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './LombaDetailModal.module.css';
 import toast from 'react-hot-toast';
+import API from '@/lib/api';
 
 const LombaDetailModal = ({ isOpen, onClose, lomba }) => {
   const [registrationStep, setRegistrationStep] = useState('initial'); // 'initial', 'create-team', 'join-team', 'success'
@@ -32,7 +33,7 @@ const LombaDetailModal = ({ isOpen, onClose, lomba }) => {
         return;
       }
 
-      const res = await fetch(`http://localhost:3001/api/lombas/${lomba.id}/register-solo`, {
+      const res = await fetch(API.lombas.registerSolo(lomba.id), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -71,7 +72,7 @@ const LombaDetailModal = ({ isOpen, onClose, lomba }) => {
         return;
       }
 
-      const res = await fetch(`http://localhost:3001/api/lombas/${lomba.id}/create-team`, {
+      const res = await fetch(API.lombas.createTeam(lomba.id), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -112,7 +113,7 @@ const LombaDetailModal = ({ isOpen, onClose, lomba }) => {
         return;
       }
 
-      const res = await fetch(`http://localhost:3001/api/lombas/${lomba.id}/join-team`, {
+      const res = await fetch(API.lombas.joinTeam(lomba.id), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

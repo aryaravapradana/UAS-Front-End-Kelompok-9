@@ -6,7 +6,26 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const app = express();
 
-app.use(cors());
+// CORS configuration for production
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL || 'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost and Vercel deployments
+    if (allowedOrigins.indexOf(origin) !== -1 || (origin && origin.endsWith('.vercel.app'))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 const authRoutes = require('./routes/auth.routes.js');

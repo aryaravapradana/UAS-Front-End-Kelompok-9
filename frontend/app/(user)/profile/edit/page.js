@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './edit.module.css';
 import Header from '../../components/Header';
+import API from '@/lib/api';
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function EditProfilePage() {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/api/profile', {
+      const res = await fetch(API.profile.get(), {
         headers: { 'Authorization': `Bearer ${token}` },
       });
 
@@ -72,7 +73,7 @@ export default function EditProfilePage() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3001/api/profile', {
+      const res = await fetch(API.profile.get(), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +105,7 @@ export default function EditProfilePage() {
     setSuccess('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3001/api/auth/resend-verification', {
+      const res = await fetch(API.auth.resendVerification(), {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
       });

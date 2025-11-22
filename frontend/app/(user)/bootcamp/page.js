@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import { useTransition } from '../context/TransitionContext';
 import FadeInOnScroll from '../components/FadeInOnScroll';
 import BootcampDetailModal from '../components/BootcampDetailModal'; // Import the new modal component
+import API from '@/lib/api';
 
 export default function BootcampPage() {
   const [activeTrack, setActiveTrack] = useState('complete');
@@ -131,7 +132,7 @@ function ChooseTrackSection({ activeTrack, setActiveTrack, openDetailModal }) {
   useEffect(() => {
     const fetchBootcamps = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/bootcamps');
+        const res = await fetch(API.bootcamps.list());
         if (!res.ok) {
           throw new Error('Failed to fetch bootcamps');
         }
@@ -171,7 +172,7 @@ function ChooseTrackSection({ activeTrack, setActiveTrack, openDetailModal }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/api/bootcamps/${bootcampId}/register`, {
+      const res = await fetch(API.bootcamps.register(bootcampId), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
