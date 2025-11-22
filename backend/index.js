@@ -106,3 +106,14 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
+
+// Catch unhandled rejections (e.g. failed DB connection)
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  // Application specific logging, throwing an error, or other logic here
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('❌ Uncaught Exception:', err);
+  // process.exit(1); // Optional: restart container
+});
