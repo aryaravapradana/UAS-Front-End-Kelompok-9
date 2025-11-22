@@ -75,10 +75,8 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const server = app.listen(PORT, () => {
-  const address = server.address();
-  console.log('✅ Server started');
-  console.log(`✅ Listening on: ${JSON.stringify(address)}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server is running on port ${PORT} (0.0.0.0)`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
   
@@ -100,6 +98,11 @@ const server = app.listen(PORT, () => {
   console.error('❌ Server startup error:', err);
   process.exit(1);
 });
+
+// FIX: Increase Keep-Alive timeout to prevent 502s from Load Balancer
+// Node.js defaults to 5s, which is often shorter than LB timeouts (60s)
+server.keepAliveTimeout = 61000; // 61 seconds
+server.headersTimeout = 65000;   // 65 seconds
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, closing server...');
