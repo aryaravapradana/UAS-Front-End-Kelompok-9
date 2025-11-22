@@ -7,15 +7,32 @@ const prisma = new PrismaClient();
 const app = express();
 
 // CORS configuration - PERMISSIVE MODE for troubleshooting
-app.use(cors({
-  origin: true, // Reflects the request origin, allowing all
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
-  maxAge: 86400 // 24 hours
-}));
+// Manual CORS Middleware - The "Nuclear Option"
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  // Allow any origin that looks like it's from Vercel or localhost
+  if (origin && (origin.includes('vercel.app') || origin.includes('localhost'))) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    // Fallback: reflect origin for troubleshooting (remove in strict production if needed)
+    if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Max-Age', '86400');
 
-// app.options('/:path(*)', cors()); // Removed explicit pre-flight, let cors middleware handle it
+  // Handle preflight requests directly
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
 
 app.use(express.json());
 
