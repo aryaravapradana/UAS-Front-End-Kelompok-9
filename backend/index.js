@@ -15,7 +15,7 @@ app.use(cors({
   maxAge: 86400 // 24 hours
 }));
 
-app.options('*', cors()); // Enable pre-flight for all routes
+app.options('(.*)', cors()); // Enable pre-flight for all routes
 
 app.use(express.json());
 
