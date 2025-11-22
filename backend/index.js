@@ -7,18 +7,19 @@ const prisma = new PrismaClient();
 const app = express();
 
 // CORS configuration - PERMISSIVE MODE for troubleshooting
-// Manual CORS Middleware - The "Nuclear Option"
+// Manual CORS Middleware - The "Nuclear Option" with Logging
 app.use((req, res, next) => {
   const origin = req.headers.origin;
+  console.log(`🔥 [CORS] Request: ${req.method} ${req.url}`);
+  console.log(`🔥 [CORS] Origin: ${origin}`);
   
-  // Allow any origin that looks like it's from Vercel or localhost
-  if (origin && (origin.includes('vercel.app') || origin.includes('localhost'))) {
+  // Blindly reflect the origin if it exists
+  if (origin) {
     res.setHeader('Access-Control-Allow-Origin', origin);
-  } else if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    console.log(`✅ [CORS] Set Access-Control-Allow-Origin: ${origin}`);
   } else {
-    // Fallback: reflect origin for troubleshooting (remove in strict production if needed)
-    if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    console.log(`⚠️ [CORS] No origin, set Access-Control-Allow-Origin: *`);
   }
   
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -28,7 +29,8 @@ app.use((req, res, next) => {
 
   // Handle preflight requests directly
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
+    console.log(`✅ [CORS] Handling OPTIONS preflight`);
+    return res.status(200).end();
   }
   
   next();
