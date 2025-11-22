@@ -127,10 +127,42 @@ const DashboardPage = () => {
 
   if (loading) {
     return (
-        <div className={styles.main}>
-            <Header />
-            {/* The curtain will cover this part, so no need for a visible loader */}
-        </div>
+      <div className={styles.main}>
+        <Header />
+        <main className={styles.container}>
+          <section className={styles.heroSection}>
+            <div className={`${styles.profilePictureContainer} ${styles.skeleton}`} style={{ width: '120px', height: '120px', borderRadius: '50%' }}></div>
+            <div className={`${styles.skeletonText} ${styles.skeletonHeroTitle}`}></div>
+            <div className={`${styles.skeletonText} ${styles.skeletonHeroSubtitle}`}></div>
+          </section>
+
+          <div className={styles.contentGrid}>
+            <section className={styles.contentCard}>
+              <div className={`${styles.skeletonText} ${styles.skeletonCardTitle}`}></div>
+              <div className={styles.profileDetails}>
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div key={i} className={`${styles.skeletonText} ${styles.skeletonDetailItem}`}></div>
+                ))}
+              </div>
+            </section>
+
+            <section className={`${styles.contentCard} ${styles.eventsCard}`}>
+              <div className={`${styles.skeletonText} ${styles.skeletonCardTitle}`}></div>
+              <div className={styles.eventList}>
+                {[1, 2, 3].map(i => (
+                  <div key={i} className={styles.eventItem}>
+                    <div className={styles.eventDetails}>
+                      <div className={`${styles.skeletonText} ${styles.skeletonEventType}`}></div>
+                      <div className={`${styles.skeletonText} ${styles.skeletonEventTitle}`}></div>
+                    </div>
+                    <div className={`${styles.skeletonText} ${styles.skeletonEventDate}`}></div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
     );
   }
 

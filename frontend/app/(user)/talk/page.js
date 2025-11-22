@@ -18,16 +18,19 @@ async function getTalk() {
 
 export default function TalkPage() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { endTransition } = useTransition();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const talkData = await getTalk();
         setData(talkData);
       } catch (error) {
         console.error(error);
       } finally {
+        setLoading(false);
         endTransition();
       }
     };
@@ -47,7 +50,7 @@ export default function TalkPage() {
         <TalksWhyJoinSection />
       </FadeInOnScroll>
       <FadeInOnScroll>
-        <TalksCollaborationSection data={data} />
+        <TalksCollaborationSection data={data} loading={loading} />
       </FadeInOnScroll>
       <FadeInOnScroll>
         <WhatsInItForYouSection />
@@ -173,7 +176,7 @@ function TalksWhyJoinSection() {
   );
 }
 
-function TalksCollaborationSection({ data }) {
+function TalksCollaborationSection({ data, loading }) {
   const [activeTab, setActiveTab] = useState('comingSoon'); // Default to Coming Soon
 
   const filterTalks = (talks, type) => {
@@ -241,7 +244,28 @@ function TalksCollaborationSection({ data }) {
         </div>
 
         <div className="row g-4">
-          {talksToDisplay.length > 0 ? (
+          {loading ? (
+            <>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="col-lg-4 col-md-6">
+                  <div className={`${styles.talkCard} ${styles.skeletonCard}`}>
+                    <div className={`${styles.talkCardImage} ${styles.skeleton}`}></div>
+                    <div className={styles.talkCardContent}>
+                      <div className={`${styles.skeletonText} ${styles.skeletonTitle}`}></div>
+                      <div className={`${styles.skeletonText} ${styles.skeletonDesc}`}></div>
+                      <div className={`${styles.skeletonText} ${styles.skeletonDesc}`}></div>
+                      <div className={styles.talkCardInfo}>
+                        <div className={`${styles.skeletonText} ${styles.skeletonInfo}`}></div>
+                        <div className={`${styles.skeletonText} ${styles.skeletonInfo}`}></div>
+                        <div className={`${styles.skeletonText} ${styles.skeletonInfo}`}></div>
+                      </div>
+                      <div className={`${styles.skeletonText} ${styles.skeletonButton}`}></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : talksToDisplay.length > 0 ? (
             talksToDisplay.map((talk) => (
               <div key={`talk-${talk.id}`} className="col-lg-4 col-md-6">
                 <div className={styles.talkCard}>

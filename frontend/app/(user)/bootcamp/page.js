@@ -224,7 +224,30 @@ function ChooseTrackSection({ activeTrack, setActiveTrack, openDetailModal }) {
 
         <div className={styles.trackCards}>
           {loading ? (
-            <p>Loading bootcamps...</p>
+            <>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className={`${styles.trackCard} ${styles.skeletonCard}`}>
+                  <div className={`${styles.trackImage} ${styles.skeleton}`}></div>
+                  <div className={styles.trackInfo}>
+                    <div className={styles.trackTitleRow}>
+                      <div className={`${styles.skeletonText} ${styles.skeletonTitle}`}></div>
+                      <div className={`${styles.skeletonText} ${styles.skeletonBadge}`}></div>
+                    </div>
+                    <ul className={styles.trackDetails}>
+                      <li>
+                        <div className={`${styles.skeletonText} ${styles.skeletonDetail}`}></div>
+                      </li>
+                      <li>
+                        <div className={`${styles.skeletonText} ${styles.skeletonDetail}`}></div>
+                      </li>
+                      <li>
+                        <div className={`${styles.skeletonText} ${styles.skeletonDetail}`}></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </>
           ) : bootcampsToDisplay.length > 0 ? (
             bootcampsToDisplay.map((bootcamp) => (
               <div key={bootcamp.id} className={styles.trackCard}>

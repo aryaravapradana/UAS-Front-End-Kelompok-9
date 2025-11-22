@@ -15,29 +15,24 @@ async function getMember() {
 
 export default function MemberPage() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { endTransition } = useTransition();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const memberData = await getMember();
         setData(memberData);
       } catch (error) {
         console.error(error);
       } finally {
+        setLoading(false);
         endTransition();
       }
     };
     fetchData();
   }, [endTransition]);
-
-  if (!data) {
-    return (
-      <div>
-        <Header />
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -58,14 +53,31 @@ export default function MemberPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((member) => (
-                  <tr key={member.nim}>
-                    <td>{member.nim}</td>
-                    <td>{member.nama_lengkap}</td>
-                    <td>{member.prodi}</td>
-                    <td>{member.angkatan}</td>
+                {loading ? (
+                  <>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <tr key={i}>
+                        <td><div className="skeleton-text" style={{ width: '70%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '80%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '60%', height: '16px' }}></div></td>
+                        <td><div className="skeleton-text" style={{ width: '50%', height: '16px' }}></div></td>
+                      </tr>
+                    ))}
+                  </>
+                ) : data && data.length > 0 ? (
+                  data.map((member) => (
+                    <tr key={member.nim}>
+                      <td>{member.nim}</td>
+                      <td>{member.nama_lengkap}</td>
+                      <td>{member.prodi}</td>
+                      <td>{member.angkatan}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">Tidak ada data member</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
