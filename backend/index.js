@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-// const cors = require('cors'); // Removed unused dependency
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
@@ -8,32 +7,19 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-// Manual CORS Middleware - The "Nuclear Option" with Logging
+// Manual CORS Middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   console.log(`🔥 [CORS] Request: ${req.method} ${req.url}`);
-  console.log(`🔥 [CORS] Origin: ${origin}`);
-  
-  // Blindly reflect the origin if it exists
   if (origin) {
     res.setHeader('Access-Control-Allow-Origin', origin);
-    console.log(`✅ [CORS] Set Access-Control-Allow-Origin: ${origin}`);
   } else {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    console.log(`⚠️ [CORS] No origin, set Access-Control-Allow-Origin: *`);
   }
-  
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Max-Age', '86400');
-
-  // Handle preflight requests directly
-  if (req.method === 'OPTIONS') {
-    console.log(`✅ [CORS] Handling OPTIONS preflight`);
-    return res.status(200).end();
-  }
-  
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
 
@@ -46,52 +32,51 @@ const talkRoutes = require('./routes/talk.routes.js');
 const bootcampRoutes = require('./routes/bootcamp.routes.js');
 const memberRoutes = require('./routes/member.routes.js');
 const userRoutes = require('./routes/user.routes.js');
-const notificationRoutes = require('./routes/notification.routes.js'); // Import notification routes
-const lombaRegistrationRoutes = require('./routes/lomba_registration.js'); // Import lomba registration routes
-const eventDetailsRoutes = require('./routes/event_details.js'); // Import event details routes
+const notificationRoutes = require('./routes/notification.routes.js');
+const lombaRegistrationRoutes = require('./routes/lomba_registration.js');
+const eventDetailsRoutes = require('./routes/event_details.js');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lombas', lombaRoutes);
-app.use('/api/lombas', lombaRegistrationRoutes); // Use lomba registration routes
-app.use('/api/events', eventDetailsRoutes); // Use event details routes
+app.use('/api/lombas', lombaRegistrationRoutes);
+app.use('/api/events', eventDetailsRoutes);
 app.use('/api/beasiswas', beasiswaRoutes);
 app.use('/api/talks', talkRoutes);
 app.use('/api/bootcamps', bootcampRoutes);
 app.use('/api', memberRoutes);
 app.use('/api', userRoutes);
-app.use('/api/notifications', notificationRoutes); // Use notification routes
+app.use('/api/notifications', notificationRoutes);
 
 // Root route handler
 app.get('/', (req, res) => {
+  console.log('✅ [ROOT] Hit root endpoint');
   res.json({ 
     message: 'Backend is running!',
-    environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString()
   });
 });
 
 // Add health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+  console.log('✅ [HEALTH] Hit health endpoint');
+  res.status(200).json({ status: 'ok' });
 });
 
-// 404 Handler - Always return JSON
+// 404 Handler
 app.use((req, res) => {
   console.log(`⚠️ [404] Route not found: ${req.method} ${req.url}`);
-  res.status(404).json({ message: `Route ${req.method} ${req.url} not found` });
+  res.status(404).json({ message: 'Not Found' });
 });
 
-// Global Error Handler - Always return JSON
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.error(`❌ [500] Global error:`, err);
   res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
-// Error handling for server startup
-const server = app.listen(PORT, () => {
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
-  console.log(`✅ Server is running on ${bind}`);
+// Start Server
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server is running on port ${PORT} (0.0.0.0)`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
   console.log(`✅ Database: ${process.env.DATABASE_URL ? 'connected' : 'not set'}`);
@@ -100,7 +85,6 @@ const server = app.listen(PORT, () => {
   process.exit(1);
 });
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, closing server...');
   server.close(() => {
@@ -112,10 +96,8 @@ process.on('SIGTERM', () => {
 // Catch unhandled rejections (e.g. failed DB connection)
 process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
-  // Application specific logging, throwing an error, or other logic here
 });
 
 process.on('uncaughtException', (err) => {
   console.error('❌ Uncaught Exception:', err);
-  // process.exit(1); // Optional: restart container
 });
